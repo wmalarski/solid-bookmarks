@@ -1,6 +1,19 @@
 import { css } from "@tokenami/css";
 
-export const cardRecipe = css.compose({});
+export const cardRecipe = css.compose({
+	variants: {
+		variant: {
+			bordered: {},
+		},
+		size: {},
+		color: {},
+		bg: {
+			"base-100": {},
+			"base-200": {},
+			"base-300": {},
+		},
+	},
+});
 
 // export const cardRecipe = twCva("card", {
 // 	defaultVariants: {
@@ -41,7 +54,11 @@ export const cardTitleRecipe = css.compose({});
 
 // export const cardTitleRecipe = twCva("card-title");
 
-export const cardActionsRecipe = css.compose({});
+export const cardActionsRecipe = css.compose({
+	variants: {
+		justify: {},
+	},
+});
 
 // export const cardActionsRecipe = twCva("card-actions", {
 // 	defaultVariants: {

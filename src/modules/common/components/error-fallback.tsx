@@ -21,7 +21,7 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
 				<CardBody class="items-center">
 					<XCircleIcon class="size-10 text-error" />
 					<header class="flex items-center justify-between gap-2 text-error">
-						<h2 class={cardTitleRecipe()}>{t("error.title")}</h2>
+						<h2 style={cardTitleRecipe()}>{t("error.title")}</h2>
 					</header>
 					<span class="text-center">
 						{/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}

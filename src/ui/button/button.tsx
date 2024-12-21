@@ -1,6 +1,7 @@
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 
-import type { Variants } from "@tokenami/css";
+import { A } from "@solidjs/router";
+import type { TokenamiStyle, Variants } from "@tokenami/css";
 import { buttonGroupRecipe, buttonRecipe } from "./button.recipe";
 
 export const buttonSplitProps = [
@@ -12,34 +13,29 @@ export const buttonSplitProps = [
 	"variant",
 ] as const;
 
-export type ButtonProps = ComponentProps<"button"> &
+export type ButtonProps = TokenamiStyle<ComponentProps<"button">> &
 	Variants<typeof buttonRecipe>;
 
 export const Button: Component<ButtonProps> = (props) => {
 	const [split, rest] = splitProps(props, buttonSplitProps);
 
-	return <button {...rest} class={buttonRecipe(split)} />;
+	return <button {...rest} style={buttonRecipe(split, props.style)} />;
 };
 
-export type ButtonGroupProps = ComponentProps<"div"> &
+export type ButtonGroupProps = TokenamiStyle<ComponentProps<"div">> &
 	Variants<typeof buttonGroupRecipe>;
 
 export const ButtonGroup: Component<ButtonGroupProps> = (props) => {
 	const [split, rest] = splitProps(props, ["direction"]);
 
-	return (
-		<div
-			{...rest}
-			class={buttonGroupRecipe({ class: props.class, ...split })}
-		/>
-	);
+	return <div {...rest} style={buttonGroupRecipe(split, props.style)} />;
 };
 
-export type LinkButtonProps = ComponentProps<"a"> &
+export type LinkButtonProps = TokenamiStyle<ComponentProps<typeof A>> &
 	Variants<typeof buttonRecipe>;
 
 export const LinkButton: Component<LinkButtonProps> = (props) => {
 	const [split, rest] = splitProps(props, buttonSplitProps);
 
-	return <a {...rest} class={buttonRecipe(split)} />;
+	return <A {...rest} style={buttonRecipe(split, props.style)} />;
 };

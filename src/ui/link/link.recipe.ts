@@ -1,6 +1,12 @@
 import { css } from "@tokenami/css";
 
-export const linkRecipe = css.compose({});
+export const linkRecipe = css.compose({
+	variants: {
+		color: {},
+		hover: {},
+		size: {},
+	},
+});
 
 // export const linkRecipe = twCva("link", {
 // 	defaultVariants: {

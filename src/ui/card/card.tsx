@@ -1,50 +1,47 @@
 import {
-	splitProps,
 	type Component,
 	type ComponentProps,
 	type ValidComponent,
+	splitProps,
 } from "solid-js";
 import { Dynamic, type DynamicProps } from "solid-js/web";
 
-import { css, type Variants } from "@tokenami/css";
+import { type TokenamiStyle, type Variants, css } from "@tokenami/css";
 import { cardActionsRecipe, cardRecipe, cardTitleRecipe } from "./card.recipe";
 
-export type CardProps = ComponentProps<"div"> & Variants<typeof cardRecipe>;
+export type CardProps = TokenamiStyle<ComponentProps<"div">> &
+	Variants<typeof cardRecipe>;
 
 export const Card: Component<CardProps> = (props) => {
 	const [split, rest] = splitProps(props, ["variant", "size", "color", "bg"]);
 
-	return <div {...rest} class={cardRecipe({ class: props.class, ...split })} />;
+	return <div {...rest} style={cardRecipe(split, props.style)} />;
 };
 
-export type CardTitleProps<T extends ValidComponent> = DynamicProps<T>;
+export type CardTitleProps<T extends ValidComponent> = DynamicProps<T> &
+	TokenamiStyle<unknown>;
 
 export function CardTitle<T extends ValidComponent>(props: CardTitleProps<T>) {
 	return (
 		<Dynamic
 			{...props}
-			class={cardTitleRecipe({ class: props.class })}
+			style={cardTitleRecipe({}, props.style)}
 			component={props.component}
 		/>
 	);
 }
 
-export type CardBodyProps = ComponentProps<"div">;
+export type CardBodyProps = TokenamiStyle<ComponentProps<"div">>;
 
 export const CardBody: Component<CardBodyProps> = (props) => {
-	return <div {...props} class={css("card-body", props.class)} />;
+	return <div {...props} style={css({}, props.style)} />;
 };
 
-export type CardActionsProps = ComponentProps<"div"> &
+export type CardActionsProps = TokenamiStyle<ComponentProps<"div">> &
 	Variants<typeof cardActionsRecipe>;
 
 export const CardActions: Component<CardActionsProps> = (props) => {
 	const [split, rest] = splitProps(props, ["justify"]);
 
-	return (
-		<div
-			{...rest}
-			class={cardActionsRecipe({ class: props.class, ...split })}
-		/>
-	);
+	return <div {...rest} style={cardActionsRecipe(split, props.style)} />;
 };
