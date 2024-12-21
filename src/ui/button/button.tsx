@@ -1,7 +1,6 @@
-import type { VariantProps } from "class-variance-authority";
-
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 
+import type { Variants } from "@tokenami/css";
 import { buttonGroupRecipe, buttonRecipe } from "./button.recipe";
 
 export const buttonSplitProps = [
@@ -14,18 +13,16 @@ export const buttonSplitProps = [
 ] as const;
 
 export type ButtonProps = ComponentProps<"button"> &
-	VariantProps<typeof buttonRecipe>;
+	Variants<typeof buttonRecipe>;
 
 export const Button: Component<ButtonProps> = (props) => {
 	const [split, rest] = splitProps(props, buttonSplitProps);
 
-	return (
-		<button {...rest} class={buttonRecipe({ class: props.class, ...split })} />
-	);
+	return <button {...rest} class={buttonRecipe(split)} />;
 };
 
 export type ButtonGroupProps = ComponentProps<"div"> &
-	VariantProps<typeof buttonGroupRecipe>;
+	Variants<typeof buttonGroupRecipe>;
 
 export const ButtonGroup: Component<ButtonGroupProps> = (props) => {
 	const [split, rest] = splitProps(props, ["direction"]);
@@ -39,10 +36,10 @@ export const ButtonGroup: Component<ButtonGroupProps> = (props) => {
 };
 
 export type LinkButtonProps = ComponentProps<"a"> &
-	VariantProps<typeof buttonRecipe>;
+	Variants<typeof buttonRecipe>;
 
 export const LinkButton: Component<LinkButtonProps> = (props) => {
 	const [split, rest] = splitProps(props, buttonSplitProps);
 
-	return <a {...rest} class={buttonRecipe({ class: props.class, ...split })} />;
+	return <a {...rest} class={buttonRecipe(split)} />;
 };

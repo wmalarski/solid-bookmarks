@@ -7,12 +7,12 @@
 		"start": "vinxi start",
 		"=== LINTERS ===": "",
 		"format-and-lint": "biome check .",
-		"format-and-lint:fix": "biome check . --write",
-		"tsc": "tsc --noEmit",
-		"code-check": "pnpm format-and-lint --error-on-warnings && pnpm tsc"
+		"format-and-lint:fix": "biome check . --write"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4"
+		"@biomejs/biome": "1.9.4",
+		"@tokenami/dev": "^0.0.75",
+		"@tokenami/ts-plugin": "^0.0.75"
 	},
 	"dependencies": {
 		"@solid-primitives/i18n": "2.1.1",
@@ -20,6 +20,7 @@
 		"@solidjs/meta": "0.29.4",
 		"@solidjs/router": "^0.15.2",
 		"@solidjs/start": "^1.0.10",
+		"@tokenami/css": "^0.0.75",
 		"decode-formdata": "0.8.0",
 		"solid-js": "^1.9.3",
 		"valibot": "1.0.0-beta.9",
