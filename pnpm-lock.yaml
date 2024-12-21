@@ -23,6 +23,9 @@ importers:
       solid-js:
         specifier: ^1.8.18
         version: 1.8.19
+      tinybase:
+        specifier: ^5.1.0
+        version: 5.1.1
       vinxi:
         specifier: ^0.4.1
         version: 0.4.1(@types/node@20.14.13)(better-sqlite3@11.1.2)(drizzle-orm@0.31.4(@types/better-sqlite3@7.6.11)(better-sqlite3@11.1.2))(ioredis@5.4.1)(magicast@0.2.11)(terser@5.31.3)
@@ -2664,6 +2667,60 @@ packages:
 
   tiny-invariant@1.3.3:
     resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
+
+  tinybase@5.1.1:
+    resolution: {integrity: sha512-+R9+cFKoadwHsi5WxP1JHU47Bz08wkqtmNiSBUHMGC4KYewEAbthxMKMHD4EIjujKCO5zQM+YAEQhUEWwBh0Ug==}
+    hasBin: true
+    peerDependencies:
+      '@automerge/automerge-repo': ^1.2.0
+      '@journeyapps/powersync-sdk-common': ^1.6.0
+      '@libsql/client': ^0.7.0
+      '@sqlite.org/sqlite-wasm': ^3.46.0-build2
+      '@vlcn.io/crsqlite-wasm': ^0.16.0
+      electric-sql: ^0.12.1
+      expo: ^51.0.0
+      expo-sqlite: ^14.0.5
+      partykit: ^0.0.108
+      partysocket: ^1.0.2
+      prettier: ^3.3.2
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      sqlite3: ^5.1.7
+      ws: ^8.17.0
+      yjs: ^13.6.18
+    peerDependenciesMeta:
+      '@automerge/automerge-repo':
+        optional: true
+      '@journeyapps/powersync-sdk-common':
+        optional: true
+      '@libsql/client':
+        optional: true
+      '@sqlite.org/sqlite-wasm':
+        optional: true
+      '@vlcn.io/crsqlite-wasm':
+        optional: true
+      electric-sql:
+        optional: true
+      expo:
+        optional: true
+      expo-sqlite:
+        optional: true
+      partykit:
+        optional: true
+      partysocket:
+        optional: true
+      prettier:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      sqlite3:
+        optional: true
+      ws:
+        optional: true
+      yjs:
+        optional: true
 
   titleize@3.0.0:
     resolution: {integrity: sha512-KxVu8EYHDPBdUYdKZdKtU2aj2XfEx9AfjXxE/Aj0vT06w2icA09Vus1rh6eSu1y01akYg6BjIK/hxyLJINoMLQ==}
@@ -5449,6 +5506,8 @@ snapshots:
       b4a: 1.6.6
 
   tiny-invariant@1.3.3: {}
+
+  tinybase@5.1.1: {}
 
   titleize@3.0.0: {}
 
