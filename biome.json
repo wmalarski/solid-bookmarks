@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
 	"files": {
 		"ignore": ["src/global.d.ts"]
 	},
@@ -12,21 +12,32 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"all": true,
 			"a11y": {
 				"noSvgWithoutTitle": "off"
 			},
-			"all": true,
 			"correctness": {
-				"useHookAtTopLevel": "off"
+				"useHookAtTopLevel": "off",
+				"useImportExtensions": "off"
 			},
 			"style": {
+				"noDefaultExport": "off",
 				"useFilenamingConvention": {
 					"level": "error",
-					"options": { "filenameCases": ["kebab-case"], "requireAscii": true }
+					"options": {
+						"filenameCases": ["kebab-case"],
+						"requireAscii": true
+					}
+				},
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": false
+					}
 				}
 			},
-			"nursery": {
-				"useSortedClasses": "error"
+			"complexity": {
+				"noVoid": "off"
 			}
 		}
 	},

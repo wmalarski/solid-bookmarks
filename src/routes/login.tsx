@@ -1,14 +1,10 @@
-import { type RouteSectionProps, useSubmission } from "@solidjs/router";
-import { Show } from "solid-js";
-import { loginOrRegister } from "~/api";
+import type { RouteSectionProps } from "@solidjs/router";
 
 export default function Login(props: RouteSectionProps) {
-	const loggingIn = useSubmission(loginOrRegister);
-
 	return (
 		<main>
 			<h1>Login</h1>
-			<form action={loginOrRegister} method="post">
+			<form method="post">
 				<input
 					type="hidden"
 					name="redirectTo"
@@ -38,11 +34,11 @@ export default function Login(props: RouteSectionProps) {
 					/>
 				</div>
 				<button type="submit">Login</button>
-				<Show when={loggingIn.result}>
+				{/* <Show when={loggingIn.result}>
 					<p style={{ color: "red" }} role="alert" id="error-message">
-						{loggingIn.result!.message}
+						{loggingIn.result?.message}
 					</p>
-				</Show>
+				</Show> */}
 			</form>
 		</main>
 	);
