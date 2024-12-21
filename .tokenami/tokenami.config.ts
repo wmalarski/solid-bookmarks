@@ -4,6 +4,17 @@ export default createConfig({
 	include: ["./src/**/*.{ts,tsx}"],
 	grid: "0.25rem",
 	responsive: {},
+	globalStyles: {
+		"*, *::before, *::after": {
+			boxSizing: "border-box",
+			margin: 0,
+			padding: 0,
+		},
+		body: {
+			fontFamily: "monospace, system-ui, sans-serif",
+			lineHeight: 1.5,
+		},
+	},
 	themeSelector: (mode) => (mode === "root" ? ":root" : `.theme-${mode}`),
 	theme: {
 		alpha: {},

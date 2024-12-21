@@ -1,4 +1,6 @@
 import type { RouteDefinition } from "@solidjs/router";
+import { css } from "@tokenami/css";
+import { Button } from "~/ui/button/button";
 
 export const route = {
 	preload() {
@@ -19,16 +21,16 @@ export default function Home() {
 			</form> */}
 			<h1>A TinyBase App</h1>
 			<div id="app">
-				<div id="buttons">
-					<button type="button" id="countButton">
+				<div style={css({ "--margin-top": 0, "--margin-bottom": 5 })}>
+					<Button type="button" id="countButton">
 						Increment number
-					</button>
-					<button type="button" id="randomButton">
+					</Button>
+					<Button type="button" id="randomButton">
 						Random number
-					</button>
-					<button type="button" id="addPetButton">
+					</Button>
+					<Button type="button" id="addPetButton">
 						Add a pet
-					</button>
+					</Button>
 				</div>
 				<details open={true}>
 					<summary>Values</summary>

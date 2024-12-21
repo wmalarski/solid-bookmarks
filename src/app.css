@@ -1,4 +1,32 @@
-body {
-	font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-		"Helvetica Neue", sans-serif;
+@layer global {
+  *, :before, :after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: monospace, system-ui, sans-serif;
+    line-height: 1.5;
+  }
+}
+
+@layer tokenami {
+  :root {
+    --_grid: .25rem;
+  }
+
+  * {
+    --margin-top: initial;
+    --margin-bottom: initial;
+  }
+
+  @layer tk2 {
+    [style] {
+      margin-top: var(--_1npkur4, var(--margin-top, revert-layer));
+      --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
+      margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
+      --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
+    }
+  }
 }
