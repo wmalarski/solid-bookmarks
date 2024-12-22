@@ -2,13 +2,17 @@ import { defineConfig } from "@solidjs/start/config";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  server: { https: true },
+  server: {
+    https: true,
+    preset: "cloudflare-pages",
+    rollupConfig: {
+      external: ["node:async_hooks"],
+    },
+  },
   vite: {
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
-        injectRegister: null,
-        workbox: {},
         devOptions: { enabled: true },
         includeAssets: ["favicon.ico"],
         manifest: {
