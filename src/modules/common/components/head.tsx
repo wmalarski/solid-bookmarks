@@ -1,7 +1,7 @@
-import { pwaInfo } from "virtual:pwa-info";
 import { Link, Meta, Title } from "@solidjs/meta";
 import { type Component, createMemo } from "solid-js";
 import { getRequestEvent } from "solid-js/web";
+import { pwaInfo } from "virtual:pwa-info";
 import { useI18n } from "../contexts/i18n";
 
 type HeadProps = {

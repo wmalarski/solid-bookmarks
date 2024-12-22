@@ -22,14 +22,21 @@ export default function Home() {
       <h1>A TinyBase App</h1>
       <div id="app">
         <div style={css({ "--margin-top": 0, "--margin-bottom": 5 })}>
-          <Button type="button" id="countButton">
+          <Button
+            onClick={() => {
+              const data: ShareData = {
+                text: "AA",
+                title: "BB",
+              };
+
+              if (navigator.canShare(data)) {
+                navigator.share(data);
+              }
+            }}
+            type="button"
+            id="countButton"
+          >
             Increment number
-          </Button>
-          <Button type="button" id="randomButton">
-            Random number
-          </Button>
-          <Button type="button" id="addPetButton">
-            Add a pet
           </Button>
         </div>
         <details open={true}>
