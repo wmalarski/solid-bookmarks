@@ -28,6 +28,14 @@ const enDict = {
       "Solid Bookmarks app is a non-trivial local first demo application built using Solid Start.",
     title: "Solid Bookmarks",
   },
+  bookmarks: {
+    form: {
+      title: "Title",
+      text: "Text",
+      url: "URL",
+      save: "Save",
+    },
+  },
 };
 
 export type Locale = "en";

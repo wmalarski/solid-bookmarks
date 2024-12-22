@@ -45,7 +45,7 @@ export default defineConfig({
             }),
           ),
           share_target: {
-            action: "https://solid-bookmarks.pages.dev/api/share/",
+            action: "/api/share/",
             enctype: "multipart/form-data",
             method: "POST",
             params: { title: "title", text: "text", url: "url", files: [] },
