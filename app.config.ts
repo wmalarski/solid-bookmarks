@@ -2,7 +2,6 @@ import { defineConfig } from "@solidjs/start/config";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  ssr: false,
   server: { https: true },
   vite: {
     plugins: [
@@ -16,8 +15,8 @@ export default defineConfig({
           name: "Solid Bookmarks",
           short_name: "Bookmarks",
           description: "Solid Bookmarks description",
-          theme_color: "#ff04aa",
-          background_color: "#ffffff",
+          theme_color: "#ffffff",
+          background_color: "#000000",
           display: "standalone",
           scope: "/",
           start_url: "/",
@@ -45,7 +44,7 @@ export default defineConfig({
             }),
           ),
           share_target: {
-            action: "/share-target/",
+            action: "/api/share/",
             enctype: "multipart/form-data",
             method: "POST",
             params: { title: "title", text: "text", url: "url" },

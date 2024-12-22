@@ -27,6 +27,7 @@
       },
       "style": {
         "noDefaultExport": "off",
+        "noNamespaceImport": "off",
         "useFilenamingConvention": {
           "level": "error",
           "options": {
