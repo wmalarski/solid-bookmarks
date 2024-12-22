@@ -1,5 +1,7 @@
 @layer global {
-  *, :before, :after {
+  *,
+  :before,
+  :after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -26,7 +28,8 @@
       margin-top: var(--_1npkur4, var(--margin-top, revert-layer));
       --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
       margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
-      --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
+      --_1rgufc4: var(--margin-bottom__calc)
+        calc(var(--margin-bottom) * var(--_grid));
     }
   }
 }

@@ -1,23 +1,23 @@
 {
-	"include": [".tokenami/tokenami.env.d.ts", "src"],
-	"compilerOptions": {
-		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"jsx": "preserve",
-		"jsxImportSource": "solid-js",
-		"allowJs": true,
-		"sourceMap": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"noEmit": true,
-		"types": ["vinxi/types/client"],
-		"isolatedModules": true,
-		"plugins": [{ "name": "@tokenami/ts-plugin" }],
-		"paths": {
-			"~/*": ["./src/*"]
-		}
-	}
+  "include": [".tokenami/tokenami.env.d.ts", "src"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "allowJs": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "types": ["vinxi/types/client"],
+    "isolatedModules": true,
+    "plugins": [{ "name": "@tokenami/ts-plugin" }],
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
 }

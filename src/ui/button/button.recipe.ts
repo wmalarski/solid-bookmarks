@@ -1,34 +1,34 @@
 import { css } from "@tokenami/css";
 
 export const buttonRecipe = css.compose({
-	variants: {
-		size: {
-			lg: {},
-			md: {},
-			sm: {},
-			xs: {},
-		},
-		variant: {
-			accent: {},
-			error: {},
-			info: {},
-			primary: {},
-			secondary: {},
-			success: {},
-			warning: {},
-		},
-		isLoading: {
-			true: {},
-			false: {},
-		},
-		shape: {
-			block: {},
-			circle: {},
-			ellipsis: {},
-			square: {},
-			wide: {},
-		},
-	},
+  variants: {
+    size: {
+      lg: {},
+      md: {},
+      sm: {},
+      xs: {},
+    },
+    variant: {
+      accent: {},
+      error: {},
+      info: {},
+      primary: {},
+      secondary: {},
+      success: {},
+      warning: {},
+    },
+    isLoading: {
+      true: {},
+      false: {},
+    },
+    shape: {
+      block: {},
+      circle: {},
+      ellipsis: {},
+      square: {},
+      wide: {},
+    },
+  },
 });
 
 // export const buttonRecipe = twCva("btn no-animation flex items-center gap-1", {
@@ -78,12 +78,12 @@ export const buttonRecipe = css.compose({
 // });
 
 export const buttonGroupRecipe = css.compose({
-	variants: {
-		direction: {
-			horizontal: {},
-			vertical: {},
-		},
-	},
+  variants: {
+    direction: {
+      horizontal: {},
+      vertical: {},
+    },
+  },
 });
 
 // export const buttonGroupRecipe = twCva("btn-group", {

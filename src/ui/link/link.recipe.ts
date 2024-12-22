@@ -1,11 +1,11 @@
 import { css } from "@tokenami/css";
 
 export const linkRecipe = css.compose({
-	variants: {
-		color: {},
-		hover: {},
-		size: {},
-	},
+  variants: {
+    color: {},
+    hover: {},
+    size: {},
+  },
 });
 
 // export const linkRecipe = twCva("link", {

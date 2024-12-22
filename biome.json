@@ -1,47 +1,49 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-	"files": {
-		"ignore": ["src/global.d.ts", ".tokenami/*.d.ts", "dev-dist"]
-	},
-	"organizeImports": {
-		"enabled": true
-	},
-	"formatter": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"all": true,
-			"a11y": {
-				"noSvgWithoutTitle": "off"
-			},
-			"correctness": {
-				"useHookAtTopLevel": "off",
-				"useImportExtensions": "off"
-			},
-			"suspicious": {
-				"noConsole": "off"
-			},
-			"style": {
-				"noDefaultExport": "off",
-				"useFilenamingConvention": {
-					"level": "error",
-					"options": {
-						"filenameCases": ["kebab-case"],
-						"requireAscii": true
-					}
-				},
-				"useNamingConvention": "off"
-			},
-			"complexity": {
-				"noVoid": "off"
-			}
-		}
-	},
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	}
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "files": {
+    "ignore": ["src/global.d.ts", ".tokenami/*.d.ts", "dev-dist"]
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      },
+      "correctness": {
+        "useHookAtTopLevel": "off",
+        "useImportExtensions": "off"
+      },
+      "suspicious": {
+        "noConsole": "off"
+      },
+      "style": {
+        "noDefaultExport": "off",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case"],
+            "requireAscii": true
+          }
+        },
+        "useNamingConvention": "off"
+      },
+      "complexity": {
+        "noVoid": "off"
+      }
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
 }

@@ -1,37 +1,37 @@
 {
-	"name": "solid-bookmarks",
-	"type": "module",
-	"scripts": {
-		"dev": "vinxi dev",
-		"build": "vinxi build",
-		"start": "vinxi start",
-		"=== LINTERS ===": "",
-		"format-and-lint": "biome check .",
-		"format-and-lint:fix": "biome check . --write",
-		"=== STYLES ===": "",
-		"tokenami:watch": "tokenami --output ./src/app.css --watch"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"@tokenami/dev": "^0.0.75",
-		"@tokenami/ts-plugin": "^0.0.75",
-		"vite-plugin-pwa": "^0.21.1",
-		"workbox-window": "^7.3.0"
-	},
-	"dependencies": {
-		"@solid-primitives/i18n": "2.1.1",
-		"@solid-primitives/memo": "1.3.10",
-		"@solidjs/meta": "0.29.4",
-		"@solidjs/router": "^0.15.2",
-		"@solidjs/start": "^1.0.10",
-		"@tokenami/css": "^0.0.75",
-		"decode-formdata": "0.8.0",
-		"solid-js": "^1.9.3",
-		"valibot": "1.0.0-beta.9",
-		"vinxi": "^0.4.3",
-		"vite": "5.4.11"
-	},
-	"engines": {
-		"node": ">=20"
-	}
+  "name": "solid-bookmarks",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start",
+    "=== LINTERS ===": "",
+    "format-and-lint": "biome check .",
+    "format-and-lint:fix": "biome check . --write",
+    "=== STYLES ===": "",
+    "tokenami:watch": "tokenami --output ./src/app.css --watch"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@tokenami/dev": "^0.0.75",
+    "@tokenami/ts-plugin": "^0.0.75",
+    "vite-plugin-pwa": "^0.21.1",
+    "workbox-window": "^7.3.0"
+  },
+  "dependencies": {
+    "@solid-primitives/i18n": "2.1.1",
+    "@solid-primitives/memo": "1.3.10",
+    "@solidjs/meta": "0.29.4",
+    "@solidjs/router": "^0.15.2",
+    "@solidjs/start": "^1.0.10",
+    "@tokenami/css": "^0.0.75",
+    "decode-formdata": "0.8.0",
+    "solid-js": "^1.9.3",
+    "valibot": "1.0.0-beta.9",
+    "vinxi": "^0.4.3",
+    "vite": "5.4.11"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }
