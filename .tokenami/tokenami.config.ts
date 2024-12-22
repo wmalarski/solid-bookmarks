@@ -27,7 +27,7 @@ export default createConfig({
     leading: {},
     "line-style": {},
     radii: {},
-    size: {},
+    size: { full: "100%" },
     shadow: {},
     surface: {},
     tracking: {},

@@ -1,9 +1,7 @@
 import { css } from "@tokenami/css";
-import { decode } from "decode-formdata";
-import { createSignal, type Component, type ComponentProps } from "solid-js";
-import * as v from "valibot";
+import type { Component } from "solid-js";
+import type * as v from "valibot";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { Button } from "~/ui/button/button";
 import {
   TextFieldInput,
   TextFieldLabel,
@@ -11,7 +9,7 @@ import {
   TextFieldRoot,
 } from "~/ui/text-field/text-field";
 
-type BookmarkFieldsData = {
+export type BookmarkFieldsData = {
   title?: string;
   text?: string;
   url?: string;
@@ -19,43 +17,19 @@ type BookmarkFieldsData = {
 
 type BookmarkFieldsProps = {
   initialData?: BookmarkFieldsData;
-  onSubmit: (data: BookmarkFieldsData) => void;
+  issues?: v.BaseIssue<unknown>[];
 };
 
 export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
   const { t } = useI18n();
 
-  const [issues, setIssues] = createSignal<v.BaseIssue<unknown>[]>();
-
-  const onSubmit: ComponentProps<"form">["onSubmit"] = async (event) => {
-    event.preventDefault();
-
-    const result = await v.safeParseAsync(
-      v.object({
-        title: v.optional(v.string()),
-        text: v.optional(v.string()),
-        url: v.optional(v.pipe(v.string(), v.url())),
-      }),
-      decode(new FormData(event.currentTarget)),
-    );
-
-    if (!result.success) {
-      console.log("result.issues", result.issues);
-      setIssues(result.issues);
-      return;
-    }
-
-    props.onSubmit(result.output);
-  };
-
   return (
-    <form
+    <div
       style={css({
         "--display": "flex",
         "--flex-direction": "column",
         "--gap": 4,
       })}
-      onSubmit={onSubmit}
     >
       <TextFieldRoot>
         <TextFieldLabel for="title">
@@ -95,10 +69,6 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           variant="bordered"
         />
       </TextFieldRoot>
-
-      <Button color="primary" size="sm" type="submit">
-        {t("bookmarks.form.save")}
-      </Button>
-    </form>
+    </div>
   );
 };
