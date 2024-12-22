@@ -5,9 +5,6 @@ export default defineConfig({
   server: {
     https: true,
     preset: "cloudflare-pages",
-    rollupConfig: {
-      external: ["node:async_hooks"],
-    },
   },
   vite: {
     plugins: [
@@ -29,13 +26,13 @@ export default defineConfig({
           screenshots: [
             {
               sizes: "512x512",
-              src: "pwa-512x512.png",
+              src: "/icons/pwa-512x512.png",
               form_factor: "narrow",
               type: "image/png",
             },
             {
               sizes: "512x512",
-              src: "pwa-512x512.png",
+              src: "/icons/pwa-512x512.png",
               form_factor: "wide",
               type: "image/png",
             },
@@ -48,10 +45,10 @@ export default defineConfig({
             }),
           ),
           share_target: {
-            action: "/api/share/",
+            action: "https://solid-bookmarks.pages.dev/api/share/",
             enctype: "multipart/form-data",
             method: "POST",
-            params: { title: "title", text: "text", url: "url" },
+            params: { title: "title", text: "text", url: "url", files: [] },
           },
         },
       }),
