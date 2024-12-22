@@ -11,7 +11,6 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
 	const { t } = useI18n();
 
 	onMount(() => {
-		// biome-ignore lint/suspicious/noConsole: <explanation>
 		console.error("ERROR", err);
 	});
 

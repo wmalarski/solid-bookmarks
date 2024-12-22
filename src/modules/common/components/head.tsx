@@ -1,6 +1,7 @@
-import { Meta, Title } from "@solidjs/meta";
+import { Link, Meta, Title } from "@solidjs/meta";
 import { type Component, createMemo } from "solid-js";
 import { getRequestEvent } from "solid-js/web";
+import { pwaInfo } from "virtual:pwa-info";
 import { useI18n } from "../contexts/i18n";
 
 type HeadProps = {
@@ -39,6 +40,9 @@ export const Head: Component<HeadProps> = (props) => {
 			<Meta content={`${url().origin}/og-image.png`} property="og:image" />
 			<Meta content="461" property="og:image:width" />
 			<Meta content="460" property="og:image:height" />
+			{pwaInfo?.webManifest?.href ? (
+				<Link rel="manifest" href={pwaInfo.webManifest.href} />
+			) : null}
 		</>
 	);
 };

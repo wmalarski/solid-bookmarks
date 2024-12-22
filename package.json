@@ -14,7 +14,9 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@tokenami/dev": "^0.0.75",
-		"@tokenami/ts-plugin": "^0.0.75"
+		"@tokenami/ts-plugin": "^0.0.75",
+		"vite-plugin-pwa": "^0.21.1",
+		"workbox-window": "^7.3.0"
 	},
 	"dependencies": {
 		"@solid-primitives/i18n": "2.1.1",
