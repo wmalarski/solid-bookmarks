@@ -1,7 +1,12 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
-    "ignore": ["src/global.d.ts", ".tokenami/*.d.ts", "dev-dist"]
+    "ignore": [
+      "src/global.d.ts",
+      ".tokenami/*.d.ts",
+      "dev-dist",
+      "src/modules/supabase/types.ts"
+    ]
   },
   "organizeImports": {
     "enabled": true

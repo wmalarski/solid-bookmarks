@@ -3,10 +3,8 @@
 /// <reference types="vite-plugin-pwa/info" />
 
 interface ImportMetaEnv {
-	DB_URL: string;
-	DB_MIGRATIONS_URL: string;
-	SITE_NAME: string;
-	SESSION_SECRET: string;
+  readonly VITE_SUPABASE_ANON_KEY: string;
+  readonly VITE_SUPABASE_URL: string;
 }
 
 interface ImportMeta {
