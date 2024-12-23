@@ -1,15 +1,12 @@
 import { useParams } from "@solidjs/router";
-import { css } from "@tokenami/css";
 import { AddBookmarkForm } from "~/modules/bookmarks/components/add-bookmark-form";
+import { PageLayout } from "~/modules/common/components/layout";
 
 export default function SharePage() {
   const params = useParams();
 
   return (
-    <main
-      style={css({ "--width": "var(--size_full)", "--padding": 4 })}
-      class="w-full space-y-2 p-4"
-    >
+    <PageLayout>
       <AddBookmarkForm
         initialData={{
           text: params.text,
@@ -17,6 +14,6 @@ export default function SharePage() {
           url: params.url,
         }}
       />
-    </main>
+    </PageLayout>
   );
 }

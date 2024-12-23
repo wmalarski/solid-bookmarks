@@ -36,6 +36,19 @@ const enDict = {
       save: "Save",
     },
   },
+  auth: {
+    email: "Email",
+    password: "Password",
+    signIn: "Sign In",
+    signOut: "Sign Out",
+    signUp: "Sign Up",
+    success: "Success",
+    signUpSuccess: {
+      description:
+        "Congratulations! your account has been successfully created",
+      title: "Sign Up Success",
+    },
+  },
 };
 
 export type Locale = "en";

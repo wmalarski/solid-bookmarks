@@ -3,8 +3,13 @@ import { css } from "@tokenami/css";
 export const linkRecipe = css.compose({
   variants: {
     color: {},
-    hover: {},
-    size: {},
+    hover: {
+      true: {},
+      false: {},
+    },
+    size: {
+      xs: {},
+    },
   },
 });
 
