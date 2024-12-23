@@ -17,13 +17,13 @@
   }
 
   * {
+    --margin-top: initial;
+    --margin-bottom: initial;
     --justify-content: initial;
     --width: initial;
     --height: initial;
     --flex-shrink: initial;
     --stroke: initial;
-    --margin-top: initial;
-    --margin-bottom: initial;
     --display: initial;
     --flex-direction: initial;
     --gap: initial;
@@ -44,12 +44,12 @@
 
   @layer tk2 {
     [style] {
-      justify-content: var(--justify-content, revert-layer);
-      flex-shrink: var(--flex-shrink, revert-layer);
       margin-top: var(--_1npkur4, var(--margin-top, revert-layer));
       --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
       margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
       --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
+      justify-content: var(--justify-content, revert-layer);
+      flex-shrink: var(--flex-shrink, revert-layer);
       flex-direction: var(--flex-direction, revert-layer);
     }
   }

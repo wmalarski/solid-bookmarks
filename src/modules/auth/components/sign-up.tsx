@@ -7,14 +7,8 @@ import { Button } from "~/ui/button/button";
 import { Card, CardBody } from "~/ui/card/card";
 import { cardTitleRecipe } from "~/ui/card/card.recipe";
 import { Link } from "~/ui/link/link";
-import {
-  TextFieldErrorMessage,
-  TextFieldInput,
-  TextFieldLabel,
-  TextFieldLabelText,
-  TextFieldRoot,
-} from "~/ui/text-field/text-field";
 import { signUpAction } from "../client";
+import { AuthFields } from "./auth-fields";
 
 export const SignUp: Component = () => {
   const { t } = useI18n();
@@ -34,49 +28,7 @@ export const SignUp: Component = () => {
               {t("auth.success")}
             </Alert>
           </Show>
-          <Show when={submission.result?.error}>
-            <Alert variant="error">
-              <AlertIcon variant="error" />
-              {submission.result?.error}
-            </Alert>
-          </Show>
-          <TextFieldRoot>
-            <TextFieldLabel for="email">
-              <TextFieldLabelText>{t("auth.email")}</TextFieldLabelText>
-            </TextFieldLabel>
-            <TextFieldInput
-              disabled={submission.pending}
-              id="email"
-              inputMode="email"
-              name="email"
-              placeholder={t("auth.email")}
-              type="email"
-              variant="bordered"
-            />
-            <Show when={submission.result?.errors?.email}>
-              <TextFieldErrorMessage>
-                {submission.result?.errors?.email}
-              </TextFieldErrorMessage>
-            </Show>
-          </TextFieldRoot>
-          <TextFieldRoot>
-            <TextFieldLabel for="password">
-              <TextFieldLabelText>{t("auth.password")}</TextFieldLabelText>
-            </TextFieldLabel>
-            <TextFieldInput
-              disabled={submission.pending}
-              id="password"
-              name="password"
-              placeholder={t("auth.password")}
-              type="password"
-              variant="bordered"
-            />
-            <Show when={submission.result?.errors?.password}>
-              <TextFieldErrorMessage>
-                {submission.result?.errors?.password}
-              </TextFieldErrorMessage>
-            </Show>
-          </TextFieldRoot>
+          <AuthFields pending={submission.pending} result={submission.result} />
           <Button
             disabled={submission.pending}
             isLoading={submission.pending}
