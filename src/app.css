@@ -1,7 +1,5 @@
 @layer global {
-  *,
-  :before,
-  :after {
+  *, :before, :after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -19,17 +17,40 @@
   }
 
   * {
+    --justify-content: initial;
+    --width: initial;
+    --height: initial;
+    --flex-shrink: initial;
+    --stroke: initial;
     --margin-top: initial;
     --margin-bottom: initial;
+    --display: initial;
+    --flex-direction: initial;
+    --gap: initial;
+  }
+
+  @layer tk1 {
+    [style] {
+      width: var(--_15jvuf0, var(--width, revert-layer));
+      --_15jvuf0: var(--width__calc) calc(var(--width) * var(--_grid));
+      height: var(--_r8sevj, var(--height, revert-layer));
+      --_r8sevj: var(--height__calc) calc(var(--height) * var(--_grid));
+      stroke: var(--stroke, revert-layer);
+      display: var(--display, revert-layer);
+      gap: var(--_14n3ddg, var(--gap, revert-layer));
+      --_14n3ddg: var(--gap__calc) calc(var(--gap) * var(--_grid));
+    }
   }
 
   @layer tk2 {
     [style] {
+      justify-content: var(--justify-content, revert-layer);
+      flex-shrink: var(--flex-shrink, revert-layer);
       margin-top: var(--_1npkur4, var(--margin-top, revert-layer));
       --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
       margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
-      --_1rgufc4: var(--margin-bottom__calc)
-        calc(var(--margin-bottom) * var(--_grid));
+      --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
+      flex-direction: var(--flex-direction, revert-layer);
     }
   }
 }

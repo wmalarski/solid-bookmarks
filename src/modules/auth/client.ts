@@ -1,4 +1,4 @@
-import { action, cache } from "@solidjs/router";
+import { action, query } from "@solidjs/router";
 
 import { USER_CACHE_KEY } from "./const";
 import {
@@ -9,7 +9,7 @@ import {
   updateUserServerAction,
 } from "./server";
 
-export const getUserLoader = cache(getUserServerLoader, USER_CACHE_KEY);
+export const getUserQuery = query(getUserServerLoader, USER_CACHE_KEY);
 
 export const signUpAction = action(signUpServerAction);
 

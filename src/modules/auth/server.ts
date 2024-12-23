@@ -119,5 +119,11 @@ export const updateUserServerAction = async (form: FormData) => {
 export const getUserServerLoader = async () => {
   const event = getRequestEventOrThrow();
   const response = await event.locals.supabase.auth.getUser();
-  return response.data.user;
+  const user = response.data.user;
+
+  if (!user) {
+    throw redirect(paths.signIn);
+  }
+
+  return user;
 };
