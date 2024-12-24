@@ -1,27 +1,25 @@
+import { createAsync, type RouteDefinition } from "@solidjs/router";
 import { css } from "@tokenami/css";
-import { Button } from "~/ui/button/button";
+import { RpcShow } from "~/modules/common/components/rpc-show";
+import { selectTagsQuery } from "~/modules/tags/client";
+import { TagsList } from "~/modules/tags/components/tags-list";
+
+export const route = {
+  load: async () => {
+    await selectTagsQuery({ offset: 0 });
+  },
+} satisfies RouteDefinition;
 
 export default function HomePage() {
+  const tags = createAsync(() => selectTagsQuery({ offset: 0 }));
+
   return (
     <>
       <h1>A App</h1>
       <div style={css({ "--margin-top": 0, "--margin-bottom": 5 })}>
-        <Button
-          onClick={() => {
-            const data: ShareData = {
-              text: "AA",
-              title: "BB",
-            };
-
-            if (navigator.canShare(data)) {
-              navigator.share(data);
-            }
-          }}
-          type="button"
-          id="countButton"
-        >
-          Increment number
-        </Button>
+        <RpcShow result={tags()}>
+          {(tags) => <TagsList tags={tags().data} />}
+        </RpcShow>
       </div>
     </>
   );

@@ -25,7 +25,8 @@
       },
       "correctness": {
         "useHookAtTopLevel": "off",
-        "useImportExtensions": "off"
+        "useImportExtensions": "off",
+        "useJsxKeyInIterable": "off"
       },
       "suspicious": {
         "noConsole": "off"

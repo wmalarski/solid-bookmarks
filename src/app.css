@@ -26,19 +26,19 @@
   }
 
   * {
-    --justify-content: initial;
-    --width: initial;
-    --height: initial;
-    --flex-shrink: initial;
-    --stroke: initial;
     --margin-top: initial;
     --margin-bottom: initial;
     --display: initial;
     --align-items: initial;
+    --justify-content: initial;
     --outline: initial;
     --background-color: initial;
     --border: initial;
     --background: initial;
+    --width: initial;
+    --height: initial;
+    --flex-shrink: initial;
+    --stroke: initial;
     --padding: initial;
     --flex-direction: initial;
     --gap: initial;
@@ -47,17 +47,17 @@
 
   @layer tk1 {
     [style] {
-      width: var(--_15jvuf0, var(--width, revert-layer));
-      --_15jvuf0: var(--width__calc) calc(var(--width) * var(--_grid));
-      height: var(--_r8sevj, var(--height, revert-layer));
-      --_r8sevj: var(--height__calc) calc(var(--height) * var(--_grid));
-      stroke: var(--stroke, revert-layer);
       display: var(--display, revert-layer);
       white-space: var(--white-space, revert-layer);
       outline: var(--outline, revert-layer);
       color: var(--color, revert-layer);
       border: var(--border, revert-layer);
       background: var(--background, revert-layer);
+      width: var(--_15jvuf0, var(--width, revert-layer));
+      --_15jvuf0: var(--width__calc) calc(var(--width) * var(--_grid));
+      height: var(--_r8sevj, var(--height, revert-layer));
+      --_r8sevj: var(--height__calc) calc(var(--height) * var(--_grid));
+      stroke: var(--stroke, revert-layer);
       padding: var(--_2dqpfb, var(--padding, revert-layer));
       --_2dqpfb: var(--padding__calc) calc(var(--padding) * var(--_grid));
       gap: var(--_14n3ddg, var(--gap, revert-layer));
@@ -71,16 +71,16 @@
 
   @layer tk2 {
     [style] {
-      justify-content: var(--justify-content, revert-layer);
-      flex-shrink: var(--flex-shrink, revert-layer);
       margin-top: var(--_1npkur4, var(--margin-top, revert-layer));
       --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
       margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
       --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
       align-items: var(--align-items, revert-layer);
+      justify-content: var(--justify-content, revert-layer);
       font-size: var(--font-size, revert-layer);
       font-weight: var(--font-weight, revert-layer);
       background-color: var(--background-color, revert-layer);
+      flex-shrink: var(--flex-shrink, revert-layer);
       flex-direction: var(--flex-direction, revert-layer);
       line-height: var(--line-height, revert-layer);
     }

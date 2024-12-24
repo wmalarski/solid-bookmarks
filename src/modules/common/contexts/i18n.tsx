@@ -36,6 +36,13 @@ const enDict = {
       save: "Save",
     },
   },
+  tags: {
+    form: {
+      name: "Name",
+      save: "Save",
+      delete: "Delete",
+    },
+  },
   auth: {
     email: "Email",
     password: "Password",
