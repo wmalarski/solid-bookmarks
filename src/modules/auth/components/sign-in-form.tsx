@@ -10,7 +10,7 @@ import { Link } from "~/ui/link/link";
 import { signInAction } from "../client";
 import { AuthFields } from "./auth-fields";
 
-export const SignIn: Component = () => {
+export const SignInForm: Component = () => {
   const { t } = useI18n();
 
   const submission = useSubmission(signInAction);

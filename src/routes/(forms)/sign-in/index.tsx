@@ -1,4 +1,4 @@
-import { SignIn } from "~/modules/auth/components/sign-in";
+import { SignInForm } from "~/modules/auth/components/sign-in-form";
 import { Head } from "~/modules/common/components/head";
 import { useI18n } from "~/modules/common/contexts/i18n";
 
@@ -8,7 +8,7 @@ export default function SignInPage() {
   return (
     <>
       <Head title={t("auth.signIn")} />
-      <SignIn />
+      <SignInForm />
     </>
   );
 }

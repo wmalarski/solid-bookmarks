@@ -1,11 +1,11 @@
 import { useParams } from "@solidjs/router";
-import { AddBookmarkForm } from "~/modules/bookmarks/components/add-bookmark-form";
+import { InsertBookmarkForm } from "~/modules/bookmarks/components/insert-bookmark-form";
 
 export default function SharePage() {
   const params = useParams();
 
   return (
-    <AddBookmarkForm
+    <InsertBookmarkForm
       initialData={{
         text: params.text,
         title: params.title,

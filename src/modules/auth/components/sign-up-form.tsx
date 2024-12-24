@@ -11,7 +11,7 @@ import { Link } from "~/ui/link/link";
 import { signUpAction } from "../client";
 import { AuthFields } from "./auth-fields";
 
-export const SignUp: Component = () => {
+export const SignUpForm: Component = () => {
   const { t } = useI18n();
 
   const submission = useSubmission(signUpAction);

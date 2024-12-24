@@ -47,6 +47,7 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
           name="name"
           placeholder={t("tags.form.name")}
           value={props.initialData?.name}
+          disabled={props.pending}
           variant="bordered"
         />
         <Show when={props.result?.errors?.email}>
