@@ -39,6 +39,30 @@ export const insertBookmark = async (form: FormData) => {
   throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
 };
 
+export const insertBookmarkTag = async (form: FormData) => {
+  const event = getRequestEventOrThrow();
+
+  const parsed = await v.safeParseAsync(
+    v.object({ bookmarkId: v.number(), tagId: v.number() }),
+    decode(form, { numbers: ["bookmarkId", "tagId"] }),
+  );
+
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
+
+  const result = await event.locals.supabase.from("bookmarks_tags").insert({
+    bookmark_id: parsed.output.bookmarkId,
+    tag_id: parsed.output.tagId,
+  });
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
+};
+
 export const deleteBookmark = async (form: FormData) => {
   const event = getRequestEventOrThrow();
 
@@ -55,6 +79,30 @@ export const deleteBookmark = async (form: FormData) => {
     .from("bookmarks")
     .delete()
     .eq("id", parsed.output.bookmarkId);
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+};
+
+export const deleteBookmarkTag = async (form: FormData) => {
+  const event = getRequestEventOrThrow();
+
+  const parsed = await v.safeParseAsync(
+    v.object({ bookmarkTagId: v.number() }),
+    decode(form, { numbers: ["bookmarkTagId"] }),
+  );
+
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
+
+  const result = await event.locals.supabase
+    .from("bookmarks_tags")
+    .delete()
+    .eq("id", parsed.output.bookmarkTagId);
 
   if (result.error) {
     return rpcErrorResult(result.error);
@@ -118,7 +166,7 @@ export const selectBookmarks = async (args: SelectBookmarksArgs) => {
   const { limit, offset } = parsed.output;
   const builder = event.locals.supabase
     .from("bookmarks")
-    .select("*", { count: "estimated" })
+    .select("*, bookmarks_tags ( bookmark_id )", { count: "estimated" })
     .range(offset, offset + limit);
 
   const result = await builder;
