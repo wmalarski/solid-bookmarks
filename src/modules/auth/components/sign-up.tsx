@@ -51,7 +51,10 @@ export const SignUp: Component = () => {
               {t("auth.success")}
             </Alert>
           </Show>
-          <AuthFields pending={submission.pending} result={submission.result} />
+          <AuthFields
+            pending={submission.pending}
+            result={submission.result?.success ? undefined : submission.result}
+          />
           <Button
             disabled={submission.pending}
             isLoading={submission.pending}

@@ -1,1 +1,1 @@
-export const USER_CACHE_KEY = "user";
+export const USER_QUERY_KEY = "user";

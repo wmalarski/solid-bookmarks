@@ -12,7 +12,7 @@ import {
   rpcSuccessResult,
 } from "../common/server/helpers";
 import { paths } from "../common/utils/paths";
-import { USER_CACHE_KEY } from "./const";
+import { USER_QUERY_KEY } from "./const";
 
 const getRedirectUrl = (event: RequestEvent, path: string) => {
   const origin = new URL(event.request.url).origin;
@@ -43,7 +43,7 @@ export const signUpServerAction = async (form: FormData) => {
     return rpcErrorResult(result.error);
   }
 
-  return rpcSuccessResult();
+  return rpcSuccessResult(result.data);
 };
 
 export const signInServerAction = async (form: FormData) => {
@@ -70,7 +70,7 @@ export const signInServerAction = async (form: FormData) => {
   }
 
   throw redirect(paths.home, {
-    revalidate: USER_CACHE_KEY,
+    revalidate: USER_QUERY_KEY,
   });
 };
 
@@ -84,35 +84,7 @@ export const signOutServerAction = async () => {
   }
 
   throw redirect(paths.signIn, {
-    revalidate: USER_CACHE_KEY,
-  });
-};
-
-export const updateUserServerAction = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
-
-  const parsed = await v.safeParseAsync(
-    v.object({
-      color: v.pipe(v.string(), v.hexColor()),
-      name: v.string(),
-    }),
-    decode(form),
-  );
-
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
-
-  const result = await event.locals.supabase.auth.updateUser({
-    data: parsed.output,
-  });
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return redirect(paths.home, {
-    revalidate: USER_CACHE_KEY,
+    revalidate: USER_QUERY_KEY,
   });
 };
 

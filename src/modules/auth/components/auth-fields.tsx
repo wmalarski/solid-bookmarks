@@ -1,7 +1,7 @@
 import { css } from "@tokenami/css";
 import { type Component, Show } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import type { RpcResult } from "~/modules/common/server/helpers";
+import type { RpcFailure } from "~/modules/common/server/helpers";
 import { Alert, AlertIcon } from "~/ui/alert/alert";
 import {
   TextFieldErrorMessage,
@@ -13,7 +13,7 @@ import {
 
 type AuthFieldsProps = {
   pending?: boolean;
-  result?: RpcResult;
+  result?: RpcFailure;
 };
 
 export const AuthFields: Component<AuthFieldsProps> = (props) => {

@@ -16,17 +16,24 @@ export const getRequestEventOrThrow = () => {
   return event;
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export type RpcResult<T = any> = {
-  data?: T;
+export type RpcFailure = {
   error?: string;
   errors?: Record<string, string>;
-  success: boolean;
+  success: false;
 };
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export type RpcSuccess<T = any> = {
+  data: T;
+  success: true;
+};
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export type RpcResult<T = any> = RpcFailure | RpcSuccess<T>;
 
 export const rpcParseIssueResult = (
   issues: v.BaseIssue<unknown>[],
-): RpcResult => {
+): RpcFailure => {
   return {
     errors: Object.fromEntries(
       issues.map((issue) => [
@@ -39,13 +46,13 @@ export const rpcParseIssueResult = (
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const rpcSuccessResult = <T = any>(data?: T): RpcResult => {
+export const rpcSuccessResult = <T = any>(data: T): RpcSuccess<T> => {
   return { data, success: true };
 };
 
 export const rpcErrorResult = <T extends { message: string }>(
   error: T,
-): RpcResult => {
+): RpcFailure => {
   return { error: error.message, success: false };
 };
 
