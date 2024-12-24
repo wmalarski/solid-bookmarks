@@ -1,6 +1,7 @@
 import { css } from "@tokenami/css";
 
 export const cardRecipe = css.compose({
+  "--padding": 4,
   variants: {
     variant: {
       bordered: {},

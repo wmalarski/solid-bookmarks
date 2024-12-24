@@ -11,7 +11,7 @@ export default defineConfig({
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
-        devOptions: { enabled: true },
+        // devOptions: { enabled: true },
         includeAssets: ["favicon.ico"],
         manifest: {
           name: "Solid Bookmarks",
