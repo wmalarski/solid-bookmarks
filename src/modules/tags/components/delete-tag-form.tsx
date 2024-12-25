@@ -12,7 +12,10 @@ type DeleteTagFormProps = {
 export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
   const { t } = useI18n();
 
-  const submission = useSubmission(deleteTagAction);
+  const submission = useSubmission(
+    deleteTagAction,
+    ([form]) => form.get("tagId") === String(props.tag.id),
+  );
 
   return (
     <form action={deleteTagAction} method="post">

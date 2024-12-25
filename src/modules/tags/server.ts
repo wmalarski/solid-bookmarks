@@ -68,10 +68,12 @@ export const updateTag = async (form: FormData) => {
     return rpcParseIssueResult(parsed.issues);
   }
 
+  const { tagId, ...update } = parsed.output;
+
   const result = await event.locals.supabase
     .from("tags")
-    .update(parsed.output)
-    .eq("id", parsed.output.tagId);
+    .update(update)
+    .eq("id", tagId);
 
   if (result.error) {
     return rpcErrorResult(result.error);
@@ -94,7 +96,8 @@ const selectTagsFromDb = async ({
   const builder = event.locals.supabase
     .from("tags")
     .select("*", { count: "estimated" })
-    .range(offset, offset + limit);
+    .range(offset, offset + limit)
+    .order("created_at");
 
   const result = await builder;
   return result;

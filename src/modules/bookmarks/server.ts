@@ -131,10 +131,12 @@ export const updateBookmark = async (form: FormData) => {
     return rpcParseIssueResult(parsed.issues);
   }
 
+  const { bookmarkId, ...update } = parsed.output;
+
   const result = await event.locals.supabase
     .from("bookmarks")
-    .update(parsed.output)
-    .eq("id", parsed.output.bookmarkId);
+    .update(update)
+    .eq("id", bookmarkId);
 
   if (result.error) {
     return rpcErrorResult(result.error);
@@ -159,7 +161,8 @@ const selectBookmarksFromDb = async ({
     .select("*, bookmarks_tags ( *, tags ( name ) )", {
       count: "estimated",
     })
-    .range(offset, offset + limit);
+    .range(offset, offset + limit)
+    .order("created_at");
 
   const result = await builder;
   return result;
