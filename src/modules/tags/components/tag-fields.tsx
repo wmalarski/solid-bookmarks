@@ -3,12 +3,11 @@ import { Show, type Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { Alert, AlertIcon } from "~/ui/alert/alert";
+import { FormControl } from "~/ui/form-control/form-control";
+import { Label, LabelText } from "~/ui/label/label";
 import {
   TextFieldErrorMessage,
   TextFieldInput,
-  TextFieldLabel,
-  TextFieldLabelText,
-  TextFieldRoot,
 } from "~/ui/text-field/text-field";
 import type { TagModel } from "../server";
 
@@ -38,10 +37,10 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
         </Alert>
       </Show>
 
-      <TextFieldRoot>
-        <TextFieldLabel for="title">
-          <TextFieldLabelText>{t("tags.form.name")}</TextFieldLabelText>
-        </TextFieldLabel>
+      <FormControl>
+        <Label for="title">
+          <LabelText>{t("tags.form.name")}</LabelText>
+        </Label>
         <TextFieldInput
           id="name"
           name="name"
@@ -55,7 +54,7 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
             {props.result?.errors?.email}
           </TextFieldErrorMessage>
         </Show>
-      </TextFieldRoot>
+      </FormControl>
     </div>
   );
 };

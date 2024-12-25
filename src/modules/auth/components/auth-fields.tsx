@@ -3,12 +3,11 @@ import { type Component, Show } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { Alert, AlertIcon } from "~/ui/alert/alert";
+import { FormControl } from "~/ui/form-control/form-control";
+import { Label, LabelText } from "~/ui/label/label";
 import {
   TextFieldErrorMessage,
   TextFieldInput,
-  TextFieldLabel,
-  TextFieldLabelText,
-  TextFieldRoot,
 } from "~/ui/text-field/text-field";
 
 type AuthFieldsProps = {
@@ -33,10 +32,10 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
           {props.result?.error}
         </Alert>
       </Show>
-      <TextFieldRoot>
-        <TextFieldLabel for="email">
-          <TextFieldLabelText>{t("auth.email")}</TextFieldLabelText>
-        </TextFieldLabel>
+      <FormControl>
+        <Label for="email">
+          <LabelText>{t("auth.email")}</LabelText>
+        </Label>
         <TextFieldInput
           disabled={props.pending}
           id="email"
@@ -51,11 +50,11 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
             {props.result?.errors?.email}
           </TextFieldErrorMessage>
         </Show>
-      </TextFieldRoot>
-      <TextFieldRoot>
-        <TextFieldLabel for="password">
-          <TextFieldLabelText>{t("auth.password")}</TextFieldLabelText>
-        </TextFieldLabel>
+      </FormControl>
+      <FormControl>
+        <Label for="password">
+          <LabelText>{t("auth.password")}</LabelText>
+        </Label>
         <TextFieldInput
           disabled={props.pending}
           id="password"
@@ -69,7 +68,7 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
             {props.result?.errors?.password}
           </TextFieldErrorMessage>
         </Show>
-      </TextFieldRoot>
+      </FormControl>
     </div>
   );
 };

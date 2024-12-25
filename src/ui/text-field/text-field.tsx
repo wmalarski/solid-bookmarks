@@ -1,29 +1,6 @@
 import { css, type TokenamiStyle, type Variants } from "@tokenami/css";
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 
-export type TextFieldRootProps = TokenamiStyle<ComponentProps<"fieldset">>;
-
-export const TextFieldRoot: Component<TextFieldRootProps> = (props) => {
-  return <fieldset {...props} style={css({}, props.style)} />;
-};
-
-export type TextFieldLabelProps = TokenamiStyle<ComponentProps<"label">>;
-
-export const TextFieldLabel: Component<TextFieldLabelProps> = (props) => {
-  return (
-    // biome-ignore lint/a11y/noLabelWithoutControl: <explanation>
-    <label {...props} style={css({}, props.style)} />
-  );
-};
-
-export type TextFieldLabelTextProps = TokenamiStyle<ComponentProps<"span">>;
-
-export const TextFieldLabelText: Component<TextFieldLabelTextProps> = (
-  props,
-) => {
-  return <span {...props} style={css({}, props.style)} />;
-};
-
 export type TextFieldDescriptionProps = TokenamiStyle<ComponentProps<"span">>;
 
 export const TextFieldDescription: Component<TextFieldDescriptionProps> = (

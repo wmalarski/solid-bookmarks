@@ -3,12 +3,11 @@ import { Show, type Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { Alert, AlertIcon } from "~/ui/alert/alert";
+import { FormControl } from "~/ui/form-control/form-control";
+import { Label, LabelText } from "~/ui/label/label";
 import {
   TextFieldErrorMessage,
   TextFieldInput,
-  TextFieldLabel,
-  TextFieldLabelText,
-  TextFieldRoot,
 } from "~/ui/text-field/text-field";
 import { BookmarkTagsField } from "./bookmark-tags-field";
 
@@ -43,10 +42,10 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
         </Alert>
       </Show>
 
-      <TextFieldRoot>
-        <TextFieldLabel for="title">
-          <TextFieldLabelText>{t("bookmarks.form.title")}</TextFieldLabelText>
-        </TextFieldLabel>
+      <FormControl>
+        <Label for="title">
+          <LabelText>{t("bookmarks.form.title")}</LabelText>
+        </Label>
         <TextFieldInput
           id="title"
           name="title"
@@ -60,12 +59,12 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
             {props.result?.errors?.title}
           </TextFieldErrorMessage>
         </Show>
-      </TextFieldRoot>
+      </FormControl>
 
-      <TextFieldRoot>
-        <TextFieldLabel for="text">
-          <TextFieldLabelText>{t("bookmarks.form.text")}</TextFieldLabelText>
-        </TextFieldLabel>
+      <FormControl>
+        <Label for="text">
+          <LabelText>{t("bookmarks.form.text")}</LabelText>
+        </Label>
         <TextFieldInput
           id="text"
           name="text"
@@ -79,12 +78,12 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
             {props.result?.errors?.text}
           </TextFieldErrorMessage>
         </Show>
-      </TextFieldRoot>
+      </FormControl>
 
-      <TextFieldRoot>
-        <TextFieldLabel for="url">
-          <TextFieldLabelText>{t("bookmarks.form.url")}</TextFieldLabelText>
-        </TextFieldLabel>
+      <FormControl>
+        <Label for="url">
+          <LabelText>{t("bookmarks.form.url")}</LabelText>
+        </Label>
         <TextFieldInput
           id="url"
           name="url"
@@ -98,7 +97,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
             {props.result?.errors?.url}
           </TextFieldErrorMessage>
         </Show>
-      </TextFieldRoot>
+      </FormControl>
 
       <BookmarkTagsField initialTags={props.initialData?.tags} />
     </div>

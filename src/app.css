@@ -1,6 +1,7 @@
 @layer global {
   *, :before, :after {
     box-sizing: border-box;
+    border: 0 solid #e5e7eb;
     margin: 0;
     padding: 0;
   }
@@ -17,9 +18,10 @@
     --color_primary: #000;
     --color_white: #fff;
     --font-size_4xl: 2.25rem;
-    --font-size_small: .875rem;
+    --font-size_sm: .875rem;
     --font-size_xs: .75rem;
     --leading_4xl: 2.5rem;
+    --leading_sm: 1.25rem;
     --size_full: 100%;
     --size_md: 28rem;
     --weight_semibold: 600;
@@ -39,9 +41,14 @@
     --background: initial;
     --padding: initial;
     --flex-direction: initial;
-    --gap: initial;
+    --user-select: initial;
+    --padding-top: initial;
+    --padding-bottom: initial;
+    --padding-left: initial;
+    --padding-right: initial;
     --margin-top: initial;
     --margin-bottom: initial;
+    --gap: initial;
     --max-width: initial;
   }
 
@@ -60,12 +67,14 @@
       background: var(--background, revert-layer);
       padding: var(--_2dqpfb, var(--padding, revert-layer));
       --_2dqpfb: var(--padding__calc) calc(var(--padding) * var(--_grid));
+      user-select: var(--user-select, revert-layer);
+      cursor: var(--cursor, revert-layer);
       gap: var(--_14n3ddg, var(--gap, revert-layer));
       --_14n3ddg: var(--gap__calc) calc(var(--gap) * var(--_grid));
-      text-align: var(--text-align, revert-layer);
-      text-transform: var(--text-transform, revert-layer);
       max-width: var(--_15j6prn, var(--max-width, revert-layer));
       --_15j6prn: var(--max-width__calc) calc(var(--max-width) * var(--_grid));
+      text-align: var(--text-align, revert-layer);
+      text-transform: var(--text-transform, revert-layer);
     }
   }
 
@@ -78,11 +87,19 @@
       font-weight: var(--font-weight, revert-layer);
       background-color: var(--background-color, revert-layer);
       flex-direction: var(--flex-direction, revert-layer);
+      padding-top: var(--_alekcd, var(--padding-top, revert-layer));
+      --_alekcd: var(--padding-top__calc) calc(var(--padding-top) * var(--_grid));
+      padding-bottom: var(--_1if2c2d, var(--padding-bottom, revert-layer));
+      --_1if2c2d: var(--padding-bottom__calc) calc(var(--padding-bottom) * var(--_grid));
+      padding-left: var(--_1l6ill9, var(--padding-left, revert-layer));
+      --_1l6ill9: var(--padding-left__calc) calc(var(--padding-left) * var(--_grid));
+      padding-right: var(--_eeg826, var(--padding-right, revert-layer));
+      --_eeg826: var(--padding-right__calc) calc(var(--padding-right) * var(--_grid));
+      line-height: var(--line-height, revert-layer);
       margin-top: var(--_1npkur4, var(--margin-top, revert-layer));
       --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
       margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
       --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
-      line-height: var(--line-height, revert-layer);
     }
   }
 }

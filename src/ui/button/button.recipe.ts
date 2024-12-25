@@ -5,7 +5,7 @@ export const buttonRecipe = css.compose({
   "--align-items": "center",
   "--justify-content": "center",
   "--white-space": "nowrap",
-  "--font-size": "var(--font-size_small)",
+  "--font-size": "var(--font-size_sm)",
   "--font-weight": "var(--weight_semibold)",
   "--outline": "none",
   "--background-color": "var(--color_primary)",

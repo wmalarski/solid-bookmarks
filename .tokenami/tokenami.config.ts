@@ -9,6 +9,9 @@ export default createConfig({
       boxSizing: "border-box",
       margin: 0,
       padding: 0,
+      borderWidth: 0,
+      borderStyle: "solid",
+      borderColor: "#e5e7eb",
     },
     body: {
       fontFamily: "monospace, system-ui, sans-serif",
@@ -29,11 +32,12 @@ export default createConfig({
     ease: {},
     font: {},
     "font-size": {
-      small: "0.875rem",
       xs: "0.75rem",
+      sm: "0.875rem",
       "4xl": "2.25rem",
     },
     leading: {
+      sm: "1.25rem",
       "4xl": "2.5rem",
     },
     "line-style": {},
