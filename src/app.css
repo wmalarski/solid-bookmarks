@@ -32,20 +32,20 @@
   * {
     --margin-top: initial;
     --margin-bottom: initial;
-    --justify-content: initial;
-    --width: initial;
-    --height: initial;
-    --flex-shrink: initial;
-    --stroke: initial;
     --display: initial;
     --align-items: initial;
+    --justify-content: initial;
     --outline: initial;
     --background-color: initial;
     --border: initial;
     --background: initial;
     --padding: initial;
-    --padding-top: initial;
+    --width: initial;
+    --height: initial;
+    --flex-shrink: initial;
+    --stroke: initial;
     --flex-direction: initial;
+    --padding-top: initial;
     --user-select: initial;
     --padding-bottom: initial;
     --padding-left: initial;
@@ -56,11 +56,6 @@
 
   @layer tk1 {
     [style] {
-      width: var(--_15jvuf0, var(--width, revert-layer));
-      --_15jvuf0: var(--width__calc) calc(var(--width) * var(--_grid));
-      height: var(--_r8sevj, var(--height, revert-layer));
-      --_r8sevj: var(--height__calc) calc(var(--height) * var(--_grid));
-      stroke: var(--stroke, revert-layer);
       display: var(--display, revert-layer);
       white-space: var(--white-space, revert-layer);
       outline: var(--outline, revert-layer);
@@ -69,14 +64,19 @@
       background: var(--background, revert-layer);
       padding: var(--_2dqpfb, var(--padding, revert-layer));
       --_2dqpfb: var(--padding__calc) calc(var(--padding) * var(--_grid));
+      width: var(--_15jvuf0, var(--width, revert-layer));
+      --_15jvuf0: var(--width__calc) calc(var(--width) * var(--_grid));
+      height: var(--_r8sevj, var(--height, revert-layer));
+      --_r8sevj: var(--height__calc) calc(var(--height) * var(--_grid));
+      stroke: var(--stroke, revert-layer);
       user-select: var(--user-select, revert-layer);
       cursor: var(--cursor, revert-layer);
       gap: var(--_14n3ddg, var(--gap, revert-layer));
       --_14n3ddg: var(--gap__calc) calc(var(--gap) * var(--_grid));
-      max-width: var(--_15j6prn, var(--max-width, revert-layer));
-      --_15j6prn: var(--max-width__calc) calc(var(--max-width) * var(--_grid));
       text-align: var(--text-align, revert-layer);
       text-transform: var(--text-transform, revert-layer);
+      max-width: var(--_15j6prn, var(--max-width, revert-layer));
+      --_15j6prn: var(--max-width__calc) calc(var(--max-width) * var(--_grid));
     }
   }
 
@@ -86,16 +86,16 @@
       --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
       margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
       --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
-      justify-content: var(--justify-content, revert-layer);
-      flex-shrink: var(--flex-shrink, revert-layer);
       align-items: var(--align-items, revert-layer);
+      justify-content: var(--justify-content, revert-layer);
       font-size: var(--font-size, revert-layer);
       font-weight: var(--font-weight, revert-layer);
       background-color: var(--background-color, revert-layer);
+      flex-shrink: var(--flex-shrink, revert-layer);
+      flex-direction: var(--flex-direction, revert-layer);
       line-height: var(--line-height, revert-layer);
       padding-top: var(--_alekcd, var(--padding-top, revert-layer));
       --_alekcd: var(--padding-top__calc) calc(var(--padding-top) * var(--_grid));
-      flex-direction: var(--flex-direction, revert-layer);
       padding-bottom: var(--_1if2c2d, var(--padding-bottom, revert-layer));
       --_1if2c2d: var(--padding-bottom__calc) calc(var(--padding-bottom) * var(--_grid));
       padding-left: var(--_1l6ill9, var(--padding-left, revert-layer));
