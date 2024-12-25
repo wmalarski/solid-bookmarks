@@ -4,6 +4,8 @@
     border: 0 solid #e5e7eb;
     margin: 0;
     padding: 0;
+    font-size: .875rem;
+    line-height: 1.25rem;
   }
 
   body {
@@ -32,21 +34,21 @@
   * {
     --margin-top: initial;
     --margin-bottom: initial;
+    --justify-content: initial;
+    --width: initial;
+    --height: initial;
+    --flex-shrink: initial;
+    --stroke: initial;
     --display: initial;
     --align-items: initial;
-    --justify-content: initial;
     --outline: initial;
     --background-color: initial;
     --border: initial;
     --background: initial;
     --padding: initial;
-    --width: initial;
-    --height: initial;
-    --flex-shrink: initial;
-    --stroke: initial;
     --flex-direction: initial;
-    --padding-top: initial;
     --user-select: initial;
+    --padding-top: initial;
     --padding-bottom: initial;
     --padding-left: initial;
     --padding-right: initial;
@@ -56,6 +58,11 @@
 
   @layer tk1 {
     [style] {
+      width: var(--_15jvuf0, var(--width, revert-layer));
+      --_15jvuf0: var(--width__calc) calc(var(--width) * var(--_grid));
+      height: var(--_r8sevj, var(--height, revert-layer));
+      --_r8sevj: var(--height__calc) calc(var(--height) * var(--_grid));
+      stroke: var(--stroke, revert-layer);
       display: var(--display, revert-layer);
       white-space: var(--white-space, revert-layer);
       outline: var(--outline, revert-layer);
@@ -64,19 +71,14 @@
       background: var(--background, revert-layer);
       padding: var(--_2dqpfb, var(--padding, revert-layer));
       --_2dqpfb: var(--padding__calc) calc(var(--padding) * var(--_grid));
-      width: var(--_15jvuf0, var(--width, revert-layer));
-      --_15jvuf0: var(--width__calc) calc(var(--width) * var(--_grid));
-      height: var(--_r8sevj, var(--height, revert-layer));
-      --_r8sevj: var(--height__calc) calc(var(--height) * var(--_grid));
-      stroke: var(--stroke, revert-layer);
       user-select: var(--user-select, revert-layer);
       cursor: var(--cursor, revert-layer);
       gap: var(--_14n3ddg, var(--gap, revert-layer));
       --_14n3ddg: var(--gap__calc) calc(var(--gap) * var(--_grid));
-      text-align: var(--text-align, revert-layer);
-      text-transform: var(--text-transform, revert-layer);
       max-width: var(--_15j6prn, var(--max-width, revert-layer));
       --_15j6prn: var(--max-width__calc) calc(var(--max-width) * var(--_grid));
+      text-align: var(--text-align, revert-layer);
+      text-transform: var(--text-transform, revert-layer);
     }
   }
 
@@ -86,14 +88,13 @@
       --_1npkur4: var(--margin-top__calc) calc(var(--margin-top) * var(--_grid));
       margin-bottom: var(--_1rgufc4, var(--margin-bottom, revert-layer));
       --_1rgufc4: var(--margin-bottom__calc) calc(var(--margin-bottom) * var(--_grid));
-      align-items: var(--align-items, revert-layer);
       justify-content: var(--justify-content, revert-layer);
+      flex-shrink: var(--flex-shrink, revert-layer);
+      align-items: var(--align-items, revert-layer);
       font-size: var(--font-size, revert-layer);
       font-weight: var(--font-weight, revert-layer);
       background-color: var(--background-color, revert-layer);
-      flex-shrink: var(--flex-shrink, revert-layer);
       flex-direction: var(--flex-direction, revert-layer);
-      line-height: var(--line-height, revert-layer);
       padding-top: var(--_alekcd, var(--padding-top, revert-layer));
       --_alekcd: var(--padding-top__calc) calc(var(--padding-top) * var(--_grid));
       padding-bottom: var(--_1if2c2d, var(--padding-bottom, revert-layer));
@@ -102,6 +103,7 @@
       --_1l6ill9: var(--padding-left__calc) calc(var(--padding-left) * var(--_grid));
       padding-right: var(--_eeg826, var(--padding-right, revert-layer));
       --_eeg826: var(--padding-right__calc) calc(var(--padding-right) * var(--_grid));
+      line-height: var(--line-height, revert-layer);
     }
   }
 }

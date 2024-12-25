@@ -12,6 +12,8 @@ export default createConfig({
       borderWidth: 0,
       borderStyle: "solid",
       borderColor: "#e5e7eb",
+      fontSize: "0.875rem",
+      lineHeight: "1.25rem",
     },
     body: {
       fontFamily: "monospace, system-ui, sans-serif",

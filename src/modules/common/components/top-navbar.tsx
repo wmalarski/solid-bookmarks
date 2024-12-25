@@ -22,6 +22,13 @@ export const TopNavbar: Component = () => {
         >
           {t("info.title")}
         </Link>
+        <Link
+          class="flex gap-2 text-3xl uppercase"
+          hover={true}
+          href={paths.tags}
+        >
+          {t("tags.heading")}
+        </Link>
       </NavbarStart>
       <NavbarEnd>
         <Show

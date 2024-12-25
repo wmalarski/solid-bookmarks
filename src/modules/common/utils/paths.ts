@@ -5,4 +5,5 @@ export const paths = {
   signIn: "/sign-in",
   signUp: "/sign-up",
   signUpSuccess: "/sign-up/success",
+  tags: "/tags",
 };

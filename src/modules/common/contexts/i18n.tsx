@@ -39,6 +39,7 @@ const enDict = {
     },
   },
   tags: {
+    heading: "Tags",
     form: {
       name: "Name",
       save: "Save",
