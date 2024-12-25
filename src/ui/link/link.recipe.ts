@@ -1,41 +1,28 @@
-import { css } from "@tokenami/css";
+import { twCva } from "../utils/tw-cva";
 
-export const linkRecipe = css.compose({
+export const linkRecipe = twCva("link", {
+  defaultVariants: {
+    color: null,
+    hover: null,
+    size: null,
+  },
   variants: {
-    color: {},
+    color: {
+      accent: "link-accent",
+      error: "link-error",
+      info: "link-info",
+      neutral: "link-neutral",
+      primary: "link-primary",
+      secondary: "link-secondary",
+      success: "link-success",
+      warning: "link-warning",
+    },
     hover: {
-      true: {},
-      false: {},
+      false: "",
+      true: "link-hover",
     },
     size: {
-      xs: {},
+      xs: "text-xs",
     },
   },
 });
-
-// export const linkRecipe = twCva("link", {
-// 	defaultVariants: {
-// 		color: null,
-// 		hover: null,
-// 		size: null,
-// 	},
-// 	variants: {
-// 		color: {
-// 			accent: "link-accent",
-// 			error: "link-error",
-// 			info: "link-info",
-// 			neutral: "link-neutral",
-// 			primary: "link-primary",
-// 			secondary: "link-secondary",
-// 			success: "link-success",
-// 			warning: "link-warning",
-// 		},
-// 		hover: {
-// 			false: "",
-// 			true: "link-hover",
-// 		},
-// 		size: {
-// 			xs: "text-xs",
-// 		},
-// 	},
-// });

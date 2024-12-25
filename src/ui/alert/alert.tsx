@@ -1,20 +1,25 @@
+import type { VariantProps } from "class-variance-authority";
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 import { Dynamic } from "solid-js/web";
-
-import { css, type TokenamiStyle, type Variants } from "@tokenami/css";
 import { AlertCircleIcon } from "../icons/alert-circle-icon";
 import { CheckCircleIcon } from "../icons/check-circle-icon";
 import { InfoIcon } from "../icons/info-icon";
 import { XCircleIcon } from "../icons/x-circle-icon";
 import { alertRecipe } from "./alert.recipe";
 
-export type AlertProps = TokenamiStyle<ComponentProps<"div">> &
-  Variants<typeof alertRecipe>;
+export type AlertProps = ComponentProps<"div"> &
+  VariantProps<typeof alertRecipe>;
 
 export const Alert: Component<AlertProps> = (props) => {
-  const [split, rest] = splitProps(props, ["variant"]);
+  const [variants, withoutVariants] = splitProps(props, ["variant"]);
 
-  return <div role="alert" {...rest} style={alertRecipe(split, props.style)} />;
+  return (
+    <div
+      role="alert"
+      {...withoutVariants}
+      class={alertRecipe({ ...variants, class: props.class })}
+    />
+  );
 };
 
 const alertIconMap: Record<
@@ -36,14 +41,6 @@ export const AlertIcon: Component<AlertIconProps> = (props) => {
     return alertIconMap[props.variant];
   };
   return (
-    <Dynamic
-      style={css({
-        "--width": 6,
-        "--height": 6,
-        "--flex-shrink": 0,
-        "--stroke": "inherit",
-      })}
-      component={component()}
-    />
+    <Dynamic class="size-6 shrink-0 stroke-current" component={component()} />
   );
 };

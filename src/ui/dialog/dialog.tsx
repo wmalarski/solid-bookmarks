@@ -1,47 +1,20 @@
-import { css, type TokenamiStyle, type Variants } from "@tokenami/css";
+import type { VariantProps } from "class-variance-authority";
 import { splitProps, type Component, type ComponentProps } from "solid-js";
+import { useI18n } from "~/modules/common/contexts/i18n";
 import { buttonSplitProps } from "../button/button";
 import { buttonRecipe } from "../button/button.recipe";
+import { twCx } from "../utils/tw-cva";
 
-export type DialogProps = TokenamiStyle<ComponentProps<"dialog">> & {
+export type DialogProps = ComponentProps<"dialog"> & {
   id: string;
 };
 
 export const Dialog: Component<DialogProps> = (props) => {
-  return (
-    <dialog
-      {...props}
-      style={css(
-        {
-          "--pointer-events": "none",
-          "--position": "fixed",
-          "--inset": 0,
-          "--margin": 0,
-          "--display": "grid",
-          "--height": "var(--size_full)",
-          "--max-height": "var(--size_none)",
-          "--width": "var(--size_full)",
-          "--max-width": "var(--size_none)",
-          "--justify-items": "center",
-          "--padding": 0,
-          "--opacity": "var(--alpha_hidden)",
-          "--overscroll-behavior": "contain",
-          "--z-index": "var(--z_dialog)",
-          "--background-color": "var(--color_transparent)",
-          "--color": "inherit",
-          "--overflow-y": "hidden",
-          "--{&[open]}_visibility": "visible",
-          "--{&[open]}_opacity": "var(--alpha_visible)",
-          "--{&[open]}_pointer-events": "auto",
-        },
-        props.style,
-      )}
-    />
-  );
+  return <dialog {...props} class={twCx("modal", props.class)} />;
 };
 
-export type DialogTriggerProps = TokenamiStyle<ComponentProps<"button">> &
-  Variants<typeof buttonRecipe> & { for: string };
+export type DialogTriggerProps = ComponentProps<"button"> &
+  VariantProps<typeof buttonRecipe> & { for: string };
 
 export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
@@ -55,87 +28,31 @@ export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
     <button
       onClick={onClick}
       {...rest}
-      style={buttonRecipe(variants, props.style)}
+      class={buttonRecipe({ ...variants, class: props.class })}
     />
   );
 };
 
-export type DialogBoxProps = TokenamiStyle<ComponentProps<"div">>;
+export type DialogBoxProps = ComponentProps<"div">;
 
 export const DialogBox: Component<DialogBoxProps> = (props) => {
-  return (
-    <div
-      {...props}
-      style={css(
-        {
-          /*
-.modal-box, .modal[open] .modal-box {
-    --tw-translate-y: 0px;
-    --tw-scale-x: 1;
-    --tw-scale-y: 1;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-.modal-box {
-    max-height: calc(100vh - 5em);
-    grid-column-start: 1;
-    grid-row-start: 1;
-    width: 91.666667%;
-    max-width: 32rem;
-    --tw-scale-x: .9;
-    --tw-scale-y: .9;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-    border-bottom-right-radius: var(--rounded-box, 1rem);
-    border-bottom-left-radius: var(--rounded-box, 1rem);
-    border-top-left-radius: var(--rounded-box, 1rem);
-    border-top-right-radius: var(--rounded-box, 1rem);
-    --tw-bg-opacity: 1;
-    background-color: var(--fallback-b1, oklch(var(--b1) / var(--tw-bg-opacity)));
-    padding: 1.5rem;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-    transition-timing-function: cubic-bezier(.4,0,.2,1);
-    transition-timing-function: cubic-bezier(0,0,.2,1);
-    transition-duration: .2s;
-    box-shadow: #00000040 0 25px 50px -12px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-
-*/
-        },
-        props.style,
-      )}
-    />
-  );
+  return <div {...props} class={twCx("modal-box", props.class)} />;
 };
 
-export type DialogBackdropProps = TokenamiStyle<Record<string, never>>;
+export type DialogBackdropProps = Record<string, never>;
 
 export const DialogBackdrop: Component<DialogBackdropProps> = (props) => {
+  const { t } = useI18n();
+
   return (
-    <div
-      {...props}
-      style={css(
-        {
-          /*
-    z-index: -1;
-    grid-column-start: 1;
-    grid-row-start: 1;
-    display: grid
-;
-    align-self: stretch;
-    justify-self: stretch;
-    color: transparent;
-  */
-        },
-        props.style,
-      )}
-    />
+    <form method="dialog" class={twCx("modal-backdrop", props.class)}>
+      <button type="submit">{t("common.closeDialog")}</button>
+    </form>
   );
 };
 
-export type DialogCloseProps = TokenamiStyle<ComponentProps<"button">> &
-  Variants<typeof buttonRecipe>;
+export type DialogCloseProps = ComponentProps<"button"> &
+  VariantProps<typeof buttonRecipe>;
 
 export const DialogClose: Component<DialogBackdropProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
@@ -144,29 +61,14 @@ export const DialogClose: Component<DialogBackdropProps> = (props) => {
     <form method="dialog">
       <button
         {...withoutVariants}
-        style={buttonRecipe(variants, props.style)}
+        class={buttonRecipe({ ...variants, class: props.class })}
       />
     </form>
   );
 };
 
-export type DialogActionsProps = TokenamiStyle<ComponentProps<"div">>;
+export type DialogActionsProps = ComponentProps<"div">;
 
 export const DialogActions: Component<DialogActionsProps> = (props) => {
-  return (
-    <div
-      {...props}
-      style={css(
-        {
-          /*
-              display: flex
-;
-    margin-top: 1.5rem;
-    justify-content: flex-end;
-*/
-        },
-        props.style,
-      )}
-    />
-  );
+  return <div {...props} class={twCx("modal-action", props.class)} />;
 };

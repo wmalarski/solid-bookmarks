@@ -1,17 +1,8 @@
-import type { TokenamiStyle } from "@tokenami/css";
-import { css } from "@tokenami/css";
 import type { Component, ComponentProps } from "solid-js";
+import { twCx } from "../utils/tw-cva";
 
-export type FormControlProps = TokenamiStyle<ComponentProps<"fieldset">>;
+export type FormControlProps = ComponentProps<"fieldset">;
 
 export const FormControl: Component<FormControlProps> = (props) => {
-  return (
-    <fieldset
-      {...props}
-      style={css(
-        { "--display": "flex", "--flex-direction": "column" },
-        props.style,
-      )}
-    />
-  );
+  return <fieldset {...props} class={twCx("form-control", props.class)} />;
 };

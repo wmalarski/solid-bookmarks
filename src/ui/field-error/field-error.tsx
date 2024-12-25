@@ -1,16 +1,12 @@
-import type { TokenamiStyle } from "@tokenami/css";
-import { css } from "@tokenami/css";
 import {
   Show,
   splitProps,
   type Component,
   type ComponentProps,
 } from "solid-js";
+import { twCx } from "../utils/tw-cva";
 
-export type FieldErrorProps = Omit<
-  TokenamiStyle<ComponentProps<"span">>,
-  "children"
-> & {
+export type FieldErrorProps = Omit<ComponentProps<"span">, "children"> & {
   message?: string;
   id: string;
 };
@@ -23,15 +19,7 @@ export const FieldError: Component<FieldErrorProps> = (props) => {
       <span
         role="alert"
         {...rest}
-        style={css(
-          {
-            "--font-size": "var(--font-size_xs)",
-            "--line-height": "var(--leading_xs)",
-            "--padding-top": 2,
-            "--color": "var(--color_error)",
-          },
-          props.style,
-        )}
+        class={twCx("text-sm text-error pt-2", props.class)}
       >
         {split.message}
       </span>

@@ -1,47 +1,62 @@
+import type { VariantProps } from "class-variance-authority";
+
 import {
   type Component,
   type ComponentProps,
-  type ValidComponent,
   splitProps,
+  type ValidComponent,
 } from "solid-js";
 import { Dynamic, type DynamicProps } from "solid-js/web";
 
-import { type TokenamiStyle, type Variants, css } from "@tokenami/css";
+import { twCx } from "../utils/tw-cva";
 import { cardActionsRecipe, cardRecipe, cardTitleRecipe } from "./card.recipe";
 
-export type CardProps = TokenamiStyle<ComponentProps<"div">> &
-  Variants<typeof cardRecipe>;
+export type CardProps = ComponentProps<"div"> & VariantProps<typeof cardRecipe>;
 
 export const Card: Component<CardProps> = (props) => {
-  const [split, rest] = splitProps(props, ["variant", "size", "color", "bg"]);
+  const [variants, withoutVariants] = splitProps(props, [
+    "variant",
+    "size",
+    "color",
+    "bg",
+  ]);
 
-  return <div {...rest} style={cardRecipe(split, props.style)} />;
+  return (
+    <div
+      {...withoutVariants}
+      class={cardRecipe({ class: props.class, ...variants })}
+    />
+  );
 };
 
-export type CardTitleProps<T extends ValidComponent> = DynamicProps<T> &
-  TokenamiStyle<unknown>;
+export type CardTitleProps<T extends ValidComponent> = DynamicProps<T>;
 
 export function CardTitle<T extends ValidComponent>(props: CardTitleProps<T>) {
   return (
     <Dynamic
       {...props}
-      style={cardTitleRecipe({}, props.style)}
+      class={cardTitleRecipe({ class: props.class })}
       component={props.component}
     />
   );
 }
 
-export type CardBodyProps = TokenamiStyle<ComponentProps<"div">>;
+export type CardBodyProps = ComponentProps<"div">;
 
 export const CardBody: Component<CardBodyProps> = (props) => {
-  return <div {...props} style={css({}, props.style)} />;
+  return <div {...props} class={twCx("card-body", props.class)} />;
 };
 
-export type CardActionsProps = TokenamiStyle<ComponentProps<"div">> &
-  Variants<typeof cardActionsRecipe>;
+export type CardActionsProps = ComponentProps<"div"> &
+  VariantProps<typeof cardActionsRecipe>;
 
 export const CardActions: Component<CardActionsProps> = (props) => {
-  const [split, rest] = splitProps(props, ["justify"]);
+  const [variants, withoutVariants] = splitProps(props, ["justify"]);
 
-  return <div {...rest} style={cardActionsRecipe(split, props.style)} />;
+  return (
+    <div
+      {...withoutVariants}
+      class={cardActionsRecipe({ class: props.class, ...variants })}
+    />
+  );
 };

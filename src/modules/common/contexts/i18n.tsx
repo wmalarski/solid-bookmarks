@@ -59,6 +59,9 @@ const enDict = {
       title: "Sign Up Success",
     },
   },
+  common: {
+    closeDialog: "Close dialog",
+  },
 };
 
 export type Locale = "en";

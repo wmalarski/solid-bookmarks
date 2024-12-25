@@ -1,40 +1,19 @@
-import { css, type TokenamiStyle, type Variants } from "@tokenami/css";
+import type { VariantProps } from "class-variance-authority";
 import { type Component, type ComponentProps, splitProps } from "solid-js";
-
-export const textFieldInputRecipe = css.compose({
-  variants: {
-    color: {
-      accent: {},
-      error: {},
-      info: {},
-      primary: {},
-      secondary: {},
-      success: {},
-      warning: {},
-    },
-    size: {
-      lg: {},
-      md: {},
-      sm: {},
-      xs: {},
-    },
-    variant: {
-      bordered: {},
-      ghost: {},
-    },
-    width: {
-      full: {},
-    },
-  },
-});
+import { textFieldInputRecipe } from "./text-field.recipe";
 
 const variantPropsList = ["color", "size", "variant", "width"] as const;
 
-export type TextFieldInputProps = TokenamiStyle<ComponentProps<"input">> &
-  Variants<typeof textFieldInputRecipe>;
+export type TextFieldInputProps = ComponentProps<"input"> &
+  VariantProps<typeof textFieldInputRecipe>;
 
 export const TextFieldInput: Component<TextFieldInputProps> = (props) => {
   const [split, rest] = splitProps(props, variantPropsList);
 
-  return <input {...rest} style={textFieldInputRecipe(split)} />;
+  return (
+    <input
+      {...rest}
+      class={textFieldInputRecipe({ ...split, class: props.class })}
+    />
+  );
 };
