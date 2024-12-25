@@ -10,7 +10,7 @@ import {
 } from "~/ui/dialog/dialog";
 
 export const InsertTagDialog: Component = () => {
-  const dialogId = createUniqueId();
+  const dialogId = "insert-tag";
   const formId = createUniqueId();
 
   return (

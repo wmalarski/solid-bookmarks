@@ -9,6 +9,16 @@ export type LinkProps = ComponentProps<typeof A> &
   VariantProps<typeof linkRecipe>;
 
 export const Link: Component<LinkProps> = (props) => {
-  const [split, rest] = splitProps(props, ["color", "hover", "size"]);
-  return <A {...rest} class={linkRecipe({ class: props.class, ...split })} />;
+  const [variants, withoutVariants] = splitProps(props, [
+    "color",
+    "hover",
+    "size",
+  ]);
+
+  return (
+    <A
+      {...withoutVariants}
+      class={linkRecipe({ class: props.class, ...variants })}
+    />
+  );
 };

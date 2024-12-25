@@ -12,16 +12,16 @@ export type FieldErrorProps = Omit<ComponentProps<"span">, "children"> & {
 };
 
 export const FieldError: Component<FieldErrorProps> = (props) => {
-  const [split, rest] = splitProps(props, ["message"]);
+  const [variants, withoutVariants] = splitProps(props, ["message"]);
 
   return (
-    <Show when={split.message}>
+    <Show when={variants.message}>
       <span
         role="alert"
-        {...rest}
+        {...withoutVariants}
         class={twCx("text-sm text-error pt-2", props.class)}
       >
-        {split.message}
+        {variants.message}
       </span>
     </Show>
   );

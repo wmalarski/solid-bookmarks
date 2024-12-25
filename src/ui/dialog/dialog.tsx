@@ -18,16 +18,18 @@ export type DialogTriggerProps = ComponentProps<"button"> &
 
 export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
-  const [split, rest] = splitProps(withoutVariants, ["for"]);
+  const [forValue, withoutFor] = splitProps(withoutVariants, ["for"]);
 
   const onClick: ComponentProps<"button">["onClick"] = () => {
-    document.querySelector<HTMLDialogElement>(split.for)?.showModal();
+    const id = `#${forValue.for}`;
+    const dialog = document.querySelector<HTMLDialogElement>(id);
+    dialog?.showModal();
   };
 
   return (
     <button
       onClick={onClick}
-      {...rest}
+      {...withoutFor}
       class={buttonRecipe({ ...variants, class: props.class })}
     />
   );

@@ -8,12 +8,12 @@ export type TextFieldInputProps = ComponentProps<"input"> &
   VariantProps<typeof textFieldInputRecipe>;
 
 export const TextFieldInput: Component<TextFieldInputProps> = (props) => {
-  const [split, rest] = splitProps(props, variantPropsList);
+  const [variants, withoutVariants] = splitProps(props, variantPropsList);
 
   return (
     <input
-      {...rest}
-      class={textFieldInputRecipe({ ...split, class: props.class })}
+      {...withoutVariants}
+      class={textFieldInputRecipe({ ...variants, class: props.class })}
     />
   );
 };
