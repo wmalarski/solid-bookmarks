@@ -1,5 +1,4 @@
 import { useSubmission } from "@solidjs/router";
-import { css } from "@tokenami/css";
 import { type Component, Show } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { paths } from "~/modules/common/utils/paths";
@@ -17,34 +16,12 @@ export const SignUpForm: Component = () => {
   const submission = useSubmission(signUpAction);
 
   return (
-    <Card
-      bg="base-200"
-      style={css({
-        "--width": "var(--size_full)",
-        "--max-width": "var(--size_md)",
-      })}
-      variant="bordered"
-    >
+    <Card bg="base-200" class="w-full max-w-md" variant="bordered">
       <CardBody>
-        <header
-          style={css({
-            "--display": "flex",
-            "--gap": 2,
-            "--justify-content": "space-between",
-            "--align-items": "center",
-          })}
-        >
-          <h2 style={cardTitleRecipe()}>{t("auth.signUp")}</h2>
+        <header class="flex items-center justify-between gap-2">
+          <h2 class={cardTitleRecipe()}>{t("auth.signUp")}</h2>
         </header>
-        <form
-          action={signUpAction}
-          style={css({
-            "--display": "flex",
-            "--flex-direction": "column",
-            "--gap": 4,
-          })}
-          method="post"
-        >
+        <form action={signUpAction} class="flex flex-col gap-4" method="post">
           <Show when={submission.result?.success}>
             <Alert variant="success">
               <AlertIcon variant="success" />
@@ -62,16 +39,8 @@ export const SignUpForm: Component = () => {
           >
             {t("auth.signUp")}
           </Button>
-          <div
-            style={css({
-              "--display": "flex",
-              "--justify-content": "center",
-            })}
-          >
-            <Link
-              style={css({ "--font-size": "var(--font-size_xs)" })}
-              href={paths.signIn}
-            >
+          <div class="flex justify-center">
+            <Link class="text-xs" href={paths.signIn}>
               {t("auth.signIn")}
             </Link>
           </div>

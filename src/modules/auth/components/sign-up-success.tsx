@@ -14,7 +14,7 @@ export const SignUpSuccess: Component = () => {
       <CardBody class="items-center">
         <CheckCircleIcon class="size-10 text-success" />
         <header class="flex items-center justify-between gap-2 text-success">
-          <h2 style={cardTitleRecipe()}>{t("auth.success")}</h2>\
+          <h2 class={cardTitleRecipe()}>{t("auth.success")}</h2>\
         </header>
         <span class="text-center">{t("auth.signUpSuccess.description")}</span>
         <Link href={paths.signIn}>{t("auth.signIn")}</Link>

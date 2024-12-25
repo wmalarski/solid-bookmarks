@@ -7,9 +7,7 @@
     "start": "vinxi start",
     "=== LINTERS ===": "",
     "format-and-lint": "biome check .",
-    "format-and-lint:fix": "biome check . --write",
-    "=== STYLES ===": "",
-    "tokenami:watch": "tokenami --output ./src/app.css --watch"
+    "format-and-lint:fix": "biome check . --write"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

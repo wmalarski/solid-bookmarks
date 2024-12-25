@@ -1,4 +1,3 @@
-import { css } from "@tokenami/css";
 import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
@@ -18,13 +17,7 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <div
-      style={css({
-        "--display": "flex",
-        "--flex-direction": "column",
-        "--gap": 4,
-      })}
-    >
+    <div class="flex flex-col gap-6">
       <FormError message={props.result?.error} />
 
       <FormControl>

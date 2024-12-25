@@ -1,5 +1,4 @@
 import { useSubmission } from "@solidjs/router";
-import { css } from "@tokenami/css";
 import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
@@ -31,11 +30,7 @@ export const UpdateBookmarkForm: Component<UpdateBookmarkFormProps> = (
     <form
       action={updateBookmarkAction}
       method="post"
-      style={css({
-        "--display": "flex",
-        "--flex-direction": "column",
-        "--gap": 6,
-      })}
+      class="flex flex-col gap-6"
     >
       <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
       <BookmarkFields

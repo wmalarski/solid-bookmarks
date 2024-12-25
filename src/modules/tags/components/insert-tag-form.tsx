@@ -1,5 +1,4 @@
 import { useSubmission } from "@solidjs/router";
-import { css } from "@tokenami/css";
 import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
@@ -12,15 +11,7 @@ export const InsertTagForm: Component = () => {
   const submission = useSubmission(insertTagAction);
 
   return (
-    <form
-      action={insertTagAction}
-      method="post"
-      style={css({
-        "--display": "flex",
-        "--flex-direction": "column",
-        "--gap": 4,
-      })}
-    >
+    <form action={insertTagAction} method="post" class="flex flex-col gap-4">
       <TagFields pending={submission.pending} result={submission.result} />
       <Button
         disabled={submission.pending}
