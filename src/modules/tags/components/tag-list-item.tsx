@@ -3,11 +3,11 @@ import type { TagModel } from "~/modules/supabase/models";
 import { DeleteTagForm } from "./delete-tag-form";
 import { UpdateTagForm } from "./update-tag-form";
 
-type TagsListProps = {
+type TagsListItemProps = {
   tag: TagModel;
 };
 
-export const TagsListItem: Component<TagsListProps> = (props) => {
+export const TagsListItem: Component<TagsListItemProps> = (props) => {
   return (
     <div>
       <pre>{JSON.stringify(props.tag, null, 2)}</pre>

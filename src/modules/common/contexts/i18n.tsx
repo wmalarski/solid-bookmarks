@@ -34,6 +34,7 @@ const enDict = {
       text: "Text",
       url: "URL",
       save: "Save",
+      delete: "Delete",
     },
   },
   tags: {

@@ -145,16 +145,35 @@ export const updateBookmark = async (form: FormData) => {
 
 type SelectBookmarksArgs = {
   limit?: number;
-  offset: number;
+  offset?: number;
 };
 
-export const selectBookmarks = async (args: SelectBookmarksArgs) => {
+const selectBookmarksWithTags = async ({
+  offset = 0,
+  limit = SELECT_BOOKMARKS_DEFAULT_LIMIT,
+}: SelectBookmarksArgs) => {
   const event = getRequestEventOrThrow();
 
+  const builder = event.locals.supabase
+    .from("bookmarks")
+    .select("*, bookmarks_tags ( * )", {
+      count: "estimated",
+    })
+    .range(offset, offset + limit);
+
+  const result = await builder;
+  return result;
+};
+
+export type BookmarkWithTagsModel = NonNullable<
+  Awaited<ReturnType<typeof selectBookmarksWithTags>>["data"]
+>[0];
+
+export const selectBookmarks = async (args: SelectBookmarksArgs) => {
   const parsed = await v.safeParseAsync(
     v.object({
       limit: v.optional(v.number(), SELECT_BOOKMARKS_DEFAULT_LIMIT),
-      offset: v.number(),
+      offset: v.optional(v.number(), 0),
     }),
     args,
   );
@@ -163,13 +182,7 @@ export const selectBookmarks = async (args: SelectBookmarksArgs) => {
     return rpcParseIssueResult(parsed.issues);
   }
 
-  const { limit, offset } = parsed.output;
-  const builder = event.locals.supabase
-    .from("bookmarks")
-    .select("*, bookmarks_tags ( bookmark_id )", { count: "estimated" })
-    .range(offset, offset + limit);
-
-  const result = await builder;
+  const result = await selectBookmarksWithTags(parsed.output);
 
   if (result.error) {
     return rpcErrorResult(result.error);

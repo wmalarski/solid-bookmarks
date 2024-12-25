@@ -2,13 +2,13 @@ import { useSubmission } from "@solidjs/router";
 import { css } from "@tokenami/css";
 import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import type { BookmarkModel } from "~/modules/supabase/models";
 import { Button } from "~/ui/button/button";
 import { updateBookmarkAction } from "../client";
+import type { BookmarkWithTagsModel } from "../server";
 import { BookmarkFields } from "./bookmark-fields";
 
 type UpdateBookmarkFormProps = {
-  bookmark: BookmarkModel;
+  bookmark: BookmarkWithTagsModel;
 };
 
 export const UpdateBookmarkForm: Component<UpdateBookmarkFormProps> = (
