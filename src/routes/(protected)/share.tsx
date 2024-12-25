@@ -10,6 +10,7 @@ export default function SharePage() {
         text: params.text,
         title: params.title,
         url: params.url,
+        tags: [],
       }}
     />
   );

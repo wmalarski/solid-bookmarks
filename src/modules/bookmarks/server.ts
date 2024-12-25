@@ -156,7 +156,7 @@ const selectBookmarksFromDb = async ({
 
   const builder = event.locals.supabase
     .from("bookmarks")
-    .select("*, bookmarks_tags ( * )", {
+    .select("*, bookmarks_tags ( *, tags ( name ) )", {
       count: "estimated",
     })
     .range(offset, offset + limit);

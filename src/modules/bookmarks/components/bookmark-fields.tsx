@@ -10,11 +10,13 @@ import {
   TextFieldLabelText,
   TextFieldRoot,
 } from "~/ui/text-field/text-field";
+import { BookmarkTagsField } from "./bookmark-tags-field";
 
 export type BookmarkFieldsData = {
   title?: string;
   text?: string;
   url?: string;
+  tags?: number[];
 };
 
 type BookmarkFieldsProps = {
@@ -97,6 +99,8 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           </TextFieldErrorMessage>
         </Show>
       </TextFieldRoot>
+
+      <BookmarkTagsField initialTags={props.initialData?.tags} />
     </div>
   );
 };

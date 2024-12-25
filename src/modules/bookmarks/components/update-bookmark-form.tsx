@@ -18,6 +18,15 @@ export const UpdateBookmarkForm: Component<UpdateBookmarkFormProps> = (
 
   const submission = useSubmission(updateBookmarkAction);
 
+  const initialData = () => {
+    return {
+      ...props.bookmark,
+      tags: props.bookmark.bookmarks_tags.map(
+        (bookmarkTag) => bookmarkTag.tag_id,
+      ),
+    };
+  };
+
   return (
     <form
       action={updateBookmarkAction}
@@ -30,7 +39,7 @@ export const UpdateBookmarkForm: Component<UpdateBookmarkFormProps> = (
     >
       <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
       <BookmarkFields
-        initialData={props.bookmark}
+        initialData={initialData()}
         pending={submission.pending}
         result={submission.result}
       />

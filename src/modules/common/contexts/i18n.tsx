@@ -29,6 +29,7 @@ const enDict = {
     title: "Solid Bookmarks",
   },
   bookmarks: {
+    loadMore: "Load More",
     form: {
       title: "Title",
       text: "Text",
