@@ -1,14 +1,13 @@
 import { css } from "@tokenami/css";
-import { Show, type Component } from "solid-js";
+import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
-import { Alert, AlertIcon } from "~/ui/alert/alert";
+import { FieldError } from "~/ui/field-error/field-error";
 import { FormControl } from "~/ui/form-control/form-control";
+import { FormError } from "~/ui/form-error/form-error";
 import { Label, LabelText } from "~/ui/label/label";
-import {
-  TextFieldErrorMessage,
-  TextFieldInput,
-} from "~/ui/text-field/text-field";
+import { TextFieldInput } from "~/ui/text-field/text-field";
+import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 import { BookmarkTagsField } from "./bookmark-tags-field";
 
 export type BookmarkFieldsData = {
@@ -35,12 +34,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
         "--gap": 4,
       })}
     >
-      <Show when={props.result?.error}>
-        <Alert variant="error">
-          <AlertIcon variant="error" />
-          {props.result?.error}
-        </Alert>
-      </Show>
+      <FormError message={props.result?.error} />
 
       <FormControl>
         <Label for="title">
@@ -53,12 +47,12 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           value={props.initialData?.title}
           disabled={props.pending}
           variant="bordered"
+          {...getInvalidStateProps({
+            errorMessageId: "title-error",
+            isInvalid: !!props.result?.errors?.title,
+          })}
         />
-        <Show when={props.result?.errors?.title}>
-          <TextFieldErrorMessage>
-            {props.result?.errors?.title}
-          </TextFieldErrorMessage>
-        </Show>
+        <FieldError id="title-error" message={props.result?.errors?.title} />
       </FormControl>
 
       <FormControl>
@@ -72,12 +66,12 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           value={props.initialData?.text}
           disabled={props.pending}
           variant="bordered"
+          {...getInvalidStateProps({
+            errorMessageId: "text-error",
+            isInvalid: !!props.result?.errors?.text,
+          })}
         />
-        <Show when={props.result?.errors?.text}>
-          <TextFieldErrorMessage>
-            {props.result?.errors?.text}
-          </TextFieldErrorMessage>
-        </Show>
+        <FieldError id="text-error" message={props.result?.errors?.text} />
       </FormControl>
 
       <FormControl>
@@ -91,12 +85,12 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           value={props.initialData?.url}
           disabled={props.pending}
           variant="bordered"
+          {...getInvalidStateProps({
+            errorMessageId: "url-error",
+            isInvalid: !!props.result?.errors?.url,
+          })}
         />
-        <Show when={props.result?.errors?.url}>
-          <TextFieldErrorMessage>
-            {props.result?.errors?.url}
-          </TextFieldErrorMessage>
-        </Show>
+        <FieldError id="url-error" message={props.result?.errors?.url} />
       </FormControl>
 
       <BookmarkTagsField initialTags={props.initialData?.tags} />

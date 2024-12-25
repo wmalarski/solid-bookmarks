@@ -14,7 +14,7 @@ export type AlertProps = TokenamiStyle<ComponentProps<"div">> &
 export const Alert: Component<AlertProps> = (props) => {
   const [split, rest] = splitProps(props, ["variant"]);
 
-  return <div {...rest} style={alertRecipe(split, props.style)} />;
+  return <div role="alert" {...rest} style={alertRecipe(split, props.style)} />;
 };
 
 const alertIconMap: Record<

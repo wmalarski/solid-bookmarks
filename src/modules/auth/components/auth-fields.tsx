@@ -1,14 +1,13 @@
 import { css } from "@tokenami/css";
-import { type Component, Show } from "solid-js";
+import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
-import { Alert, AlertIcon } from "~/ui/alert/alert";
+import { FieldError } from "~/ui/field-error/field-error";
 import { FormControl } from "~/ui/form-control/form-control";
+import { FormError } from "~/ui/form-error/form-error";
 import { Label, LabelText } from "~/ui/label/label";
-import {
-  TextFieldErrorMessage,
-  TextFieldInput,
-} from "~/ui/text-field/text-field";
+import { TextFieldInput } from "~/ui/text-field/text-field";
+import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 
 type AuthFieldsProps = {
   pending?: boolean;
@@ -26,12 +25,8 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
         "--gap": 4,
       })}
     >
-      <Show when={props.result?.error}>
-        <Alert variant="error">
-          <AlertIcon variant="error" />
-          {props.result?.error}
-        </Alert>
-      </Show>
+      <FormError message={props.result?.error} />
+
       <FormControl>
         <Label for="email">
           <LabelText>{t("auth.email")}</LabelText>
@@ -44,13 +39,14 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
           placeholder={t("auth.email")}
           type="email"
           variant="bordered"
+          {...getInvalidStateProps({
+            errorMessageId: "email-error",
+            isInvalid: !!props.result?.errors?.email,
+          })}
         />
-        <Show when={props.result?.errors?.email}>
-          <TextFieldErrorMessage>
-            {props.result?.errors?.email}
-          </TextFieldErrorMessage>
-        </Show>
+        <FieldError id="email-error" message={props.result?.errors?.email} />
       </FormControl>
+
       <FormControl>
         <Label for="password">
           <LabelText>{t("auth.password")}</LabelText>
@@ -62,12 +58,15 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
           placeholder={t("auth.password")}
           type="password"
           variant="bordered"
+          {...getInvalidStateProps({
+            errorMessageId: "password-error",
+            isInvalid: !!props.result?.errors?.password,
+          })}
         />
-        <Show when={props.result?.errors?.password}>
-          <TextFieldErrorMessage>
-            {props.result?.errors?.password}
-          </TextFieldErrorMessage>
-        </Show>
+        <FieldError
+          id="password-error"
+          message={props.result?.errors?.password}
+        />
       </FormControl>
     </div>
   );

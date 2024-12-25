@@ -1,14 +1,13 @@
 import { css } from "@tokenami/css";
-import { Show, type Component } from "solid-js";
+import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
-import { Alert, AlertIcon } from "~/ui/alert/alert";
+import { FieldError } from "~/ui/field-error/field-error";
 import { FormControl } from "~/ui/form-control/form-control";
+import { FormError } from "~/ui/form-error/form-error";
 import { Label, LabelText } from "~/ui/label/label";
-import {
-  TextFieldErrorMessage,
-  TextFieldInput,
-} from "~/ui/text-field/text-field";
+import { TextFieldInput } from "~/ui/text-field/text-field";
+import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 import type { TagModel } from "../server";
 
 export type TagFieldsData = Pick<TagModel, "name">;
@@ -30,15 +29,10 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
         "--gap": 4,
       })}
     >
-      <Show when={props.result?.error}>
-        <Alert variant="error">
-          <AlertIcon variant="error" />
-          {props.result?.error}
-        </Alert>
-      </Show>
+      <FormError message={props.result?.error} />
 
       <FormControl>
-        <Label for="title">
+        <Label for="name">
           <LabelText>{t("tags.form.name")}</LabelText>
         </Label>
         <TextFieldInput
@@ -48,12 +42,12 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
           value={props.initialData?.name}
           disabled={props.pending}
           variant="bordered"
+          {...getInvalidStateProps({
+            errorMessageId: "name-error",
+            isInvalid: !!props.result?.errors?.name,
+          })}
         />
-        <Show when={props.result?.errors?.email}>
-          <TextFieldErrorMessage>
-            {props.result?.errors?.email}
-          </TextFieldErrorMessage>
-        </Show>
+        <FieldError id="name-error" message={props.result?.errors?.name} />
       </FormControl>
     </div>
   );

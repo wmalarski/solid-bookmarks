@@ -28,6 +28,7 @@ export default createConfig({
     color: {
       primary: "#000000",
       white: "#ffffff",
+      error: "#cc4444",
     },
     ease: {},
     font: {},
@@ -37,6 +38,7 @@ export default createConfig({
       "4xl": "2.25rem",
     },
     leading: {
+      xs: "1rem",
       sm: "1.25rem",
       "4xl": "2.5rem",
     },
