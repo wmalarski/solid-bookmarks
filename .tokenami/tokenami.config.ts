@@ -22,7 +22,10 @@ export default createConfig({
   },
   themeSelector: (mode) => (mode === "root" ? ":root" : `.theme-${mode}`),
   theme: {
-    alpha: {},
+    alpha: {
+      visible: 1,
+      hidden: 0,
+    },
     anim: {},
     border: {
       button: "0.0375rem solid hsl(var(--border) / 0.8)",
@@ -31,6 +34,7 @@ export default createConfig({
       primary: "#000000",
       white: "#ffffff",
       error: "#cc4444",
+      transparent: "transparent",
     },
     ease: {},
     font: {},
@@ -46,7 +50,7 @@ export default createConfig({
     },
     "line-style": {},
     radii: {},
-    size: { full: "100%", md: "28rem" },
+    size: { full: "100%", md: "28rem", none: "none" },
     shadow: {},
     surface: {},
     tracking: {},
@@ -54,7 +58,9 @@ export default createConfig({
     weight: {
       semibold: 600,
     },
-    z: {},
+    z: {
+      dialog: 999,
+    },
   },
   aliases: {},
   selectors: {

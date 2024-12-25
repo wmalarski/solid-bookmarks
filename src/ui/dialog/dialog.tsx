@@ -13,38 +13,26 @@ export const Dialog: Component<DialogProps> = (props) => {
       {...props}
       style={css(
         {
-          /*
-.modal-open, .modal:target, .modal-toggle:checked+.modal, .modal[open] {
-    pointer-events: auto;
-    visibility: visible;
-    opacity: 1;
-}
-.modal {
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: 0;
-    display: grid
-;
-    height: 100%;
-    max-height: none;
-    width: 100%;
-    max-width: none;
-    justify-items: center;
-    padding: 0;
-    opacity: 0;
-    overscroll-behavior: contain;
-    z-index: 999;
-    background-color: transparent;
-    color: inherit;
-    transition-duration: .2s;
-    transition-timing-function: cubic-bezier(0,0,.2,1);
-    transition-property: transform, opacity, visibility;
-    overflow-y: hidden;
-*/
+          "--pointer-events": "none",
+          "--position": "fixed",
+          "--inset": 0,
+          "--margin": 0,
+          "--display": "grid",
+          "--height": "var(--size_full)",
+          "--max-height": "var(--size_none)",
+          "--width": "var(--size_full)",
+          "--max-width": "var(--size_none)",
+          "--justify-items": "center",
+          "--padding": 0,
+          "--opacity": "var(--alpha_hidden)",
+          "--overscroll-behavior": "contain",
+          "--z-index": "var(--z_dialog)",
+          "--background-color": "var(--color_transparent)",
+          "--color": "inherit",
+          "--overflow-y": "hidden",
+          "--{&[open]}_visibility": "visible",
+          "--{&[open]}_opacity": "var(--alpha_visible)",
+          "--{&[open]}_pointer-events": "auto",
         },
         props.style,
       )}
