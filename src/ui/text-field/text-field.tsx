@@ -12,6 +12,7 @@ export const TextFieldInput: Component<TextFieldInputProps> = (props) => {
 
   return (
     <input
+      autocomplete="false"
       {...withoutVariants}
       class={textFieldInputRecipe({ ...variants, class: props.class })}
     />

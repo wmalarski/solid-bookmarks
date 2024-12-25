@@ -53,10 +53,12 @@ export const DialogBackdrop: Component<DialogBackdropProps> = (props) => {
   );
 };
 
-export type DialogCloseProps = ComponentProps<"button"> &
+export type DialogCloseProps = Omit<ComponentProps<"button">, "children"> &
   VariantProps<typeof buttonRecipe>;
 
 export const DialogClose: Component<DialogBackdropProps> = (props) => {
+  const { t } = useI18n();
+
   const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
 
   return (
@@ -64,7 +66,9 @@ export const DialogClose: Component<DialogBackdropProps> = (props) => {
       <button
         {...withoutVariants}
         class={buttonRecipe({ ...variants, class: props.class })}
-      />
+      >
+        {t("common.closeDialog")}
+      </button>
     </form>
   );
 };
@@ -73,4 +77,8 @@ export type DialogActionsProps = ComponentProps<"div">;
 
 export const DialogActions: Component<DialogActionsProps> = (props) => {
   return <div {...props} class={twCx("modal-action", props.class)} />;
+};
+
+export const closeDialog = (dialogId: string) => {
+  document.querySelector<HTMLDialogElement>(`#${dialogId}`)?.close();
 };

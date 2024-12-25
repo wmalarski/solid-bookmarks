@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect, reload } from "@solidjs/router";
+import { reload } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import * as v from "valibot";
 import {
@@ -9,7 +9,6 @@ import {
   rpcParseIssueResult,
   rpcSuccessResult,
 } from "../common/server/helpers";
-import { paths } from "../common/utils/paths";
 import { SELECT_TAGS_DEFAULT_LIMIT, TAGS_QUERY_KEY } from "./const";
 
 export const insertTag = async (form: FormData) => {
@@ -30,7 +29,7 @@ export const insertTag = async (form: FormData) => {
     return rpcErrorResult(result.error);
   }
 
-  throw redirect(paths.home, { revalidate: TAGS_QUERY_KEY });
+  throw reload({ revalidate: TAGS_QUERY_KEY });
 };
 
 export const deleteTag = async (form: FormData) => {

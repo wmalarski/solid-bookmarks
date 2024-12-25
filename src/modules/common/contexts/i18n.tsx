@@ -41,6 +41,7 @@ const enDict = {
   tags: {
     heading: "Tags",
     form: {
+      title: "Add tag",
       name: "Name",
       save: "Save",
       delete: "Delete",
@@ -60,7 +61,7 @@ const enDict = {
     },
   },
   common: {
-    closeDialog: "Close dialog",
+    closeDialog: "Close",
   },
 };
 
