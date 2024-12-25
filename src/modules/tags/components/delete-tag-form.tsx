@@ -1,9 +1,9 @@
 import { useSubmission } from "@solidjs/router";
 import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import type { TagModel } from "~/modules/supabase/models";
 import { Button } from "~/ui/button/button";
 import { deleteTagAction } from "../client";
+import type { TagModel } from "../server";
 
 type DeleteTagFormProps = {
   tag: TagModel;

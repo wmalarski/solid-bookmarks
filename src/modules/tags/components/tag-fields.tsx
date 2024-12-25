@@ -2,7 +2,6 @@ import { css } from "@tokenami/css";
 import { Show, type Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
-import type { TagModel } from "~/modules/supabase/models";
 import { Alert, AlertIcon } from "~/ui/alert/alert";
 import {
   TextFieldErrorMessage,
@@ -11,6 +10,7 @@ import {
   TextFieldLabelText,
   TextFieldRoot,
 } from "~/ui/text-field/text-field";
+import type { TagModel } from "../server";
 
 export type TagFieldsData = Pick<TagModel, "name">;
 

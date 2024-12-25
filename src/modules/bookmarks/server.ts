@@ -148,7 +148,7 @@ type SelectBookmarksArgs = {
   offset?: number;
 };
 
-const selectBookmarksWithTags = async ({
+const selectBookmarksFromDb = async ({
   offset = 0,
   limit = SELECT_BOOKMARKS_DEFAULT_LIMIT,
 }: SelectBookmarksArgs) => {
@@ -166,15 +166,12 @@ const selectBookmarksWithTags = async ({
 };
 
 export type BookmarkWithTagsModel = NonNullable<
-  Awaited<ReturnType<typeof selectBookmarksWithTags>>["data"]
+  Awaited<ReturnType<typeof selectBookmarksFromDb>>["data"]
 >[0];
 
 export const selectBookmarks = async (args: SelectBookmarksArgs) => {
   const parsed = await v.safeParseAsync(
-    v.object({
-      limit: v.optional(v.number(), SELECT_BOOKMARKS_DEFAULT_LIMIT),
-      offset: v.optional(v.number(), 0),
-    }),
+    v.object({ limit: v.optional(v.number()), offset: v.optional(v.number()) }),
     args,
   );
 
@@ -182,7 +179,7 @@ export const selectBookmarks = async (args: SelectBookmarksArgs) => {
     return rpcParseIssueResult(parsed.issues);
   }
 
-  const result = await selectBookmarksWithTags(parsed.output);
+  const result = await selectBookmarksFromDb(parsed.output);
 
   if (result.error) {
     return rpcErrorResult(result.error);

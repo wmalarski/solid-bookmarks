@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import type { TagModel } from "~/modules/supabase/models";
+import type { TagModel } from "../server";
 import { DeleteTagForm } from "./delete-tag-form";
 import { UpdateTagForm } from "./update-tag-form";
 

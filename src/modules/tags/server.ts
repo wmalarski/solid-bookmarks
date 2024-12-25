@@ -83,17 +83,31 @@ export const updateTag = async (form: FormData) => {
 
 type SelectTagsArgs = {
   limit?: number;
-  offset: number;
+  offset?: number;
 };
 
-export const selectTags = async (args: SelectTagsArgs) => {
+const selectTagsFromDb = async ({
+  limit = SELECT_TAGS_DEFAULT_LIMIT,
+  offset = 0,
+}: SelectTagsArgs) => {
   const event = getRequestEventOrThrow();
 
+  const builder = event.locals.supabase
+    .from("tags")
+    .select("*", { count: "estimated" })
+    .range(offset, offset + limit);
+
+  const result = await builder;
+  return result;
+};
+
+export type TagModel = NonNullable<
+  Awaited<ReturnType<typeof selectTagsFromDb>>["data"]
+>[0];
+
+export const selectTags = async (args: SelectTagsArgs) => {
   const parsed = await v.safeParseAsync(
-    v.object({
-      limit: v.optional(v.number(), SELECT_TAGS_DEFAULT_LIMIT),
-      offset: v.number(),
-    }),
+    v.object({ limit: v.optional(v.number()), offset: v.optional(v.number()) }),
     args,
   );
 
@@ -101,13 +115,7 @@ export const selectTags = async (args: SelectTagsArgs) => {
     return rpcParseIssueResult(parsed.issues);
   }
 
-  const { limit, offset } = parsed.output;
-  const builder = event.locals.supabase
-    .from("tags")
-    .select("*", { count: "estimated" })
-    .range(offset, offset + limit);
-
-  const result = await builder;
+  const result = await selectTagsFromDb(parsed.output);
 
   if (result.error) {
     return rpcErrorResult(result.error);

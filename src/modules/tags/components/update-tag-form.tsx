@@ -2,9 +2,10 @@ import { useSubmission } from "@solidjs/router";
 import { css } from "@tokenami/css";
 import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import type { TagModel } from "~/modules/supabase/models";
+
 import { Button } from "~/ui/button/button";
 import { updateTagAction } from "../client";
+import type { TagModel } from "../server";
 import { TagFields } from "./tag-fields";
 
 type UpdateTagFormProps = {
