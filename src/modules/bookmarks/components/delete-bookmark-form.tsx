@@ -24,7 +24,7 @@ export const DeleteBookmarkForm: Component<DeleteBookmarkFormProps> = (
         isLoading={submission.pending}
         type="submit"
       >
-        {t("bookmarks.form.delete")}
+        {t("common.delete")}
       </Button>
     </form>
   );

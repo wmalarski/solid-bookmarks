@@ -34,7 +34,6 @@ const enDict = {
       title: "Title",
       text: "Text",
       url: "URL",
-      save: "Save",
       delete: "Delete",
     },
   },
@@ -44,7 +43,6 @@ const enDict = {
       add: "Add tag",
       update: "Update tag",
       name: "Name",
-      save: "Save",
       delete: "Delete",
     },
   },
@@ -63,6 +61,8 @@ const enDict = {
   },
   common: {
     closeDialog: "Close",
+    save: "Save",
+    delete: "Delete",
   },
 };
 

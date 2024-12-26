@@ -39,7 +39,7 @@ export const UpdateBookmarkForm: Component<UpdateBookmarkFormProps> = (
         result={submission.result}
       />
       <Button color="primary" size="sm" type="submit">
-        {t("bookmarks.form.save")}
+        {t("common.save")}
       </Button>
     </form>
   );

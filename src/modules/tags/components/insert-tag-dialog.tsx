@@ -53,7 +53,7 @@ export const InsertTagDialog: Component = () => {
               isLoading={submission.pending}
               type="submit"
             >
-              {t("tags.form.save")}
+              {t("common.save")}
             </Button>
           </DialogActions>
         </DialogBox>

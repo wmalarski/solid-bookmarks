@@ -28,7 +28,7 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
         result={submission.result}
       />
       <Button color="primary" size="sm" type="submit">
-        {t("bookmarks.form.save")}
+        {t("common.save")}
       </Button>
     </form>
   );

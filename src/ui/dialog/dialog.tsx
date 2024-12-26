@@ -28,6 +28,7 @@ export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
 
   return (
     <button
+      type="button"
       onClick={onClick}
       {...withoutFor}
       class={buttonRecipe({ ...variants, class: props.class })}

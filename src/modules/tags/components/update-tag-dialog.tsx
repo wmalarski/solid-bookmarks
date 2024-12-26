@@ -62,7 +62,7 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
               isLoading={submission.pending}
               type="submit"
             >
-              {t("tags.form.save")}
+              {t("common.save")}
             </Button>
           </DialogActions>
         </DialogBox>

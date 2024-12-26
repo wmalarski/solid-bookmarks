@@ -1,4 +1,4 @@
-import type { Component } from "solid-js";
+import { Show, type Component } from "solid-js";
 import { Button } from "../button/button";
 import {
   Dialog,
@@ -7,12 +7,15 @@ import {
   DialogBox,
   DialogClose,
 } from "../dialog/dialog";
+import { FormError } from "../form-error/form-error";
 
 type AlertDialogProps = {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   confirm: string;
+  pending?: boolean;
+  errorMessage?: string;
 };
 
 export const AlertDialog: Component<AlertDialogProps> = (props) => {
@@ -20,10 +23,19 @@ export const AlertDialog: Component<AlertDialogProps> = (props) => {
     <Dialog id={props.id}>
       <DialogBox>
         <h3>{props.title}</h3>
-        <p>{props.description}</p>
+        <Show when={props.description}>
+          <p>{props.description}</p>
+        </Show>
+        <FormError message={props.errorMessage} />
         <DialogActions>
           <DialogClose />
-          <Button type="submit">{props.confirm}</Button>
+          <Button
+            type="submit"
+            disabled={props.pending}
+            isLoading={props.pending}
+          >
+            {props.confirm}
+          </Button>
         </DialogActions>
       </DialogBox>
       <DialogBackdrop />
