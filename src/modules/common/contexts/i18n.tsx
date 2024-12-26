@@ -43,6 +43,16 @@ const enDict = {
       url: "URL",
       delete: "Delete",
     },
+    item: {
+      title: "Title:",
+      text: "Text:",
+      url: "Url:",
+      createdAt: "Created:",
+      done: "Done:",
+      doneAt: "Completed:",
+      rate: "Rate:",
+      note: "Note:",
+    },
   },
   tags: {
     heading: "Tags",
