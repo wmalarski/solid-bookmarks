@@ -10,6 +10,7 @@ import {
   DialogBackdrop,
   DialogBox,
   DialogClose,
+  DialogTitle,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
 import { insertTagAction } from "../client";
@@ -35,7 +36,7 @@ export const InsertTagDialog: Component = () => {
       </DialogTrigger>
       <Dialog id={dialogId}>
         <DialogBox>
-          <h3>{t("tags.form.add")}</h3>
+          <DialogTitle>{t("tags.form.add")}</DialogTitle>
           <form id={formId} onSubmit={onSubmit}>
             <TagFields
               pending={submission.pending}

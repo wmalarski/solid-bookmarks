@@ -10,6 +10,7 @@ import {
   DialogBackdrop,
   DialogBox,
   DialogClose,
+  DialogTitle,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
 import { updateTagAction } from "../client";
@@ -41,7 +42,7 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
       <DialogTrigger for={dialogId()}>{t("common.update")}</DialogTrigger>
       <Dialog id={dialogId()}>
         <DialogBox>
-          <h3>{t("common.update")}</h3>
+          <DialogTitle>{t("common.update")}</DialogTitle>
           <form id={formId()} onSubmit={onSubmit}>
             <input type="hidden" value={props.tag.id} name="tagId" />
             <TagFields

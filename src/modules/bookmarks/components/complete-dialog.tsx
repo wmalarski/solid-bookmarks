@@ -12,51 +12,42 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
-import { updateBookmarkAction } from "../client";
+import { completeBookmarkAction } from "../client";
 import type { BookmarkWithTagsModel } from "../server";
-import { BookmarkFields } from "./bookmark-fields";
+import { CompleteFields } from "./complete-fields";
 
-type UpdateBookmarkDialogProps = {
+type CompleteDialogProps = {
   bookmark: BookmarkWithTagsModel;
 };
 
-export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
-  props,
-) => {
+export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
   const { t } = useI18n();
 
-  const dialogId = createMemo(() => `update-dialog-${props.bookmark.id}`);
-  const formId = createMemo(() => `update-form-${props.bookmark.id}`);
+  const dialogId = createMemo(() => `complete-dialog-${props.bookmark.id}`);
+  const formId = createMemo(() => `complete-form-${props.bookmark.id}`);
 
   const submission = useSubmission(
-    updateBookmarkAction,
+    completeBookmarkAction,
     ([form]) => form.get("bookmarkId") === String(props.bookmark.id),
   );
 
   const onSubmit = useActionOnSubmit({
-    action: updateBookmarkAction,
+    action: completeBookmarkAction,
     onSuccess: () => closeDialog(dialogId()),
   });
 
-  const initialData = () => {
-    return {
-      ...props.bookmark,
-      tags: props.bookmark.bookmarks_tags.map(
-        (bookmarkTag) => bookmarkTag.tags.id,
-      ),
-    };
-  };
-
   return (
     <>
-      <DialogTrigger for={dialogId()}>{t("common.update")}</DialogTrigger>
+      <DialogTrigger for={dialogId()}>
+        {t("bookmarks.complete.complete")}
+      </DialogTrigger>
       <Dialog id={dialogId()}>
         <DialogBox>
-          <DialogTitle>{t("common.update")}</DialogTitle>
-          <form id={formId()} onSubmit={onSubmit} class="flex flex-col gap-6">
+          <DialogTitle>{t("bookmarks.complete.complete")}</DialogTitle>
+          <form id={formId()} onSubmit={onSubmit}>
             <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
-            <BookmarkFields
-              initialData={initialData()}
+            <CompleteFields
+              initialData={props.bookmark}
               pending={submission.pending}
               result={submission.result}
             />
@@ -70,7 +61,7 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
               isLoading={submission.pending}
               type="submit"
             >
-              {t("common.save")}
+              {t("bookmarks.complete.complete")}
             </Button>
           </DialogActions>
         </DialogBox>

@@ -6,6 +6,7 @@ import {
   DialogBackdrop,
   DialogBox,
   DialogClose,
+  DialogTitle,
 } from "../dialog/dialog";
 import { FormError } from "../form-error/form-error";
 
@@ -23,7 +24,7 @@ export const AlertDialog: Component<AlertDialogProps> = (props) => {
   return (
     <Dialog id={props.id}>
       <DialogBox>
-        <h3>{props.title}</h3>
+        <DialogTitle>{props.title}</DialogTitle>
         <Show when={props.description}>
           <p>{props.description}</p>
         </Show>

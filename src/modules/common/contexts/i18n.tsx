@@ -31,6 +31,12 @@ const enDict = {
   bookmarks: {
     loadMore: "Load More",
     share: "Share",
+    complete: {
+      complete: "Complete",
+      done: "Done",
+      rate: "Rate",
+      note: "Note",
+    },
     form: {
       title: "Title",
       text: "Text",
