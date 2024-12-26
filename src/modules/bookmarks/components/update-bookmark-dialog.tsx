@@ -47,7 +47,7 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
     return {
       ...props.bookmark,
       tags: props.bookmark.bookmarks_tags.map(
-        (bookmarkTag) => bookmarkTag.tag_id,
+        (bookmarkTag) => bookmarkTag.tags.id,
       ),
     };
   };

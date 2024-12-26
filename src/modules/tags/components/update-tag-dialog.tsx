@@ -22,8 +22,8 @@ type UpdateTagDialogProps = {
 export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
   const { t } = useI18n();
 
-  const dialogId = createMemo(() => `update-tag-dialog-${props.tag.id}`);
-  const formId = createMemo(() => `update-tag-form-${props.tag.id}`);
+  const dialogId = createMemo(() => `update-dialog-${props.tag.id}`);
+  const formId = createMemo(() => `update-form-${props.tag.id}`);
 
   const submission = useSubmission(
     updateTagAction,

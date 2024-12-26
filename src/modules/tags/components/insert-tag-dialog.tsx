@@ -17,8 +17,8 @@ import { TagFields } from "./tag-fields";
 export const InsertTagDialog: Component = () => {
   const { t } = useI18n();
 
-  const dialogId = "insert-tag-dialog";
-  const formId = "insert-tag-form";
+  const dialogId = "insert-dialog";
+  const formId = "insert-form";
 
   const submission = useSubmission(insertTagAction);
   const action = useAction(insertTagAction);

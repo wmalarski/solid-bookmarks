@@ -13,7 +13,7 @@ type DeleteTagFormProps = {
 export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
   const { t } = useI18n();
 
-  const dialogId = createMemo(() => `delete-tag-dialog-${props.tag.id}`);
+  const dialogId = createMemo(() => `delete-dialog-${props.tag.id}`);
 
   const submission = useSubmission(
     deleteTagAction,
@@ -34,11 +34,11 @@ export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
   };
 
   return (
-    <form onSubmit={onSubmit} method="post">
+    <form onSubmit={onSubmit}>
       <input type="hidden" value={props.tag.id} name="tagId" />
       <DialogTrigger for={dialogId()}>{t("common.delete")}</DialogTrigger>
       <AlertDialog
-        confirm={t("common.save")}
+        confirm={t("common.delete")}
         confirmColor="warning"
         title={t("common.delete")}
         pending={submission.pending}
