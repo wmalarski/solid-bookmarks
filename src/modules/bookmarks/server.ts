@@ -55,30 +55,6 @@ export const insertBookmark = async (form: FormData) => {
   throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
 };
 
-export const insertBookmarkTag = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
-
-  const parsed = await v.safeParseAsync(
-    v.object({ bookmarkId: v.number(), tagId: v.number() }),
-    decode(form, { numbers: ["bookmarkId", "tagId"] }),
-  );
-
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
-
-  const result = await event.locals.supabase.from("bookmarks_tags").insert({
-    bookmark_id: parsed.output.bookmarkId,
-    tag_id: parsed.output.tagId,
-  });
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
-};
-
 export const deleteBookmark = async (form: FormData) => {
   const event = getRequestEventOrThrow();
 
@@ -103,28 +79,36 @@ export const deleteBookmark = async (form: FormData) => {
   throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
 };
 
-export const deleteBookmarkTag = async (form: FormData) => {
+type UpdateBookmarkTagsArgs = {
+  bookmarkId: number;
+  existingTags: { tag_id: number; id: number }[];
+  formTags: number[];
+};
+
+const updateBookmarkTags = ({
+  bookmarkId,
+  existingTags,
+  formTags,
+}: UpdateBookmarkTagsArgs) => {
   const event = getRequestEventOrThrow();
 
-  const parsed = await v.safeParseAsync(
-    v.object({ bookmarkTagId: v.number() }),
-    decode(form, { numbers: ["bookmarkTagId"] }),
-  );
+  const existingTagsSet = new Set(existingTags.map((tag) => tag.tag_id));
+  const formTagsSet = new Set(formTags);
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+  const toAdd = formTags.filter((tag) => !existingTagsSet.has(tag));
+  const toRemove = existingTags
+    .filter((tag) => !formTagsSet.has(tag.tag_id))
+    .map((tag) => tag.id);
 
-  const result = await event.locals.supabase
-    .from("bookmarks_tags")
-    .delete()
-    .eq("id", parsed.output.bookmarkTagId);
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+  return Promise.all([
+    event.locals.supabase.from("bookmarks_tags").delete().in("id", toRemove),
+    event.locals.supabase.from("bookmarks_tags").insert(
+      toAdd.map((tagId) => ({
+        bookmark_id: bookmarkId,
+        tag_id: tagId,
+      })),
+    ),
+  ]);
 };
 
 export const updateBookmark = async (form: FormData) => {
@@ -158,14 +142,26 @@ export const updateBookmark = async (form: FormData) => {
     .from("bookmarks")
     .update(values)
     .eq("id", bookmarkId)
-    .select("*, bookmarks_tags ( tag_id )")
+    .select("*, bookmarks_tags ( id, tag_id )")
     .single();
 
   if (result.error) {
     return rpcErrorResult(result.error);
   }
 
-  console.log("result", result.data, tags);
+  const [deleteResult, insertResult] = await updateBookmarkTags({
+    bookmarkId,
+    existingTags: result.data.bookmarks_tags,
+    formTags: tags,
+  });
+
+  if (deleteResult.error) {
+    return rpcErrorResult(deleteResult.error);
+  }
+
+  if (insertResult.error) {
+    return rpcErrorResult(insertResult.error);
+  }
 
   throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
 };
