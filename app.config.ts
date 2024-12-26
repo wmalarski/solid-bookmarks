@@ -46,9 +46,8 @@ export default defineConfig({
             }),
           ),
           share_target: {
-            action: "/api/share/",
-            enctype: "multipart/form-data",
-            method: "POST",
+            action: "/share/",
+            method: "GET",
             params: { title: "title", text: "text", url: "url", files: [] },
           },
         },
