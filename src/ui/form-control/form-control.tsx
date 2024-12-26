@@ -1,8 +1,17 @@
-import type { Component, ComponentProps } from "solid-js";
-import { twCx } from "../utils/tw-cva";
+import type { VariantProps } from "class-variance-authority";
+import { splitProps, type Component, type ComponentProps } from "solid-js";
+import { formControlRecipe } from "./form-control.recipe";
 
-export type FormControlProps = ComponentProps<"fieldset">;
+export type FormControlProps = ComponentProps<"fieldset"> &
+  VariantProps<typeof formControlRecipe>;
 
 export const FormControl: Component<FormControlProps> = (props) => {
-  return <fieldset {...props} class={twCx("form-control", props.class)} />;
+  const [variants, withoutVariants] = splitProps(props, ["direction"]);
+
+  return (
+    <fieldset
+      {...withoutVariants}
+      class={formControlRecipe({ ...variants, class: props.class })}
+    />
+  );
 };

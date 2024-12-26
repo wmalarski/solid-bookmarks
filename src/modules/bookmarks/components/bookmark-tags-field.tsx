@@ -30,7 +30,7 @@ export const BookmarkTagsField: Component<BookmarkTagsFieldProps> = (props) => {
 
                 return (
                   <li>
-                    <FormControl class="flex-row items-center gap-2">
+                    <FormControl direction="horizontal">
                       <Checkbox
                         id={id}
                         type="checkbox"

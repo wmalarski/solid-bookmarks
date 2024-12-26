@@ -1,10 +1,9 @@
-import { Show, type Component, type ParentProps } from "solid-js";
+import { For, Show, type Component, type ParentProps } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { createDateFormatter } from "~/modules/common/utils/formatters";
+import { Badge } from "~/ui/badge/badge";
 import { Card, CardActions, CardBody } from "~/ui/card/card";
 import type { BookmarkWithTagsModel } from "../server";
-import { BookmarkPreview } from "./bookmark-preview";
-import { BookmarkTagsList } from "./bookmark-tags-list";
 import { CompleteDialog } from "./complete-dialog";
 import { DeleteBookmarkForm } from "./delete-bookmark-form";
 import { UpdateBookmarkDialog } from "./update-bookmark-dialog";
@@ -61,4 +60,32 @@ const GridTitle: Component<ParentProps> = (props) => {
 
 const GridText: Component<ParentProps> = (props) => {
   return <span>{props.children}</span>;
+};
+
+type BookmarkPreviewProps = {
+  bookmark: BookmarkWithTagsModel;
+};
+
+const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
+  return (
+    <pre>{JSON.stringify({ preview: props.bookmark.preview }, null, 2)}</pre>
+  );
+};
+
+type BookmarkTagsListProps = {
+  bookmark: BookmarkWithTagsModel;
+};
+
+const BookmarkTagsList: Component<BookmarkTagsListProps> = (props) => {
+  return (
+    <ul class="flex flex-wrap flex-row gap-2">
+      <For each={props.bookmark.bookmarks_tags}>
+        {(bookmarkTag) => (
+          <li>
+            <Badge color="primary">{bookmarkTag.tags.name}</Badge>
+          </li>
+        )}
+      </For>
+    </ul>
+  );
 };

@@ -6,6 +6,8 @@ import { Button } from "~/ui/button/button";
 import { selectBookmarksQuery } from "../client";
 import { SELECT_BOOKMARKS_DEFAULT_LIMIT } from "../const";
 import type { BookmarkWithTagsModel } from "../server";
+import { useFiltersSearchParams } from "../utils/use-filters-search-params";
+import { BookmarkFilters } from "./bookmark-filters";
 import { BookmarkListItem } from "./bookmark-list-item";
 
 type BookmarkListProps = {
@@ -15,6 +17,8 @@ type BookmarkListProps = {
 
 export const BookmarkList: Component<BookmarkListProps> = (props) => {
   const { t } = useI18n();
+
+  const { filtersParams, setFiltersParams } = useFiltersSearchParams();
 
   const [offsets, setOffsets] = createSignal<number[]>([]);
 
@@ -27,6 +31,7 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
 
   return (
     <div class="w-full max-w-xl flex flex-col gap-2 py-4">
+      <BookmarkFilters params={filtersParams()} onSubmit={setFiltersParams} />
       <ul class="flex flex-col gap-4">
         <BookmarkListPart bookmarks={props.initialBookmarks} />
         <For each={offsets()}>

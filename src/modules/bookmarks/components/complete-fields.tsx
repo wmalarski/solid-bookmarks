@@ -23,7 +23,7 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
     <div class="flex flex-col gap-4">
       <FormError message={props.result?.error} />
 
-      <FormControl class="flex flex-row gap-4 items-center">
+      <FormControl direction="horizontal">
         <Checkbox
           id="done"
           name="done"
