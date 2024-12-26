@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "~/ui/dialog/dialog";
 import { FormControl } from "~/ui/form-control/form-control";
+import { FilterIcon } from "~/ui/icons/filter-icon";
 import { Label, LabelText } from "~/ui/label/label";
 import { Radio } from "~/ui/radio/radio";
 import {
@@ -43,7 +44,8 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
 
   return (
     <>
-      <DialogTrigger for={dialogId()}>
+      <DialogTrigger for={dialogId()} size="sm" color="secondary">
+        <FilterIcon class="size-4" />
         {t("bookmarks.filters.filters")}
       </DialogTrigger>
       <Dialog id={dialogId()}>
@@ -57,7 +59,7 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
           <DialogActions>
             <DialogClose />
             <Button form={formId()} color="primary" type="submit">
-              {t("bookmarks.complete.complete")}
+              {t("common.save")}
             </Button>
           </DialogActions>
         </DialogBox>

@@ -30,8 +30,11 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
   };
 
   return (
-    <div class="w-full max-w-xl flex flex-col gap-2 py-4">
-      <BookmarkFilters params={props.filterSearchParams} />
+    <div class="w-full max-w-xl flex flex-col gap-2 py-4 px-2">
+      <div class="w-full flex justify-between gap-2">
+        <h2 class="text-xl">{t("bookmarks.title")}</h2>
+        <BookmarkFilters params={props.filterSearchParams} />
+      </div>
       <ul class="flex flex-col gap-4">
         <BookmarkListPart bookmarks={props.initialBookmarks} />
         <For each={offsets()}>
@@ -40,7 +43,9 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
           )}
         </For>
       </ul>
-      <Button onClick={onLoadMoreClick}>{t("bookmarks.loadMore")}</Button>
+      <Button size="sm" color="secondary" onClick={onLoadMoreClick}>
+        {t("bookmarks.loadMore")}
+      </Button>
     </div>
   );
 };

@@ -18,7 +18,6 @@ export const Card: Component<CardProps> = (props) => {
     "variant",
     "size",
     "color",
-    "bg",
   ]);
 
   return (

@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
+import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { updateTagAction } from "../client";
 import type { TagModel } from "../server";
 import { TagFields } from "./tag-fields";
@@ -39,7 +40,10 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
 
   return (
     <>
-      <DialogTrigger for={dialogId()}>{t("common.update")}</DialogTrigger>
+      <DialogTrigger for={dialogId()} size="sm" color="secondary">
+        <PencilIcon class="size-4" />
+        {t("common.update")}
+      </DialogTrigger>
       <Dialog id={dialogId()}>
         <DialogBox>
           <DialogTitle>{t("common.update")}</DialogTitle>

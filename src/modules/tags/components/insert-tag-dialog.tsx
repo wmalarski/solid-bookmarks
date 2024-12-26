@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
+import { PlusIcon } from "~/ui/icons/plus-icon";
 import { insertTagAction } from "../client";
 import { TagFields } from "./tag-fields";
 
@@ -31,7 +32,8 @@ export const InsertTagDialog: Component = () => {
 
   return (
     <>
-      <DialogTrigger color="primary" for={dialogId}>
+      <DialogTrigger color="primary" for={dialogId} size="sm">
+        <PlusIcon class="size-4" />
         {t("tags.form.add")}
       </DialogTrigger>
       <Dialog id={dialogId}>

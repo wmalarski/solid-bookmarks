@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
+import { CheckIcon } from "~/ui/icons/check-icon";
 import { completeBookmarkAction } from "../client";
 import type { BookmarkWithTagsModel } from "../server";
 import { CompleteFields } from "./complete-fields";
@@ -38,7 +39,8 @@ export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
 
   return (
     <>
-      <DialogTrigger for={dialogId()}>
+      <DialogTrigger for={dialogId()} size="sm" color="primary">
+        <CheckIcon class="size-4" />
         {t("bookmarks.complete.complete")}
       </DialogTrigger>
       <Dialog id={dialogId()}>

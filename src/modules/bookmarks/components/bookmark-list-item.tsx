@@ -18,11 +18,11 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
   const formatDate = createDateFormatter();
 
   return (
-    <Card variant="bordered" size="compact" bg="base-100" class="w-full">
+    <Card variant="bordered" size="compact" class="w-full">
       <CardBody class="">
         <BookmarkTagsList bookmark={props.bookmark} />
         <BookmarkPreview bookmark={props.bookmark} />
-        <div class="grid grid-cols-2 gap-4 pb-4">
+        <div class="grid grid-cols-2 gap-2 pb-4">
           <GridTitle>{t("bookmarks.item.title")}</GridTitle>
           <GridText>{props.bookmark.title}</GridText>
           <GridTitle>{t("bookmarks.item.text")}</GridTitle>
@@ -55,7 +55,7 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
 };
 
 const GridTitle: Component<ParentProps> = (props) => {
-  return <span class="font-semibold">{props.children}</span>;
+  return <span class="font-semibold text-base">{props.children}</span>;
 };
 
 const GridText: Component<ParentProps> = (props) => {
@@ -82,7 +82,7 @@ const BookmarkTagsList: Component<BookmarkTagsListProps> = (props) => {
       <For each={props.bookmark.bookmarks_tags}>
         {(bookmarkTag) => (
           <li>
-            <Badge color="primary">{bookmarkTag.tags.name}</Badge>
+            <Badge color="accent">{bookmarkTag.tags.name}</Badge>
           </li>
         )}
       </For>

@@ -2,17 +2,11 @@ import { twCva } from "../utils/tw-cva";
 
 export const cardRecipe = twCva("card", {
   defaultVariants: {
-    bg: null,
     color: null,
     size: null,
     variant: null,
   },
   variants: {
-    bg: {
-      "base-100": "bg-base-100",
-      "base-200": "bg-base-200",
-      "base-300": "bg-base-300",
-    },
     color: {
       accent: "border-l-8 border-l-accent",
       black: "border-l-8 border-l-neutral",

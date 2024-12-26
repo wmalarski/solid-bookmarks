@@ -10,7 +10,7 @@ export const SignUpSuccess: Component = () => {
   const { t } = useI18n();
 
   return (
-    <Card bg="base-200" class="w-full max-w-md" variant="bordered">
+    <Card class="w-full max-w-md" variant="bordered">
       <CardBody class="items-center">
         <CheckCircleIcon class="size-10 text-success" />
         <header class="flex items-center justify-between gap-2 text-success">

@@ -4,6 +4,7 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { AlertDialog } from "~/ui/alert-dialog/alert-dialog";
 import { closeDialog, DialogTrigger } from "~/ui/dialog/dialog";
+import { TrashIcon } from "~/ui/icons/trash-icon";
 import { deleteBookmarkAction } from "../client";
 import type { BookmarkWithTagsModel } from "../server";
 
@@ -31,10 +32,13 @@ export const DeleteBookmarkForm: Component<DeleteBookmarkFormProps> = (
   return (
     <form onSubmit={onSubmit}>
       <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
-      <DialogTrigger for={dialogId()}>{t("common.delete")}</DialogTrigger>
+      <DialogTrigger for={dialogId()} color="error" size="sm">
+        <TrashIcon class="size-4" />
+        {t("common.delete")}
+      </DialogTrigger>
       <AlertDialog
         confirm={t("common.delete")}
-        confirmColor="warning"
+        confirmColor="error"
         title={t("common.delete")}
         pending={submission.pending}
         id={dialogId()}

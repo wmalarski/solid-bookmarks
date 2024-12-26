@@ -17,7 +17,7 @@ export default function TagsPage() {
   const tags = createAsync(() => selectTagsQuery({}));
 
   return (
-    <div class="flex flex-col gap-4">
+    <div class="w-full max-w-xl flex flex-col gap-4 py-4 px-2">
       <div class="flex justify-between gap-2 items-center">
         <h2 class="text-xl">{t("tags.heading")}</h2>
         <InsertTagDialog />

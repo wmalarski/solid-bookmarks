@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
+import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { updateBookmarkAction } from "../client";
 import type { BookmarkWithTagsModel } from "../server";
 import { BookmarkFields } from "./bookmark-fields";
@@ -49,7 +50,10 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
 
   return (
     <>
-      <DialogTrigger for={dialogId()}>{t("common.update")}</DialogTrigger>
+      <DialogTrigger for={dialogId()} size="sm" color="secondary">
+        <PencilIcon class="size-4" />
+        {t("common.update")}
+      </DialogTrigger>
       <Dialog id={dialogId()}>
         <DialogBox>
           <DialogTitle>{t("common.update")}</DialogTitle>

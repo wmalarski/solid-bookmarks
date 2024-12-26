@@ -1,4 +1,5 @@
 import type { Component, ParentProps } from "solid-js";
+import { BookmarkIcon } from "~/ui/icons/bookmark-icon";
 import { Link } from "~/ui/link/link";
 import { useI18n } from "../contexts/i18n";
 import { paths } from "../utils/paths";
@@ -8,6 +9,7 @@ export const PageTitle: Component = () => {
 
   return (
     <h1 class="my-16 flex items-center text-center text-4xl uppercase sm:text-6xl">
+      <BookmarkIcon />
       <Link hover={true} href={paths.home}>
         {t("info.title")}
       </Link>

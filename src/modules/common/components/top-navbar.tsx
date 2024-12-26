@@ -2,6 +2,7 @@ import { type Component, Show } from "solid-js";
 import { SignOutButton } from "~/modules/auth/components/sign-out-button";
 import { useUserContext } from "~/modules/auth/contexts/user-context";
 import { LinkButton } from "~/ui/button/button";
+import { BookmarkIcon } from "~/ui/icons/bookmark-icon";
 import { Link } from "~/ui/link/link";
 import { Navbar, NavbarEnd, NavbarStart } from "~/ui/navbar/navbar";
 import { useI18n } from "../contexts/i18n";
@@ -17,10 +18,11 @@ export const TopNavbar: Component = () => {
       <NavbarStart class="gap-6">
         <h1>
           <Link
-            class="text-xl lg:text-3xl uppercase"
+            class="flex gap-1 text-xl lg:text-3xl uppercase"
             hover={true}
             href={paths.home}
           >
+            <BookmarkIcon />
             {t("info.title")}
           </Link>
         </h1>

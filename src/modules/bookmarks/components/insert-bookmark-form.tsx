@@ -4,6 +4,7 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import { Card, CardBody } from "~/ui/card/card";
 import { cardTitleRecipe } from "~/ui/card/card.recipe";
+import { PlusIcon } from "~/ui/icons/plus-icon";
 import { insertBookmarkAction } from "../client";
 import { BookmarkFields, type BookmarkFieldsData } from "./bookmark-fields";
 
@@ -19,7 +20,7 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
   const submission = useSubmission(insertBookmarkAction);
 
   return (
-    <Card bg="base-200" class="w-full max-w-md mt-4" variant="bordered">
+    <Card class="w-full max-w-md mt-4" variant="bordered">
       <CardBody>
         <header class="flex items-center justify-between gap-2">
           <h2 class={cardTitleRecipe()}>{t("bookmarks.share")}</h2>
@@ -35,6 +36,7 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
             result={submission.result}
           />
           <Button color="primary" size="sm" type="submit">
+            <PlusIcon class="size-4" />
             {t("common.save")}
           </Button>
         </form>
