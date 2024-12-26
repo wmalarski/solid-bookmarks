@@ -1,7 +1,9 @@
 import { createMemo, For, type Component, type ComponentProps } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
+import { Checkbox } from "~/ui/checkbox/checkbox";
 import {
+  closeDialog,
   Dialog,
   DialogActions,
   DialogBox,
@@ -17,7 +19,7 @@ import { BookmarkTagsField } from "./bookmark-tags-field";
 
 type BookmarkFiltersProps = {
   params: FiltersSearchParams;
-  onSubmit: (params: FiltersSearchParams) => void;
+  onSubmit: (params: FormData) => void;
 };
 
 export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
@@ -30,22 +32,23 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    props.onSubmit(formData);
 
-    console.log(formData);
+    closeDialog(dialogId());
   };
 
   return (
     <>
       <DialogTrigger for={dialogId()}>
-        {t("bookmarks.complete.complete")}
+        {t("bookmarks.filters.filters")}
       </DialogTrigger>
       <Dialog id={dialogId()}>
         <DialogBox>
-          <DialogTitle>{t("bookmarks.complete.complete")}</DialogTitle>
+          <DialogTitle>{t("bookmarks.filters.filters")}</DialogTitle>
           <form id={formId()} onSubmit={onSubmit} class="flex flex-col gap-4">
             <RandomFilter random={props.params.random} />
             <DoneFilter done={props.params.done} />
-            <BookmarkTagsField initialTags={props.params.tags} />
+            <BookmarkTagsField initialTags={props.params["tags[]"]} />
           </form>
           <DialogActions>
             <DialogClose />
@@ -100,7 +103,7 @@ const RandomFilter: Component<RandomFilterProps> = (props) => {
 
   return (
     <FormControl direction="horizontal">
-      <Radio id="random" checked={props.random} name="random" />
+      <Checkbox id="random" checked={props.random === "on"} name="random" />
       <Label for="random">
         <LabelText>{t("bookmarks.filters.random")}</LabelText>
       </Label>

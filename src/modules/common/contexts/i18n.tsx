@@ -59,6 +59,7 @@ const enDict = {
       completed: "Completed",
       uncompleted: "Uncompleted",
       all: "All",
+      filters: "Filters",
     },
   },
   tags: {

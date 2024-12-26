@@ -1,23 +1,48 @@
 import { useSearchParams } from "@solidjs/router";
+import { decode } from "decode-formdata";
 import { createMemo } from "solid-js";
 import * as v from "valibot";
 
+const createDoneSchema = () => {
+  return v.optional(
+    v.union([
+      v.literal("all"),
+      v.literal("completed"),
+      v.literal("uncompleted"),
+    ]),
+    "all",
+  );
+};
+
+const createRandomSchema = () => {
+  return v.optional(
+    v.pipe(v.union([v.literal("on"), v.literal("off")])),
+    "off",
+  );
+};
+
+const createFiltersFormSchema = () => {
+  return v.object({
+    done: createDoneSchema(),
+    random: createRandomSchema(),
+    "tags[]": v.optional(v.array(v.number()), []),
+  });
+};
+
 export const createFiltersSearchParamsSchema = () => {
   return v.object({
-    done: v.optional(
+    done: createDoneSchema(),
+    random: createRandomSchema(),
+    "tags[]": v.optional(
       v.union([
-        v.literal("all"),
-        v.literal("completed"),
-        v.literal("uncompleted"),
+        v.array(v.pipe(v.string(), v.transform(Number))),
+        v.pipe(
+          v.string(),
+          v.transform(Number),
+          v.transform((value) => [value]),
+        ),
       ]),
-      "all",
-    ),
-    tags: v.optional(v.array(v.pipe(v.string(), v.transform(Number))), []),
-    random: v.optional(
-      v.pipe(
-        v.string(),
-        v.transform((value) => value === "true"),
-      ),
+      [],
     ),
   });
 };
@@ -29,18 +54,20 @@ export type FiltersSearchParams = v.InferOutput<
 export const useFiltersSearchParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const filtersParams = createMemo(() => {
+  const filtersParams = createMemo((): FiltersSearchParams => {
     const schema = createFiltersSearchParamsSchema();
-
-    const parsed = v.parse(schema, searchParams);
-
-    console.log({ searchParams, parsed });
-
-    return parsed;
+    return v.parse(schema, searchParams);
   });
 
-  const setFiltersParams = (params: FiltersSearchParams) => {
-    setSearchParams(params);
+  const setFiltersParams = (formData: FormData) => {
+    const decoded = decode(formData, {
+      arrays: ["tags[]"],
+      numbers: ["tags[]"],
+    });
+
+    const parsed = v.parse(createFiltersFormSchema(), decoded);
+
+    setSearchParams(parsed);
   };
 
   return { filtersParams, setFiltersParams };
