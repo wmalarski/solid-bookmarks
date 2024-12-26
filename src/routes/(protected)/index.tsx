@@ -13,16 +13,13 @@ export default function HomePage() {
   const bookmarks = createAsync(() => selectBookmarksQuery({}));
 
   return (
-    <>
-      <h1>A App</h1>
-      <RpcShow result={bookmarks()}>
-        {(bookmarks) => (
-          <BookmarkList
-            count={bookmarks().count ?? 0}
-            initialBookmarks={bookmarks().data}
-          />
-        )}
-      </RpcShow>
-    </>
+    <RpcShow result={bookmarks()}>
+      {(bookmarks) => (
+        <BookmarkList
+          count={bookmarks().count ?? 0}
+          initialBookmarks={bookmarks().data}
+        />
+      )}
+    </RpcShow>
   );
 }

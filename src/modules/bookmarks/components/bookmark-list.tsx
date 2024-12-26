@@ -26,8 +26,8 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
   };
 
   return (
-    <div>
-      <ul>
+    <div class="w-full max-w-xl flex flex-col gap-2 py-4">
+      <ul class="flex flex-col gap-4">
         <BookmarkListPart bookmarks={props.initialBookmarks} />
         <For each={offsets()}>
           {(offset) => <BookmarkLazy offset={offset} />}
