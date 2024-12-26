@@ -42,7 +42,9 @@ export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
         title={t("common.delete")}
         pending={submission.pending}
         id={dialogId()}
-        errorMessage={submission.result?.error}
+        errorMessage={
+          submission.result?.success ? undefined : submission.result?.error
+        }
       />
     </form>
   );

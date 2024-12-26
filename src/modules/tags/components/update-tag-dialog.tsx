@@ -51,7 +51,9 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
             <input type="hidden" value={props.tag.id} name="tagId" />
             <TagFields
               pending={submission.pending}
-              result={submission.result}
+              result={
+                submission.result?.success ? undefined : submission.result
+              }
             />
           </form>
           <DialogActions>
