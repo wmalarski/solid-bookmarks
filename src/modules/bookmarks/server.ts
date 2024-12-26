@@ -117,17 +117,13 @@ export const updateBookmark = async (form: FormData) => {
   const parsed = await v.safeParseAsync(
     v.object({
       bookmarkId: v.number(),
-      done: v.optional(v.boolean()),
-      note: v.optional(v.string()),
-      rate: v.optional(v.number()),
       text: v.optional(v.string()),
       title: v.optional(v.string()),
       url: v.optional(v.string()),
       "tags[]": v.optional(v.array(v.number()), []),
     }),
     decode(form, {
-      numbers: ["bookmarkId", "rate", "tags[]"],
-      booleans: ["done"],
+      numbers: ["bookmarkId", "tags[]"],
       arrays: ["tags[]"],
     }),
   );
@@ -161,6 +157,40 @@ export const updateBookmark = async (form: FormData) => {
 
   if (insertResult.error) {
     return rpcErrorResult(insertResult.error);
+  }
+
+  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+};
+
+export const completeBookmark = async (form: FormData) => {
+  const event = getRequestEventOrThrow();
+
+  const parsed = await v.safeParseAsync(
+    v.object({
+      bookmarkId: v.number(),
+      done: v.optional(v.boolean()),
+      note: v.optional(v.string()),
+      rate: v.optional(v.number()),
+    }),
+    decode(form, {
+      numbers: ["bookmarkId", "rate"],
+      booleans: ["done"],
+    }),
+  );
+
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
+
+  const { bookmarkId, ...values } = parsed.output;
+
+  const result = await event.locals.supabase
+    .from("bookmarks")
+    .update({ ...values, done_at: new Date().toISOString() })
+    .eq("id", bookmarkId);
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
   }
 
   throw reload({ revalidate: BOOKMARKS_QUERY_KEY });

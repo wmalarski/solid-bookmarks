@@ -38,8 +38,10 @@ export type Database = {
         Row: {
           created_at: string
           done: boolean
+          done_at: string | null
           id: number
           note: string | null
+          preview: string | null
           rate: number | null
           text: string
           title: string
@@ -49,8 +51,10 @@ export type Database = {
         Insert: {
           created_at?: string
           done?: boolean
+          done_at?: string | null
           id?: number
           note?: string | null
+          preview?: string | null
           rate?: number | null
           text?: string
           title?: string
@@ -60,8 +64,10 @@ export type Database = {
         Update: {
           created_at?: string
           done?: boolean
+          done_at?: string | null
           id?: number
           note?: string | null
+          preview?: string | null
           rate?: number | null
           text?: string
           title?: string
