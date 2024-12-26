@@ -1,5 +1,5 @@
 import { createAsync } from "@solidjs/router";
-import { createSignal, For, Suspense, type Component } from "solid-js";
+import { type Component, For, Suspense, createSignal } from "solid-js";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";

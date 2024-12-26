@@ -1,4 +1,4 @@
-import { createAsync, type RouteDefinition } from "@solidjs/router";
+import { type RouteDefinition, createAsync } from "@solidjs/router";
 import { createMemo } from "solid-js";
 import { selectBookmarksQuery } from "~/modules/bookmarks/client";
 import { BookmarkList } from "~/modules/bookmarks/components/bookmark-list";

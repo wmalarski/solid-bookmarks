@@ -1,8 +1,8 @@
 import {
-  Show,
-  splitProps,
   type Component,
   type ComponentProps,
+  Show,
+  splitProps,
 } from "solid-js";
 import { twCx } from "../utils/tw-cva";
 

@@ -1,5 +1,5 @@
 import type { VariantProps } from "class-variance-authority";
-import { splitProps, type Component, type ComponentProps } from "solid-js";
+import { type Component, type ComponentProps, splitProps } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { buttonSplitProps } from "../button/button";
 import { buttonRecipe } from "../button/button.recipe";

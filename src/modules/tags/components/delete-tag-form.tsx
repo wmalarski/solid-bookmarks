@@ -1,9 +1,9 @@
 import { useSubmission } from "@solidjs/router";
-import { createMemo, type Component } from "solid-js";
+import { type Component, createMemo } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { AlertDialog } from "~/ui/alert-dialog/alert-dialog";
-import { closeDialog, DialogTrigger } from "~/ui/dialog/dialog";
+import { DialogTrigger, closeDialog } from "~/ui/dialog/dialog";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { deleteTagAction } from "../client";
 import type { TagModel } from "../server";

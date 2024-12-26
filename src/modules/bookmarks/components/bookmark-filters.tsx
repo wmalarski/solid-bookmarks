@@ -1,23 +1,23 @@
-import { createMemo, For, type Component, type ComponentProps } from "solid-js";
+import { type Component, type ComponentProps, For, createMemo } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import { Checkbox } from "~/ui/checkbox/checkbox";
 import {
-  closeDialog,
   Dialog,
   DialogActions,
   DialogBox,
   DialogClose,
   DialogTitle,
   DialogTrigger,
+  closeDialog,
 } from "~/ui/dialog/dialog";
 import { FormControl } from "~/ui/form-control/form-control";
 import { FilterIcon } from "~/ui/icons/filter-icon";
 import { Label, LabelText } from "~/ui/label/label";
 import { Radio } from "~/ui/radio/radio";
 import {
-  useSetFiltersSearchParams,
   type FiltersSearchParams,
+  useSetFiltersSearchParams,
 } from "../utils/use-filters-search-params";
 import { BookmarkTagsField } from "./bookmark-tags-field";
 

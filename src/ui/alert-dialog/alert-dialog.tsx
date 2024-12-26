@@ -1,4 +1,4 @@
-import { Show, type Component } from "solid-js";
+import { type Component, Show } from "solid-js";
 import { Button, type ButtonProps } from "../button/button";
 import {
   Dialog,
