@@ -6,30 +6,32 @@ import {
   closeDialog,
   Dialog,
   DialogActions,
-  DialogBackdrop,
   DialogBox,
   DialogClose,
   DialogTrigger,
 } from "~/ui/dialog/dialog";
-import { updateTagAction } from "../client";
-import type { TagModel } from "../server";
-import { TagFields } from "./tag-fields";
+import { updateBookmarkAction } from "../client";
+import type { BookmarkWithTagsModel } from "../server";
+import { BookmarkFields } from "./bookmark-fields";
 
-type UpdateTagDialogProps = {
-  tag: TagModel;
+type UpdateBookmarkDialogProps = {
+  bookmark: BookmarkWithTagsModel;
 };
 
-export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
+export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
+  props,
+) => {
   const { t } = useI18n();
 
-  const dialogId = createMemo(() => `update-tag-dialog-${props.tag.id}`);
-  const formId = createMemo(() => `update-tag-form-${props.tag.id}`);
+  const dialogId = createMemo(() => `update-dialog-${props.bookmark.id}`);
+  const formId = createMemo(() => `update-form-${props.bookmark.id}`);
 
   const submission = useSubmission(
-    updateTagAction,
-    ([form]) => form.get("tagId") === String(props.tag.id),
+    updateBookmarkAction,
+    ([form]) => form.get("bookmarkId") === String(props.bookmark.id),
   );
-  const action = useAction(updateTagAction);
+
+  const action = useAction(updateBookmarkAction);
 
   const onSubmit: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -41,19 +43,27 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
     }
   };
 
+  const initialData = () => {
+    return {
+      ...props.bookmark,
+      tags: props.bookmark.bookmarks_tags.map(
+        (bookmarkTag) => bookmarkTag.tag_id,
+      ),
+    };
+  };
+
   return (
     <>
       <DialogTrigger for={dialogId()}>{t("common.update")}</DialogTrigger>
       <Dialog id={dialogId()}>
         <DialogBox>
-          <h3>{t("common.update")}</h3>
-          <form id={formId()} onSubmit={onSubmit}>
-            <input type="hidden" value={props.tag.id} name="tagId" />
-            <TagFields
+          <h3>{t("bookmarks.form.title")}</h3>
+          <form id={formId()} onSubmit={onSubmit} class="flex flex-col gap-6">
+            <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
+            <BookmarkFields
+              initialData={initialData()}
               pending={submission.pending}
-              result={
-                submission.result?.success ? undefined : submission.result
-              }
+              result={submission.result}
             />
           </form>
           <DialogActions>
@@ -69,7 +79,6 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
             </Button>
           </DialogActions>
         </DialogBox>
-        <DialogBackdrop />
       </Dialog>
     </>
   );

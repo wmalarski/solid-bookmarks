@@ -33,6 +33,7 @@ export const SignUpForm: Component = () => {
             result={submission.result?.success ? undefined : submission.result}
           />
           <Button
+            color="primary"
             disabled={submission.pending}
             isLoading={submission.pending}
             type="submit"

@@ -1,5 +1,5 @@
 import { Show, type Component } from "solid-js";
-import { Button } from "../button/button";
+import { Button, type ButtonProps } from "../button/button";
 import {
   Dialog,
   DialogActions,
@@ -14,6 +14,7 @@ type AlertDialogProps = {
   title: string;
   description?: string;
   confirm: string;
+  confirmColor?: ButtonProps["color"];
   pending?: boolean;
   errorMessage?: string;
 };
@@ -31,6 +32,7 @@ export const AlertDialog: Component<AlertDialogProps> = (props) => {
           <DialogClose />
           <Button
             type="submit"
+            color={props.confirmColor}
             disabled={props.pending}
             isLoading={props.pending}
           >

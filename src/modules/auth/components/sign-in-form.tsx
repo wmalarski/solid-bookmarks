@@ -23,6 +23,7 @@ export const SignInForm: Component = () => {
         <form action={signInAction} method="post" class="flex flex-col gap-4">
           <AuthFields pending={submission.pending} result={submission.result} />
           <Button
+            color="primary"
             disabled={submission.pending}
             isLoading={submission.pending}
             type="submit"

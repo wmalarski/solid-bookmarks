@@ -53,6 +53,7 @@ export const InsertTagDialog: Component = () => {
             <DialogClose />
             <Button
               form={formId}
+              color="primary"
               disabled={submission.pending}
               isLoading={submission.pending}
               type="submit"

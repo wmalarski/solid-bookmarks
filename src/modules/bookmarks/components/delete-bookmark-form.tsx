@@ -20,6 +20,7 @@ export const DeleteBookmarkForm: Component<DeleteBookmarkFormProps> = (
     <form action={deleteBookmarkAction} method="post">
       <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
       <Button
+        color="warning"
         disabled={submission.pending}
         isLoading={submission.pending}
         type="submit"

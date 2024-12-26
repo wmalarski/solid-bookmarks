@@ -39,6 +39,7 @@ export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
       <DialogTrigger for={dialogId()}>{t("common.delete")}</DialogTrigger>
       <AlertDialog
         confirm={t("common.save")}
+        confirmColor="warning"
         title={t("common.delete")}
         pending={submission.pending}
         id={dialogId()}

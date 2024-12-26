@@ -42,9 +42,7 @@ const enDict = {
     heading: "Tags",
     form: {
       add: "Add tag",
-      update: "Update",
       name: "Name",
-      delete: "Delete",
     },
   },
   auth: {
@@ -63,6 +61,7 @@ const enDict = {
   common: {
     closeDialog: "Close",
     save: "Save",
+    update: "Update",
     delete: "Delete",
   },
 };
