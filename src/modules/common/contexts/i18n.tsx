@@ -53,6 +53,13 @@ const enDict = {
       rate: "Rate:",
       note: "Note:",
     },
+    filters: {
+      random: "Random",
+      tags: "Tags",
+      completed: "Completed",
+      uncompleted: "Uncompleted",
+      all: "All",
+    },
   },
   tags: {
     heading: "Tags",
