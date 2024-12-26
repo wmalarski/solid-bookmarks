@@ -1,6 +1,7 @@
-import { useAction, useSubmission } from "@solidjs/router";
-import { createMemo, type Component, type ComponentProps } from "solid-js";
+import { useSubmission } from "@solidjs/router";
+import { createMemo, type Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { AlertDialog } from "~/ui/alert-dialog/alert-dialog";
 import { closeDialog, DialogTrigger } from "~/ui/dialog/dialog";
 import { deleteTagAction } from "../client";
@@ -20,18 +21,10 @@ export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
     ([form]) => form.get("tagId") === String(props.tag.id),
   );
 
-  const action = useAction(deleteTagAction);
-
-  const onSubmit: ComponentProps<"form">["onSubmit"] = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-    const result = await action(formData);
-
-    if (result?.success) {
-      closeDialog(dialogId());
-    }
-  };
+  const onSubmit = useActionOnSubmit({
+    action: deleteTagAction,
+    onSuccess: () => closeDialog(dialogId()),
+  });
 
   return (
     <form onSubmit={onSubmit}>

@@ -1,6 +1,7 @@
-import { useAction, useSubmission } from "@solidjs/router";
-import { createMemo, type Component, type ComponentProps } from "solid-js";
+import { useSubmission } from "@solidjs/router";
+import { createMemo, type Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { Button } from "~/ui/button/button";
 import {
   closeDialog,
@@ -31,17 +32,10 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
     ([form]) => form.get("bookmarkId") === String(props.bookmark.id),
   );
 
-  const action = useAction(updateBookmarkAction);
-
-  const onSubmit: ComponentProps<"form">["onSubmit"] = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-    const result = await action(formData);
-    if (result.success) {
-      closeDialog(dialogId());
-    }
-  };
+  const onSubmit = useActionOnSubmit({
+    action: updateBookmarkAction,
+    onSuccess: () => closeDialog(dialogId()),
+  });
 
   const initialData = () => {
     return {
