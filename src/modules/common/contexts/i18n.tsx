@@ -41,7 +41,7 @@ const enDict = {
     heading: "Tags",
     form: {
       add: "Add tag",
-      update: "Update tag",
+      update: "Update",
       name: "Name",
       delete: "Delete",
     },

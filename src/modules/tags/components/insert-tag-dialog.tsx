@@ -28,7 +28,7 @@ export const InsertTagDialog: Component = () => {
 
     const formData = new FormData(event.currentTarget);
     const result = await action(formData);
-    if (result.success) {
+    if (result?.success) {
       closeDialog(dialogId);
     }
   };
@@ -42,7 +42,9 @@ export const InsertTagDialog: Component = () => {
           <form id={formId} onSubmit={onSubmit}>
             <TagFields
               pending={submission.pending}
-              result={submission.result}
+              result={
+                submission.result?.success ? undefined : submission.result
+              }
             />
           </form>
           <DialogActions>

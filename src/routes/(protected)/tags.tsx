@@ -2,6 +2,7 @@ import { createAsync, type RouteDefinition } from "@solidjs/router";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { selectTagsQuery } from "~/modules/tags/client";
+import { InsertTagDialog } from "~/modules/tags/components/insert-tag-dialog";
 import { TagsList } from "~/modules/tags/components/tags-list";
 
 export const route = {
@@ -16,8 +17,11 @@ export default function TagsPage() {
   const tags = createAsync(() => selectTagsQuery({}));
 
   return (
-    <div>
-      <h2>{t("tags.heading")}</h2>
+    <div class="flex flex-col gap-4">
+      <div class="flex justify-between gap-2 items-center">
+        <h2 class="text-xl">{t("tags.heading")}</h2>
+        <InsertTagDialog />
+      </div>
       <RpcShow result={tags()}>
         {(tags) => <TagsList tags={tags().data} />}
       </RpcShow>

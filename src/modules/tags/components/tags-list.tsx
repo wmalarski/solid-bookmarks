@@ -1,6 +1,5 @@
 import type { Component } from "solid-js";
 import type { TagModel } from "../server";
-import { InsertTagDialog } from "./insert-tag-dialog";
 import { TagsListItem } from "./tag-list-item";
 
 type TagsListProps = {
@@ -9,15 +8,12 @@ type TagsListProps = {
 
 export const TagsList: Component<TagsListProps> = (props) => {
   return (
-    <div>
-      <InsertTagDialog />
-      <ul>
-        {props.tags.map((tag) => (
-          <li>
-            <TagsListItem tag={tag} />
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul class="flex flex-col gap-2">
+      {props.tags.map((tag) => (
+        <li>
+          <TagsListItem tag={tag} />
+        </li>
+      ))}
+    </ul>
   );
 };

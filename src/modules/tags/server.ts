@@ -1,6 +1,6 @@
 "use server";
 
-import { reload } from "@solidjs/router";
+import { json, reload } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import * as v from "valibot";
 import {
@@ -29,7 +29,9 @@ export const insertTag = async (form: FormData) => {
     return rpcErrorResult(result.error);
   }
 
-  throw reload({ revalidate: TAGS_QUERY_KEY });
+  return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
+
+  // throw reload({ revalidate: TAGS_QUERY_KEY });
 };
 
 export const deleteTag = async (form: FormData) => {
