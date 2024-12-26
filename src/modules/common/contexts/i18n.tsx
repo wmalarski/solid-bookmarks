@@ -30,6 +30,7 @@ const enDict = {
   },
   bookmarks: {
     loadMore: "Load More",
+    share: "Share",
     form: {
       title: "Title",
       text: "Text",

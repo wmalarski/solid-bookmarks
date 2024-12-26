@@ -19,21 +19,37 @@ export const insertBookmark = async (form: FormData) => {
     v.object({
       title: v.optional(v.string()),
       text: v.optional(v.string()),
-      url: v.optional(v.pipe(v.string(), v.url())),
+      url: v.optional(v.string()),
+      "tags[]": v.optional(v.array(v.number()), []),
     }),
-    decode(form),
+    decode(form, { arrays: ["tags[]"], numbers: ["tags[]"] }),
   );
 
   if (!parsed.success) {
     return rpcParseIssueResult(parsed.issues);
   }
 
+  const { "tags[]": tags, ...values } = parsed.output;
+
   const result = await event.locals.supabase
     .from("bookmarks")
-    .insert(parsed.output);
+    .insert(values)
+    .select()
+    .single();
 
   if (result.error) {
     return rpcErrorResult(result.error);
+  }
+
+  const tagsResult = await event.locals.supabase.from("bookmarks_tags").insert(
+    tags.map((tagId) => ({
+      bookmark_id: result.data.id,
+      tag_id: tagId,
+    })),
+  );
+
+  if (tagsResult.error) {
+    return rpcErrorResult(tagsResult.error);
   }
 
   throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
@@ -123,24 +139,33 @@ export const updateBookmark = async (form: FormData) => {
       text: v.optional(v.string()),
       title: v.optional(v.string()),
       url: v.optional(v.string()),
+      "tags[]": v.optional(v.array(v.number()), []),
     }),
-    decode(form, { numbers: ["bookmarkId", "rate"], booleans: ["done"] }),
+    decode(form, {
+      numbers: ["bookmarkId", "rate", "tags[]"],
+      booleans: ["done"],
+      arrays: ["tags[]"],
+    }),
   );
 
   if (!parsed.success) {
     return rpcParseIssueResult(parsed.issues);
   }
 
-  const { bookmarkId, ...update } = parsed.output;
+  const { bookmarkId, "tags[]": tags, ...values } = parsed.output;
 
   const result = await event.locals.supabase
     .from("bookmarks")
-    .update(update)
-    .eq("id", bookmarkId);
+    .update(values)
+    .eq("id", bookmarkId)
+    .select("*, bookmarks_tags ( tag_id )")
+    .single();
 
   if (result.error) {
     return rpcErrorResult(result.error);
   }
+
+  console.log("result", result.data, tags);
 
   throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
 };
@@ -162,7 +187,7 @@ const selectBookmarksFromDb = async ({
       count: "estimated",
     })
     .range(offset, offset + limit)
-    .order("created_at");
+    .order("created_at", { ascending: false });
 
   const result = await builder;
   return result;

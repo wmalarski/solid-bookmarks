@@ -68,11 +68,11 @@ export const updateTag = async (form: FormData) => {
     return rpcParseIssueResult(parsed.issues);
   }
 
-  const { tagId, ...update } = parsed.output;
+  const { tagId, ...values } = parsed.output;
 
   const result = await event.locals.supabase
     .from("tags")
-    .update(update)
+    .update(values)
     .eq("id", tagId);
 
   if (result.error) {

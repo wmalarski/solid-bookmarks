@@ -35,7 +35,9 @@ export const InsertTagDialog: Component = () => {
 
   return (
     <>
-      <DialogTrigger for={dialogId}>{t("tags.form.add")}</DialogTrigger>
+      <DialogTrigger color="primary" for={dialogId}>
+        {t("tags.form.add")}
+      </DialogTrigger>
       <Dialog id={dialogId}>
         <DialogBox>
           <h3>{t("tags.form.add")}</h3>
