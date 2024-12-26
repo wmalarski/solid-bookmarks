@@ -14,12 +14,14 @@ import {
 import { FormControl } from "~/ui/form-control/form-control";
 import { Label, LabelText } from "~/ui/label/label";
 import { Radio } from "~/ui/radio/radio";
-import type { FiltersSearchParams } from "../utils/use-filters-search-params";
+import {
+  useSetFiltersSearchParams,
+  type FiltersSearchParams,
+} from "../utils/use-filters-search-params";
 import { BookmarkTagsField } from "./bookmark-tags-field";
 
 type BookmarkFiltersProps = {
   params: FiltersSearchParams;
-  onSubmit: (params: FormData) => void;
 };
 
 export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
@@ -28,11 +30,13 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
   const dialogId = createMemo(() => "filters-dialog");
   const formId = createMemo(() => "filters-form");
 
+  const setFiltersSearchParams = useSetFiltersSearchParams();
+
   const onSubmit: ComponentProps<"form">["onSubmit"] = (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    props.onSubmit(formData);
+    setFiltersSearchParams(formData);
 
     closeDialog(dialogId());
   };

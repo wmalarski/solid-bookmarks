@@ -11,6 +11,7 @@ import {
 } from "../common/server/helpers";
 import { paths } from "../common/utils/paths";
 import { BOOKMARKS_QUERY_KEY, SELECT_BOOKMARKS_DEFAULT_LIMIT } from "./const";
+import { createDoneSchema } from "./utils/use-filters-search-params";
 
 export const insertBookmark = async (form: FormData) => {
   const event = getRequestEventOrThrow();
@@ -196,24 +197,50 @@ export const completeBookmark = async (form: FormData) => {
   throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
 };
 
-type SelectBookmarksArgs = {
-  limit?: number;
-  offset?: number;
+const createSelectBookmarksSchema = () => {
+  return v.object({
+    limit: v.optional(v.number()),
+    offset: v.optional(v.number()),
+    tags: v.array(v.number()),
+    done: createDoneSchema(),
+    random: v.boolean(),
+  });
 };
+
+export type SelectBookmarksArgs = v.InferOutput<
+  ReturnType<typeof createSelectBookmarksSchema>
+>;
 
 const selectBookmarksFromDb = async ({
   offset = 0,
   limit = SELECT_BOOKMARKS_DEFAULT_LIMIT,
+  done,
+  tags,
 }: SelectBookmarksArgs) => {
   const event = getRequestEventOrThrow();
 
-  const builder = event.locals.supabase
-    .from("bookmarks")
-    .select("*, bookmarks_tags ( id, tags ( id, name ) )", {
-      count: "estimated",
-    })
+  let builder = (
+    tags.length > 0
+      ? event.locals.supabase
+          .from("bookmarks")
+          .select("*, bookmarks_tags!inner ( id, tags!inner ( id, name ) )", {
+            count: "estimated",
+          })
+          .in("bookmarks_tags.tag_id", tags)
+      : event.locals.supabase
+          .from("bookmarks")
+          .select("*, bookmarks_tags ( id, tags ( id, name ) )", {
+            count: "estimated",
+          })
+  )
     .range(offset, offset + limit)
     .order("created_at", { ascending: false });
+
+  if (done === "completed") {
+    builder = builder.eq("done", true);
+  } else if (done === "uncompleted") {
+    builder = builder.eq("done", false);
+  }
 
   const result = await builder;
   return result;
@@ -224,10 +251,7 @@ export type BookmarkWithTagsModel = NonNullable<
 >[0];
 
 export const selectBookmarks = async (args: SelectBookmarksArgs) => {
-  const parsed = await v.safeParseAsync(
-    v.object({ limit: v.optional(v.number()), offset: v.optional(v.number()) }),
-    args,
-  );
+  const parsed = await v.safeParseAsync(createSelectBookmarksSchema(), args);
 
   if (!parsed.success) {
     return rpcParseIssueResult(parsed.issues);

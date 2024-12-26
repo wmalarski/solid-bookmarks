@@ -3,7 +3,7 @@ import { decode } from "decode-formdata";
 import { createMemo } from "solid-js";
 import * as v from "valibot";
 
-const createDoneSchema = () => {
+export const createDoneSchema = () => {
   return v.optional(
     v.union([
       v.literal("all"),
@@ -51,15 +51,22 @@ export type FiltersSearchParams = v.InferOutput<
   ReturnType<typeof createFiltersSearchParamsSchema>
 >;
 
+export type SearchParams = ReturnType<typeof useSearchParams>[0];
+
+export const parseFiltersSearchParams = (params: SearchParams) => {
+  const schema = createFiltersSearchParamsSchema();
+  return v.parse(schema, params);
+};
+
 export const useFiltersSearchParams = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [params] = useSearchParams();
+  return createMemo(() => parseFiltersSearchParams(params));
+};
 
-  const filtersParams = createMemo((): FiltersSearchParams => {
-    const schema = createFiltersSearchParamsSchema();
-    return v.parse(schema, searchParams);
-  });
+export const useSetFiltersSearchParams = () => {
+  const [, setSearchParams] = useSearchParams();
 
-  const setFiltersParams = (formData: FormData) => {
+  return (formData: FormData) => {
     const decoded = decode(formData, {
       arrays: ["tags[]"],
       numbers: ["tags[]"],
@@ -69,6 +76,4 @@ export const useFiltersSearchParams = () => {
 
     setSearchParams(parsed);
   };
-
-  return { filtersParams, setFiltersParams };
 };
