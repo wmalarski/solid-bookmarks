@@ -88,6 +88,8 @@ const enDict = {
     save: "Save",
     update: "Update",
     delete: "Delete",
+    nextSlide: "Next slide",
+    previousSlide: "Previous slide",
   },
 };
 

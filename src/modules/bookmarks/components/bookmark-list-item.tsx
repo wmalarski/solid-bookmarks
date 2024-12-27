@@ -1,4 +1,11 @@
-import { type Component, For, type ParentProps, Show } from "solid-js";
+import createEmblaCarousel from "embla-carousel-solid";
+import {
+  type Component,
+  createMemo,
+  For,
+  type ParentProps,
+  Show,
+} from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { createDateFormatter } from "~/modules/common/utils/formatters";
 import { Badge } from "~/ui/badge/badge";
@@ -67,8 +74,25 @@ type BookmarkPreviewProps = {
 };
 
 const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
+  const [emblaRef] = createEmblaCarousel();
+
+  const images = createMemo(
+    () =>
+      props.bookmark.preview
+        ?.split(";")
+        .filter((path) => path.endsWith("-250.jpg")) ?? [],
+  );
+
   return (
-    <pre>{JSON.stringify({ preview: props.bookmark.preview }, null, 2)}</pre>
+    <Show when={images().length > 0}>
+      <div class="embla" ref={emblaRef}>
+        <div class="embla__container">
+          <For each={images()}>
+            {(image) => <div class="embla__slide">{image}</div>}
+          </For>
+        </div>
+      </div>
+    </Show>
   );
 };
 
