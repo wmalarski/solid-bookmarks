@@ -59,7 +59,7 @@ const GridTitle: Component<ParentProps> = (props) => {
 };
 
 const GridText: Component<ParentProps> = (props) => {
-  return <span>{props.children}</span>;
+  return <span class="break-words">{props.children}</span>;
 };
 
 type BookmarkPreviewProps = {
