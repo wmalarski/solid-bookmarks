@@ -9,7 +9,7 @@ export const PageTitle: Component = () => {
 
   return (
     <h1 class="my-16 flex items-center text-center text-4xl uppercase sm:text-6xl">
-      <BookmarkIcon />
+      <BookmarkIcon class="size-16 pr-4" />
       <Link hover={true} href={paths.home}>
         {t("info.title")}
       </Link>

@@ -4,19 +4,15 @@ import { twCx } from "../utils/tw-cva";
 export type NavbarProps = ComponentProps<"nav">;
 
 export const Navbar: Component<NavbarProps> = (props) => {
-  return <nav {...props} class={twCx("navbar", props.class)} />;
+  return <nav {...props} class={twCx("navbar justify-between", props.class)} />;
 };
 
 export type NavbarStartProps = ComponentProps<"div">;
 
 export const NavbarStart = (props: NavbarStartProps) => {
-  return <div {...props} class={twCx("navbar-start", props.class)} />;
-};
-
-export type NavbarCenterProps = ComponentProps<"div">;
-
-export const NavbarCenter = (props: NavbarCenterProps) => {
-  return <div {...props} class={twCx("navbar-center", props.class)} />;
+  return (
+    <div {...props} class={twCx("flex-wrap navbar-start w-fit", props.class)} />
+  );
 };
 
 export type NavbarEndProps = ComponentProps<"div">;

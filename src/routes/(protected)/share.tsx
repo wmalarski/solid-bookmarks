@@ -1,15 +1,15 @@
-import { useParams } from "@solidjs/router";
+import { useSearchParams } from "@solidjs/router";
 import { InsertBookmarkForm } from "~/modules/bookmarks/components/insert-bookmark-form";
 
 export default function SharePage() {
-  const params = useParams();
+  const [searchParams] = useSearchParams();
 
   return (
     <InsertBookmarkForm
       initialData={{
-        text: params.text,
-        title: params.title,
-        url: params.url,
+        text: searchParams.text?.toString(),
+        title: searchParams.title?.toString(),
+        url: searchParams.url?.toString(),
         tags: [],
       }}
     />

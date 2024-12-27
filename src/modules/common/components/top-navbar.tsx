@@ -15,26 +15,26 @@ export const TopNavbar: Component = () => {
 
   return (
     <Navbar>
-      <NavbarStart class="gap-6">
+      <NavbarStart class="gap-2">
         <h1>
           <Link
-            class="flex gap-1 text-xl lg:text-3xl uppercase"
+            class="flex gap-1 text-md sm:text-xl lg:text-3xl uppercase items-center"
             hover={true}
             href={paths.home}
           >
-            <BookmarkIcon />
+            <BookmarkIcon class="size-6 min-w-6" />
             {t("info.title")}
           </Link>
         </h1>
         <Link
-          class="text-md lg:text-xl uppercase"
+          class="text-sm sm:text-md lg:text-xl uppercase"
           hover={true}
           href={paths.tags}
         >
           {t("tags.heading")}
         </Link>
         <Link
-          class="text-md lg:text-xl uppercase"
+          class="text-sm sm:text-md lg:text-xl uppercase"
           hover={true}
           href={paths.share}
         >
