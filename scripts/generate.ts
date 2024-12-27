@@ -37,6 +37,9 @@ const getReviewsMap = async () => {
   return new Map(reviews.map((review: any) => [review.albumId, review]));
 };
 
+const tValueRegex = /T/;
+const endOfDateRegex = /\..+/;
+
 export const parseDumpData = async () => {
   const [albums, artists, reviews] = await Promise.all([
     readAlbumsImportFile(),
@@ -51,10 +54,16 @@ export const parseDumpData = async () => {
     const artistName = artists.get(album.artistId);
 
     return {
+      user_id: "a83bdb3c-3faa-4090-9c24-fe1f077574b6",
       done: !!review,
-      done_at: review && new Date(review._creationTime).toISOString(),
+      done_at:
+        review &&
+        new Date(review._creationTime)
+          .toISOString()
+          .replace(tValueRegex, " ")
+          .replace(endOfDateRegex, ""),
       note: review?.text,
-      preview: album.covers,
+      preview: album.covers && Object.values(album.covers).flat().join(";"),
       rate: review?.rate,
       text: "",
       title: `${artistName} - ${album.title}${album.year ? ` (${album.year})` : ""}`,

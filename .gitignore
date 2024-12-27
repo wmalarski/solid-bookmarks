@@ -29,3 +29,4 @@ Thumbs.db
 
 scripts/dump.sql
 scripts/*.json
+scripts/*.csv
