@@ -1,7 +1,10 @@
 import { type RouteDefinition, createAsync } from "@solidjs/router";
-import { createMemo } from "solid-js";
+import { createMemo, Suspense } from "solid-js";
 import { selectBookmarksQuery } from "~/modules/bookmarks/client";
-import { BookmarkList } from "~/modules/bookmarks/components/bookmark-list";
+import {
+  BookmarkList,
+  BookmarkListPlaceholder,
+} from "~/modules/bookmarks/components/bookmark-list";
 import type { SelectBookmarksArgs } from "~/modules/bookmarks/server";
 import {
   type FiltersSearchParams,
@@ -27,16 +30,18 @@ export default function HomePage() {
   const bookmarks = createAsync(() => selectBookmarksQuery(queryArgs()));
 
   return (
-    <RpcShow result={bookmarks()}>
-      {(bookmarks) => (
-        <BookmarkList
-          queryArgs={queryArgs()}
-          filterSearchParams={filterSearchParams()}
-          count={bookmarks().count ?? 0}
-          initialBookmarks={bookmarks().data}
-        />
-      )}
-    </RpcShow>
+    <Suspense fallback={<BookmarkListPlaceholder />}>
+      <RpcShow result={bookmarks()}>
+        {(bookmarks) => (
+          <BookmarkList
+            queryArgs={queryArgs()}
+            filterSearchParams={filterSearchParams()}
+            count={bookmarks().count ?? 0}
+            initialBookmarks={bookmarks().data}
+          />
+        )}
+      </RpcShow>
+    </Suspense>
   );
 }
 

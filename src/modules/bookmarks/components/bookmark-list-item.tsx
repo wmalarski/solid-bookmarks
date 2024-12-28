@@ -89,11 +89,18 @@ const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
 
   return (
     <Show when={images().length > 0}>
-      <div class="relative mx-16 my-4">
+      <div class="relative mx-auto my-4 w-64">
         <Carousel>
           <CarouselContent>
             <For each={images()}>
-              {(image) => <CarouselItem>{image}</CarouselItem>}
+              {(image) => (
+                <CarouselItem>
+                  <BookmarkPreviewImage
+                    image={image}
+                    title={props.bookmark.title}
+                  />
+                </CarouselItem>
+              )}
             </For>
           </CarouselContent>
           <CarouselPrevious />
@@ -101,6 +108,23 @@ const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
         </Carousel>
       </div>
     </Show>
+  );
+};
+
+type BookmarkPreviewImageProps = {
+  image: string;
+  title: string;
+};
+
+const BookmarkPreviewImage: Component<BookmarkPreviewImageProps> = (props) => {
+  const { t } = useI18n();
+
+  return (
+    <img
+      src={props.image}
+      alt={t("bookmarks.item.preview", { preview: props.title })}
+      loading="lazy"
+    />
   );
 };
 

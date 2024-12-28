@@ -86,7 +86,10 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
         <FieldError id="url-error" message={props.result?.errors?.url} />
       </FormControl>
 
-      <BookmarkTagsField initialTags={props.initialData?.tags} />
+      <BookmarkTagsField
+        disabled={props.pending}
+        initialTags={props.initialData?.tags}
+      />
     </div>
   );
 };

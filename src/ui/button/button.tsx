@@ -3,7 +3,7 @@ import type { VariantProps } from "class-variance-authority";
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 import { buttonGroupRecipe, buttonRecipe } from "./button.recipe";
 
-export const buttonSplitProps = [
+const buttonSplitProps = [
   "class",
   "color",
   "isLoading",

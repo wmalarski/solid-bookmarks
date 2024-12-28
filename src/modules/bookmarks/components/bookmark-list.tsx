@@ -1,8 +1,10 @@
+import { createWritableMemo } from "@solid-primitives/memo";
 import { createAsync } from "@solidjs/router";
-import { type Component, For, Suspense, createSignal } from "solid-js";
+import { type Component, For, Suspense } from "solid-js";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
+import { Skeleton } from "~/ui/skeleton/skeleton";
 import { selectBookmarksQuery } from "../client";
 import { SELECT_BOOKMARKS_DEFAULT_LIMIT } from "../const";
 import type { BookmarkWithTagsModel, SelectBookmarksArgs } from "../server";
@@ -20,12 +22,14 @@ type BookmarkListProps = {
 export const BookmarkList: Component<BookmarkListProps> = (props) => {
   const { t } = useI18n();
 
-  const [offsets, setOffsets] = createSignal<number[]>([]);
+  const [offsets, setOffsets] = createWritableMemo<number[]>(
+    () => props.filterSearchParams && [],
+  );
 
   const onLoadMoreClick = () => {
     setOffsets((current) => {
       const lastOffset = current[current.length - 1] ?? 0;
-      return [...current, lastOffset + SELECT_BOOKMARKS_DEFAULT_LIMIT];
+      return [...current, lastOffset + SELECT_BOOKMARKS_DEFAULT_LIMIT + 1];
     });
   };
 
@@ -36,7 +40,7 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
         <BookmarkFilters params={props.filterSearchParams} />
       </div>
       <ul class="flex flex-col gap-4">
-        <BookmarkListPart bookmarks={props.initialBookmarks} />
+        <BookmarkListPart offset={0} bookmarks={props.initialBookmarks} />
         <For each={offsets()}>
           {(offset) => (
             <BookmarkLazy offset={offset} queryArgs={props.queryArgs} />
@@ -61,26 +65,54 @@ const BookmarkLazy: Component<BookmarkLazyProps> = (props) => {
   );
 
   return (
-    <Suspense>
+    <Suspense fallback={<BookmarkListLoadingPlaceholder />}>
       <RpcShow result={bookmarks()}>
-        {(bookmarks) => <BookmarkListPart bookmarks={bookmarks().data ?? []} />}
+        {(bookmarks) => (
+          <BookmarkListPart
+            offset={props.offset}
+            bookmarks={bookmarks().data ?? []}
+          />
+        )}
       </RpcShow>
     </Suspense>
   );
 };
 
 type BookmarkListPartProps = {
+  offset: number;
   bookmarks: BookmarkWithTagsModel[];
 };
 
 const BookmarkListPart: Component<BookmarkListPartProps> = (props) => {
   return (
-    <>
-      {props.bookmarks.map((bookmark) => (
+    <For each={props.bookmarks}>
+      {(bookmark) => (
         <li>
           <BookmarkListItem bookmark={bookmark} />
         </li>
-      ))}
-    </>
+      )}
+    </For>
+  );
+};
+
+export const BookmarkListPlaceholder: Component = () => {
+  return (
+    <ul class="w-full max-w-xl flex flex-col gap-2 py-4 px-2">
+      <BookmarkListLoadingPlaceholder />
+    </ul>
+  );
+};
+
+const BookmarkListLoadingPlaceholder: Component = () => {
+  const list = Array.from({ length: 3 });
+
+  return (
+    <For each={list}>
+      {() => (
+        <li>
+          <Skeleton class="w-full h-48" />
+        </li>
+      )}
+    </For>
   );
 };

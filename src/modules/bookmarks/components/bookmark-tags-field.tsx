@@ -10,6 +10,7 @@ export const BOOKMARK_TAGS_FIELD_PREFIX = "tags.";
 
 type BookmarkTagsFieldProps = {
   initialTags?: number[];
+  disabled?: boolean;
 };
 
 export const BookmarkTagsField: Component<BookmarkTagsFieldProps> = (props) => {
@@ -37,6 +38,7 @@ export const BookmarkTagsField: Component<BookmarkTagsFieldProps> = (props) => {
                         value={tag.id}
                         checked={initialTagIds().has(tag.id)}
                         name="tags[]"
+                        disabled={props.disabled}
                       />
                       <Label for={id}>
                         <LabelText>{tag.name}</LabelText>
