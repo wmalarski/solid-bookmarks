@@ -1,4 +1,3 @@
-import createEmblaCarousel from "embla-carousel-solid";
 import {
   type Component,
   createMemo,
@@ -10,6 +9,13 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import { createDateFormatter } from "~/modules/common/utils/formatters";
 import { Badge } from "~/ui/badge/badge";
 import { Card, CardActions, CardBody } from "~/ui/card/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "~/ui/carousel/carousel";
 import type { BookmarkWithTagsModel } from "../server";
 import { CompleteDialog } from "./complete-dialog";
 import { DeleteBookmarkForm } from "./delete-bookmark-form";
@@ -74,8 +80,6 @@ type BookmarkPreviewProps = {
 };
 
 const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
-  const [emblaRef] = createEmblaCarousel();
-
   const images = createMemo(
     () =>
       props.bookmark.preview
@@ -85,12 +89,16 @@ const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
 
   return (
     <Show when={images().length > 0}>
-      <div class="embla" ref={emblaRef}>
-        <div class="embla__container">
-          <For each={images()}>
-            {(image) => <div class="embla__slide">{image}</div>}
-          </For>
-        </div>
+      <div class="relative mx-16 my-4">
+        <Carousel>
+          <CarouselContent>
+            <For each={images()}>
+              {(image) => <CarouselItem>{image}</CarouselItem>}
+            </For>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
     </Show>
   );

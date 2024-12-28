@@ -8,6 +8,7 @@ import {
   type Component,
   type ComponentProps,
   createContext,
+  createEffect,
   createMemo,
   createSignal,
   onCleanup,
@@ -50,11 +51,13 @@ const createCarouselContext = (args: CreateCarouselContextArgs) => {
     setCanScrollNext(api.canScrollNext());
   };
 
-  onSelect(api());
-  api()?.on("select", onSelect);
+  createEffect(() => {
+    const apiValue = api();
 
-  onCleanup(() => {
-    api()?.off("select", onSelect);
+    onSelect(apiValue);
+
+    apiValue?.on("select", onSelect);
+    onCleanup(() => apiValue?.off("select", onSelect));
   });
 
   const scrollPrevious = () => {
@@ -157,11 +160,10 @@ export const CarouselPrevious: Component<CarouselPreviousProps> = (props) => {
     <button
       {...withoutVariants}
       class={buttonRecipe({
+        shape: "circle",
+        size: "sm",
         ...variants,
-        class: twCx(
-          "absolute h-8 w-8 rounded-full -left-12 top-1/2 -translate-y-1/2",
-          props.class,
-        ),
+        class: twCx("absolute -left-12 top-1/2 -translate-y-1/2", props.class),
       })}
       disabled={!carousel().canScrollPrev()}
       onClick={carousel().scrollPrevious}
@@ -186,9 +188,11 @@ export const CarouselNext: Component<CarouselNextProps> = (props) => {
       type="button"
       {...withoutVariants}
       class={buttonRecipe({
+        shape: "circle",
+        size: "sm",
         ...variants,
         class: twCx(
-          "absolute h-8 w-8 rounded-full -right-12 top-1/2 -translate-y-1/2",
+          "absolute -right-12 top-1/2 -translate-y-1/2 z-50",
           props.class,
         ),
       })}
