@@ -35,7 +35,13 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
             pending={submission.pending}
             result={submission.result}
           />
-          <Button color="primary" size="sm" type="submit">
+          <Button
+            color="primary"
+            size="sm"
+            type="submit"
+            isLoading={submission.pending}
+            disabled={submission.pending}
+          >
             <PlusIcon class="size-4" />
             {t("common.save")}
           </Button>

@@ -83,6 +83,11 @@ const enDict = {
       title: "Sign Up Success",
     },
   },
+  pwa: {
+    reload: "Reload",
+    readyOffline: "App ready to work offline",
+    update: "New content available, click on reload button to update.",
+  },
   common: {
     closeDialog: "Close",
     save: "Save",

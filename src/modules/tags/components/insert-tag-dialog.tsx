@@ -27,6 +27,7 @@ export const InsertTagDialog: Component = () => {
 
   const onSubmit = useActionOnSubmit({
     action: insertTagAction,
+    resetOnSuccess: true,
     onSuccess: () => closeDialog(dialogId),
   });
 

@@ -4,6 +4,7 @@ import type { RpcResult } from "../server/helpers";
 
 type UseActionOnSubmitArgs = {
   onSuccess: () => void;
+  resetOnSuccess?: boolean;
   action: Action<[form: FormData], RpcResult, [form: FormData]>;
 };
 
@@ -16,8 +17,14 @@ export const useActionOnSubmit = (args: UseActionOnSubmitArgs) => {
     const formData = new FormData(event.currentTarget);
     const result = await action(formData);
 
-    if (result?.success) {
-      args.onSuccess();
+    if (!result?.success) {
+      return;
+    }
+
+    args.onSuccess();
+
+    if (args.resetOnSuccess) {
+      event.currentTarget.reset();
     }
   };
 

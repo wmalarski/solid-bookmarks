@@ -12,7 +12,11 @@ export const SignOutButton: Component = () => {
 
   return (
     <form action={signOutAction} method="post">
-      <Button disabled={submission.pending} size="sm">
+      <Button
+        disabled={submission.pending}
+        isLoading={submission.pending}
+        size="sm"
+      >
         <ExitIcon class="size-4" />
         {t("auth.signOut")}
       </Button>
