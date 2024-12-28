@@ -26,6 +26,7 @@
     "@solidjs/start": "^1.0.10",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.10",
+    "cheerio": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "decode-formdata": "0.8.0",
     "embla-carousel-solid": "^8.5.1",
