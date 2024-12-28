@@ -1,4 +1,4 @@
-import type { Component } from "solid-js";
+import { Show, type Component, type ParentProps } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
@@ -8,6 +8,7 @@ import { Label, LabelText } from "~/ui/label/label";
 import { TextFieldInput } from "~/ui/text-field/text-field";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 import { BookmarkTagsField } from "./bookmark-tags-field";
+import { CheckOgPropsDialog } from "./check-og-props-dialog";
 
 export type BookmarkFieldsData = {
   title?: string;
@@ -25,14 +26,29 @@ type BookmarkFieldsProps = {
 export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
   const { t } = useI18n();
 
+  const onCheckSubmit = () => {
+    //
+  };
+
   return (
     <div class="flex flex-col gap-4">
       <FormError message={props.result?.error} />
 
       <FormControl>
-        <Label for="title">
-          <LabelText>{t("bookmarks.form.title")}</LabelText>
-        </Label>
+        <LabelRow>
+          <Label for="title">
+            <LabelText>{t("bookmarks.form.title")}</LabelText>
+          </Label>
+          <Show when={props.initialData?.title}>
+            {(value) => (
+              <CheckOgPropsDialog
+                name="title"
+                value={value()}
+                onSubmit={onCheckSubmit}
+              />
+            )}
+          </Show>
+        </LabelRow>
         <TextFieldInput
           id="title"
           name="title"
@@ -49,9 +65,20 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
       </FormControl>
 
       <FormControl>
-        <Label for="text">
-          <LabelText>{t("bookmarks.form.text")}</LabelText>
-        </Label>
+        <LabelRow>
+          <Label for="text">
+            <LabelText>{t("bookmarks.form.text")}</LabelText>
+          </Label>
+          <Show when={props.initialData?.text}>
+            {(value) => (
+              <CheckOgPropsDialog
+                name="text"
+                value={value()}
+                onSubmit={onCheckSubmit}
+              />
+            )}
+          </Show>
+        </LabelRow>
         <TextFieldInput
           id="text"
           name="text"
@@ -68,9 +95,20 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
       </FormControl>
 
       <FormControl>
-        <Label for="url">
-          <LabelText>{t("bookmarks.form.url")}</LabelText>
-        </Label>
+        <LabelRow>
+          <Label for="url">
+            <LabelText>{t("bookmarks.form.url")}</LabelText>
+          </Label>
+          <Show when={props.initialData?.url}>
+            {(value) => (
+              <CheckOgPropsDialog
+                name="url"
+                value={value()}
+                onSubmit={onCheckSubmit}
+              />
+            )}
+          </Show>
+        </LabelRow>
         <TextFieldInput
           id="url"
           name="url"
@@ -90,6 +128,14 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
         disabled={props.pending}
         initialTags={props.initialData?.tags}
       />
+    </div>
+  );
+};
+
+const LabelRow: Component<ParentProps> = (props) => {
+  return (
+    <div class="flex justify-between gap-2 w-full items-center">
+      {props.children}
     </div>
   );
 };

@@ -63,6 +63,9 @@ const enDict = {
       all: "All",
       filters: "Filters",
     },
+    check: {
+      check: "OG Check",
+    },
   },
   tags: {
     heading: "Tags",
