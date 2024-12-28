@@ -1,8 +1,6 @@
-import type { VariantProps } from "class-variance-authority";
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { buttonSplitProps } from "../button/button";
-import { buttonRecipe } from "../button/button.recipe";
+import { Button } from "../button/button";
 import { twCx } from "../utils/tw-cva";
 
 export type DialogProps = ComponentProps<"dialog"> & {
@@ -13,12 +11,12 @@ export const Dialog: Component<DialogProps> = (props) => {
   return <dialog {...props} class={twCx("modal", props.class)} />;
 };
 
-export type DialogTriggerProps = ComponentProps<"button"> &
-  VariantProps<typeof buttonRecipe> & { for: string };
+export type DialogTriggerProps = ComponentProps<typeof Button> & {
+  for: string;
+};
 
 export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
-  const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
-  const [forValue, withoutFor] = splitProps(withoutVariants, ["for"]);
+  const [forValue, withoutFor] = splitProps(props, ["for"]);
 
   const onClick: ComponentProps<"button">["onClick"] = () => {
     const id = `#${forValue.for}`;
@@ -26,14 +24,7 @@ export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
     dialog?.showModal();
   };
 
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      {...withoutFor}
-      class={buttonRecipe({ ...variants, class: props.class })}
-    />
-  );
+  return <Button type="button" onClick={onClick} {...withoutFor} />;
 };
 
 export type DialogBoxProps = ComponentProps<"div">;
@@ -60,22 +51,14 @@ export const DialogBackdrop: Component<DialogBackdropProps> = (props) => {
   );
 };
 
-export type DialogCloseProps = Omit<ComponentProps<"button">, "children"> &
-  VariantProps<typeof buttonRecipe>;
+export type DialogCloseProps = Omit<ComponentProps<typeof Button>, "children">;
 
 export const DialogClose: Component<DialogBackdropProps> = (props) => {
   const { t } = useI18n();
 
-  const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
-
   return (
     <form method="dialog">
-      <button
-        {...withoutVariants}
-        class={buttonRecipe({ ...variants, class: props.class })}
-      >
-        {t("common.closeDialog")}
-      </button>
+      <Button {...props}>{t("common.closeDialog")}</Button>
     </form>
   );
 };

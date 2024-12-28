@@ -1,8 +1,6 @@
 import createEmblaCarousel, {
   type CreateEmblaCarouselType,
 } from "embla-carousel-solid";
-
-import type { VariantProps } from "class-variance-authority";
 import {
   type Accessor,
   type Component,
@@ -12,12 +10,10 @@ import {
   createMemo,
   createSignal,
   onCleanup,
-  splitProps,
   useContext,
 } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { buttonSplitProps } from "../button/button";
-import { buttonRecipe } from "../button/button.recipe";
+import { Button } from "../button/button";
 import { ArrowLeftIcon } from "../icons/arrow-left-icon";
 import { ArrowRightIcon } from "../icons/arrow-right-icon";
 import { twCx } from "../utils/tw-cva";
@@ -147,60 +143,48 @@ export const CarouselItem: Component<CarouselItemProps> = (props) => {
   );
 };
 
-type CarouselPreviousProps = ComponentProps<"button"> &
-  VariantProps<typeof buttonRecipe>;
+type CarouselPreviousProps = Omit<ComponentProps<typeof Button>, "children">;
 
 export const CarouselPrevious: Component<CarouselPreviousProps> = (props) => {
   const { t } = useI18n();
 
   const carousel = useCarousel();
-  const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
 
   return (
-    <button
-      {...withoutVariants}
-      class={buttonRecipe({
-        shape: "circle",
-        size: "sm",
-        ...variants,
-        class: twCx("absolute -left-12 top-1/2 -translate-y-1/2", props.class),
-      })}
+    <Button
+      type="button"
+      shape="circle"
+      size="sm"
+      {...props}
+      class={twCx("absolute -left-12 top-1/2 -translate-y-1/2", props.class)}
       disabled={!carousel().canScrollPrev()}
       onClick={carousel().scrollPrevious}
     >
       <ArrowLeftIcon class="size-4" />
       <span class="sr-only">{t("common.previousSlide")}</span>
-    </button>
+    </Button>
   );
 };
 
-type CarouselNextProps = ComponentProps<"button"> &
-  VariantProps<typeof buttonRecipe>;
+type CarouselNextProps = Omit<ComponentProps<typeof Button>, "children">;
 
 export const CarouselNext: Component<CarouselNextProps> = (props) => {
   const { t } = useI18n();
 
   const carousel = useCarousel();
-  const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
 
   return (
-    <button
+    <Button
       type="button"
-      {...withoutVariants}
-      class={buttonRecipe({
-        shape: "circle",
-        size: "sm",
-        ...variants,
-        class: twCx(
-          "absolute -right-12 top-1/2 -translate-y-1/2 z-50",
-          props.class,
-        ),
-      })}
+      shape="circle"
+      size="sm"
+      {...props}
+      class={twCx("absolute -right-12 top-1/2 -translate-y-1/2", props.class)}
       disabled={!carousel().canScrollNext()}
       onClick={carousel().scrollNext}
     >
       <ArrowRightIcon class="size-4" />
       <span class="sr-only">{t("common.nextSlide")}</span>
-    </button>
+    </Button>
   );
 };
