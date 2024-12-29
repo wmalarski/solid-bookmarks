@@ -1,4 +1,4 @@
-import { Show, type Component, type ParentProps } from "solid-js";
+import { createSignal, type Component, type ParentProps } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
@@ -14,7 +14,7 @@ export type BookmarkFieldsData = {
   title?: string;
   text?: string;
   url?: string;
-  preview?: string;
+  preview?: string | null;
   tags?: number[];
 };
 
@@ -27,8 +27,24 @@ type BookmarkFieldsProps = {
 export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
   const { t } = useI18n();
 
-  const onCheckSubmit = () => {
-    //
+  const [titleRef, setTitleRef] = createSignal<HTMLInputElement>();
+  const [urlRef, setUrlRef] = createSignal<HTMLInputElement>();
+  const [previewRef, setPreviewRef] = createSignal<HTMLInputElement>();
+
+  const onCheckSubmit = (data: BookmarkFieldsData) => {
+    const titleInput = titleRef();
+    const urlInput = urlRef();
+    const previewInput = previewRef();
+
+    if (data.title && titleInput) {
+      titleInput.value = data.title;
+    }
+    if (data.url && urlInput) {
+      urlInput.value = data.url;
+    }
+    if (data.preview && previewInput) {
+      previewInput.value = data.preview;
+    }
   };
 
   return (
@@ -40,15 +56,10 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           <Label for="title">
             <LabelText>{t("bookmarks.form.title")}</LabelText>
           </Label>
-          <Show when={props.initialData?.title}>
-            {(value) => (
-              <CheckOgPropsDialog
-                name="title"
-                value={value()}
-                onCheck={onCheckSubmit}
-              />
-            )}
-          </Show>
+          <CheckOgPropsDialog
+            value={props.initialData?.title}
+            onCheck={onCheckSubmit}
+          />
         </LabelRow>
         <TextFieldInput
           id="title"
@@ -57,6 +68,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           value={props.initialData?.title}
           disabled={props.pending}
           variant="bordered"
+          ref={setTitleRef}
           {...getInvalidStateProps({
             errorMessageId: "title-error",
             isInvalid: !!props.result?.errors?.title,
@@ -70,15 +82,10 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           <Label for="text">
             <LabelText>{t("bookmarks.form.text")}</LabelText>
           </Label>
-          <Show when={props.initialData?.text}>
-            {(value) => (
-              <CheckOgPropsDialog
-                name="text"
-                value={value()}
-                onCheck={onCheckSubmit}
-              />
-            )}
-          </Show>
+          <CheckOgPropsDialog
+            value={props.initialData?.text}
+            onCheck={onCheckSubmit}
+          />
         </LabelRow>
         <TextFieldInput
           id="text"
@@ -100,15 +107,10 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           <Label for="url">
             <LabelText>{t("bookmarks.form.url")}</LabelText>
           </Label>
-          <Show when={props.initialData?.url}>
-            {(value) => (
-              <CheckOgPropsDialog
-                name="url"
-                value={value()}
-                onCheck={onCheckSubmit}
-              />
-            )}
-          </Show>
+          <CheckOgPropsDialog
+            value={props.initialData?.url}
+            onCheck={onCheckSubmit}
+          />
         </LabelRow>
         <TextFieldInput
           id="url"
@@ -117,12 +119,42 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           value={props.initialData?.url}
           disabled={props.pending}
           variant="bordered"
+          ref={setUrlRef}
           {...getInvalidStateProps({
             errorMessageId: "url-error",
             isInvalid: !!props.result?.errors?.url,
           })}
         />
         <FieldError id="url-error" message={props.result?.errors?.url} />
+      </FormControl>
+
+      <FormControl>
+        <LabelRow>
+          <Label for="preview">
+            <LabelText>{t("bookmarks.form.preview")}</LabelText>
+          </Label>
+          <CheckOgPropsDialog
+            value={props.initialData?.preview ?? undefined}
+            onCheck={onCheckSubmit}
+          />
+        </LabelRow>
+        <TextFieldInput
+          id="preview"
+          name="preview"
+          placeholder={t("bookmarks.form.preview")}
+          value={props.initialData?.preview ?? undefined}
+          disabled={props.pending}
+          variant="bordered"
+          ref={setPreviewRef}
+          {...getInvalidStateProps({
+            errorMessageId: "preview-error",
+            isInvalid: !!props.result?.errors?.preview,
+          })}
+        />
+        <FieldError
+          id="preview-error"
+          message={props.result?.errors?.preview}
+        />
       </FormControl>
 
       <BookmarkTagsField

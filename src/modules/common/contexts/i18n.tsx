@@ -42,7 +42,9 @@ const enDict = {
       title: "Title",
       text: "Text",
       url: "URL",
+      preview: "Preview",
       delete: "Delete",
+      check: "OG Check",
     },
     item: {
       title: "Title:",
@@ -62,9 +64,6 @@ const enDict = {
       uncompleted: "Uncompleted",
       all: "All",
       filters: "Filters",
-    },
-    check: {
-      check: "OG Check",
     },
   },
   tags: {

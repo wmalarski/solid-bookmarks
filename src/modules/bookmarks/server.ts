@@ -21,6 +21,7 @@ export const insertBookmark = async (form: FormData) => {
       title: v.optional(v.string()),
       text: v.optional(v.string()),
       url: v.optional(v.string()),
+      preview: v.optional(v.string()),
       "tags[]": v.optional(v.array(v.number()), []),
     }),
     decode(form, { arrays: ["tags[]"], numbers: ["tags[]"] }),
@@ -121,6 +122,7 @@ export const updateBookmark = async (form: FormData) => {
       text: v.optional(v.string()),
       title: v.optional(v.string()),
       url: v.optional(v.string()),
+      preview: v.optional(v.string()),
       "tags[]": v.optional(v.array(v.number()), []),
     }),
     decode(form, {
