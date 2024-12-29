@@ -1,4 +1,3 @@
-import {} from "solid-js";
 import { twCva } from "../utils/tw-cva";
 
 export const radioRecipe = twCva("radio", {

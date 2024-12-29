@@ -1,5 +1,4 @@
 import { useSearchParams } from "@solidjs/router";
-import {} from "solid-js";
 import { InsertBookmarkForm } from "~/modules/bookmarks/components/insert-bookmark-form";
 
 export default function SharePage() {

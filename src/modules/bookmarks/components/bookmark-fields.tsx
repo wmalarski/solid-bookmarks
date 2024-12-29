@@ -14,6 +14,7 @@ export type BookmarkFieldsData = {
   title?: string;
   text?: string;
   url?: string;
+  preview?: string;
   tags?: number[];
 };
 
@@ -44,7 +45,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
               <CheckOgPropsDialog
                 name="title"
                 value={value()}
-                onSubmit={onCheckSubmit}
+                onCheck={onCheckSubmit}
               />
             )}
           </Show>
@@ -74,7 +75,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
               <CheckOgPropsDialog
                 name="text"
                 value={value()}
-                onSubmit={onCheckSubmit}
+                onCheck={onCheckSubmit}
               />
             )}
           </Show>
@@ -104,7 +105,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
               <CheckOgPropsDialog
                 name="url"
                 value={value()}
-                onSubmit={onCheckSubmit}
+                onCheck={onCheckSubmit}
               />
             )}
           </Show>
