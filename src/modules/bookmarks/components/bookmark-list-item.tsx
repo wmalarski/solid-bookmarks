@@ -80,12 +80,16 @@ type BookmarkPreviewProps = {
 };
 
 const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
-  const images = createMemo(
-    () =>
-      props.bookmark.preview
-        ?.split(";")
-        .filter((path) => path.endsWith("-250.jpg")) ?? [],
-  );
+  const images = createMemo(() => {
+    const array = props.bookmark.preview?.split(";");
+    const smallImages = array?.filter((path) => path.endsWith("-250.jpg"));
+
+    if (smallImages && smallImages.length > 0) {
+      return smallImages;
+    }
+
+    return array ?? [];
+  });
 
   return (
     <Show when={images().length > 0}>
