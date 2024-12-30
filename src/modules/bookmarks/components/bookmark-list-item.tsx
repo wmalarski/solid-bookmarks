@@ -7,8 +7,8 @@ import {
   Show,
   createMemo,
 } from "solid-js";
-import * as v from "valibot";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { createIsLink } from "~/modules/common/utils/create-is-link";
 import { createDateFormatter } from "~/modules/common/utils/formatters";
 import { paths } from "~/modules/common/utils/paths";
 import { Badge } from "~/ui/badge/badge";
@@ -98,9 +98,7 @@ type GridLinkProps = {
 };
 
 const GridLink: Component<GridLinkProps> = (props) => {
-  const isLink = createMemo(() => {
-    return v.safeParse(v.pipe(v.string(), v.url()), props.href).success;
-  });
+  const isLink = createIsLink(() => props.href);
 
   return (
     <Show when={isLink()} fallback={<GridText>{props.href}</GridText>}>
@@ -117,7 +115,9 @@ type BookmarkPreviewProps = {
 
 const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
   const images = createMemo(() => {
-    const array = props.bookmark.preview?.split(";");
+    const array = props.bookmark.preview
+      ?.split(";")
+      .filter((image) => image.length > 0);
     const smallImages = array?.filter((path) => path.endsWith("-250.jpg"));
 
     if (smallImages && smallImages.length > 0) {

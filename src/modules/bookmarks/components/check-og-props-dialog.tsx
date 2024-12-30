@@ -1,5 +1,6 @@
-import { type Component, Show } from "solid-js";
+import { type Component, createSignal, Show } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { createIsLink } from "~/modules/common/utils/create-is-link";
 import { Button } from "~/ui/button/button";
 import { getOgPropsQuery } from "../client";
 import type { BookmarkFieldsData } from "./bookmark-fields";
@@ -14,7 +15,13 @@ export const CheckOgPropsDialog: Component<CheckOgPropsDialogProps> = (
 ) => {
   const { t } = useI18n();
 
+  const isLink = createIsLink(() => props.value);
+
+  const [isPending, setIsPending] = createSignal(false);
+
   const onCheckClick = async () => {
+    setIsPending(true);
+
     const results = await getOgPropsQuery(props.value);
     const map = new Map(
       results?.props.map((prop) => [prop.property, prop.content]),
@@ -29,11 +36,19 @@ export const CheckOgPropsDialog: Component<CheckOgPropsDialogProps> = (
       preview: image,
       url,
     });
+
+    setIsPending(false);
   };
 
   return (
-    <Show when={props.value}>
-      <Button type="button" color="secondary" size="xs" onClick={onCheckClick}>
+    <Show when={isLink()}>
+      <Button
+        type="button"
+        color="secondary"
+        size="xs"
+        onClick={onCheckClick}
+        isLoading={isPending()}
+      >
         {t("bookmarks.form.check")}
       </Button>
     </Show>
