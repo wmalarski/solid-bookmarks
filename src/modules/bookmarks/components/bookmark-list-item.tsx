@@ -154,12 +154,13 @@ const BookmarkPreviewImage: Component<BookmarkPreviewImageProps> = (props) => {
   const { t } = useI18n();
 
   let el: HTMLDivElement | undefined;
-  const useVisibilityObserver = createVisibilityObserver({ threshold: 0.5 });
+  const useVisibilityObserver = createVisibilityObserver({ threshold: 0.1 });
   const visible = useVisibilityObserver(() => el);
+  const shouldShow = createMemo<boolean>((previous) => previous || visible());
 
   return (
     <CarouselItem ref={el} class="min-h-72">
-      <Show when={visible()}>
+      <Show when={shouldShow()}>
         <img
           src={props.image}
           alt={t("bookmarks.item.preview", { preview: props.title })}
