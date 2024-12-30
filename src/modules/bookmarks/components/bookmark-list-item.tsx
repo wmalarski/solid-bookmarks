@@ -1,6 +1,7 @@
 import { createVisibilityObserver } from "@solid-primitives/intersection-observer";
 import {
   type Component,
+  type ComponentProps,
   For,
   type ParentProps,
   Show,
@@ -41,6 +42,9 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
       <CardBody class="">
         <BookmarkTagsList bookmark={props.bookmark} />
         <BookmarkPreview bookmark={props.bookmark} />
+        <Show when={props.bookmark.title}>
+          <BookmarkLinks bookmark={props.bookmark} />
+        </Show>
         <div class="grid grid-cols-2 gap-2 pb-4">
           <GridTitle>{t("bookmarks.item.title")}</GridTitle>
           <GridText>{props.bookmark.title}</GridText>
@@ -188,6 +192,50 @@ const BookmarkTagsList: Component<BookmarkTagsListProps> = (props) => {
           </li>
         )}
       </For>
+    </ul>
+  );
+};
+
+type BookmarkLinksProps = {
+  bookmark: BookmarkWithTagsModel;
+};
+
+const BookmarkLinks: Component<BookmarkLinksProps> = (props) => {
+  const { t } = useI18n();
+
+  const commonProps: Partial<ComponentProps<typeof LinkButton>> = {
+    rel: "noopener noreferrer",
+    target: "_blank",
+    size: "xs",
+    color: "secondary",
+  };
+
+  return (
+    <ul class="flex flex-wrap flex-row gap-2">
+      <li>
+        <LinkButton
+          {...commonProps}
+          href={`https://www.youtube.com/results?${new URLSearchParams({ search_query: props.bookmark.title })}`}
+        >
+          {t("bookmarks.item.youtube")}
+        </LinkButton>
+      </li>
+      <li>
+        <LinkButton
+          {...commonProps}
+          href={`https://www.youtube.com/results?${new URLSearchParams({ q: props.bookmark.title })}`}
+        >
+          {t("bookmarks.item.google")}
+        </LinkButton>
+      </li>
+      <li>
+        <LinkButton
+          {...commonProps}
+          href={`https://open.spotify.com/search/${props.bookmark.title}`}
+        >
+          {t("bookmarks.item.spotify")}
+        </LinkButton>
+      </li>
     </ul>
   );
 };

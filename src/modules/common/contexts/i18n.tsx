@@ -57,6 +57,9 @@ const enDict = {
       note: "Note:",
       preview: "{{preview}} preview",
       details: "Details",
+      google: "Google",
+      youtube: "Youtube",
+      spotify: "Spotify",
     },
     filters: {
       random: "Random",
