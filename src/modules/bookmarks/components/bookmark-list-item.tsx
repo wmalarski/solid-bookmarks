@@ -8,7 +8,9 @@ import {
 import * as v from "valibot";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { createDateFormatter } from "~/modules/common/utils/formatters";
+import { paths } from "~/modules/common/utils/paths";
 import { Badge } from "~/ui/badge/badge";
+import { LinkButton } from "~/ui/button/button";
 import { Card, CardActions, CardBody } from "~/ui/card/card";
 import {
   Carousel,
@@ -17,6 +19,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "~/ui/carousel/carousel";
+import { ChevronRightIcon } from "~/ui/icons/chevron-right-icon";
 import { Link } from "~/ui/link/link";
 import type { BookmarkWithTagsModel } from "../server";
 import { CompleteDialog } from "./complete-dialog";
@@ -63,6 +66,14 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
           <DeleteBookmarkForm bookmark={props.bookmark} />
           <CompleteDialog bookmark={props.bookmark} />
           <UpdateBookmarkDialog bookmark={props.bookmark} />
+          <LinkButton
+            href={paths.bookmark(props.bookmark.id)}
+            size="sm"
+            color="secondary"
+          >
+            <ChevronRightIcon class="size-4" />
+            {t("bookmarks.item.details")}
+          </LinkButton>
         </CardActions>
       </CardBody>
     </Card>

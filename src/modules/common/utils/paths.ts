@@ -7,4 +7,5 @@ export const paths = {
   signUpSuccess: "/sign-up/success",
   tags: "/tags",
   share: "/share",
+  bookmark: (bookmarkId: number) => `/bookmark/${bookmarkId}`,
 };

@@ -56,6 +56,7 @@ const enDict = {
       rate: "Rate:",
       note: "Note:",
       preview: "{{preview}} preview",
+      details: "Details",
     },
     filters: {
       random: "Random",

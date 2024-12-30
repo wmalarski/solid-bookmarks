@@ -272,3 +272,35 @@ export const selectBookmarks = async (args: SelectBookmarksArgs) => {
 
   return rpcSuccessResult({ data: result.data, count: result.count });
 };
+
+const createSelectBookmarkSchema = () => {
+  return v.object({
+    bookmarkId: v.number(),
+  });
+};
+
+export type SelectBookmarkArgs = v.InferOutput<
+  ReturnType<typeof createSelectBookmarkSchema>
+>;
+
+export const selectBookmark = async (args: SelectBookmarkArgs) => {
+  const event = getRequestEventOrThrow();
+
+  const parsed = await v.safeParseAsync(createSelectBookmarkSchema(), args);
+
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
+
+  const result = await event.locals.supabase
+    .from("bookmarks")
+    .select("*, bookmarks_tags ( id, tags ( id, name ) )")
+    .eq("id", parsed.output.bookmarkId)
+    .single();
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  return rpcSuccessResult({ data: result.data });
+};
