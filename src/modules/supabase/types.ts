@@ -42,6 +42,7 @@ export type Database = {
           id: number
           note: string | null
           preview: string | null
+          random: number
           rate: number | null
           text: string
           title: string
@@ -55,6 +56,7 @@ export type Database = {
           id?: number
           note?: string | null
           preview?: string | null
+          random?: number
           rate?: number | null
           text?: string
           title?: string
@@ -68,6 +70,7 @@ export type Database = {
           id?: number
           note?: string | null
           preview?: string | null
+          random?: number
           rate?: number | null
           text?: string
           title?: string

@@ -218,6 +218,7 @@ const selectBookmarksFromDb = async ({
   limit = SELECT_BOOKMARKS_DEFAULT_LIMIT,
   done,
   tags,
+  random,
 }: SelectBookmarksArgs) => {
   const event = getRequestEventOrThrow();
 
@@ -234,9 +235,13 @@ const selectBookmarksFromDb = async ({
           .select("*, bookmarks_tags ( id, tags ( id, name ) )", {
             count: "estimated",
           })
-  )
-    .range(offset, offset + limit)
-    .order("created_at", { ascending: false });
+  ).range(offset, offset + limit);
+
+  if (random) {
+    builder = builder.gte("random", Math.random()).order("random");
+  } else {
+    builder = builder.order("created_at", { ascending: false });
+  }
 
   if (done === "completed") {
     builder = builder.eq("done", true);
