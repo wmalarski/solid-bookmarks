@@ -5,6 +5,7 @@ import {
   type ParentProps,
   Show,
 } from "solid-js";
+import * as v from "valibot";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { createDateFormatter } from "~/modules/common/utils/formatters";
 import { Badge } from "~/ui/badge/badge";
@@ -16,6 +17,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "~/ui/carousel/carousel";
+import { Link } from "~/ui/link/link";
 import type { BookmarkWithTagsModel } from "../server";
 import { CompleteDialog } from "./complete-dialog";
 import { DeleteBookmarkForm } from "./delete-bookmark-form";
@@ -39,9 +41,9 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
           <GridTitle>{t("bookmarks.item.title")}</GridTitle>
           <GridText>{props.bookmark.title}</GridText>
           <GridTitle>{t("bookmarks.item.text")}</GridTitle>
-          <GridText>{props.bookmark.text}</GridText>
+          <GridLink href={props.bookmark.text} />
           <GridTitle>{t("bookmarks.item.url")}</GridTitle>
-          <GridText>{props.bookmark.url}</GridText>
+          <GridLink href={props.bookmark.url} />
           <GridTitle>{t("bookmarks.item.createdAt")}</GridTitle>
           <GridText>{formatDate(props.bookmark.created_at)}</GridText>
           <GridTitle>{t("bookmarks.item.done")}</GridTitle>
@@ -73,6 +75,24 @@ const GridTitle: Component<ParentProps> = (props) => {
 
 const GridText: Component<ParentProps> = (props) => {
   return <span class="break-words">{props.children}</span>;
+};
+
+type GridLinkProps = {
+  href: string;
+};
+
+const GridLink: Component<GridLinkProps> = (props) => {
+  const isLink = createMemo(() => {
+    return v.safeParse(v.pipe(v.string(), v.url()), props.href).success;
+  });
+
+  return (
+    <Show when={isLink()} fallback={<GridText>{props.href}</GridText>}>
+      <Link hover={true} href={props.href} class="break-words">
+        {props.href}
+      </Link>
+    </Show>
+  );
 };
 
 type BookmarkPreviewProps = {
