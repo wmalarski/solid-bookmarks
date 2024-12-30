@@ -1,4 +1,4 @@
-import { createSignal, type Component, type ParentProps } from "solid-js";
+import { type Component, type ParentProps, createSignal } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";

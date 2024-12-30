@@ -1,4 +1,4 @@
-import { Show, type Component } from "solid-js";
+import { type Component, Show } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import { getOgPropsQuery } from "../client";

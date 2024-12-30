@@ -1,5 +1,5 @@
 import { useIsRouting } from "@solidjs/router";
-import { Show, type Component } from "solid-js";
+import { type Component, Show } from "solid-js";
 import { ClientOnly } from "~/ui/client-only/client-only";
 import { Progress } from "~/ui/progress/progress";
 

@@ -1,9 +1,9 @@
 import {
+  type Component,
+  type ParentProps,
   Show,
   createSignal,
   onMount,
-  type Component,
-  type ParentProps,
 } from "solid-js";
 
 export const ClientOnly: Component<ParentProps> = (props) => {

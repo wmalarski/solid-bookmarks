@@ -1,6 +1,6 @@
+import { useRegisterSW } from "virtual:pwa-register/solid";
 import type { Component } from "solid-js";
 import { Show } from "solid-js";
-import { useRegisterSW } from "virtual:pwa-register/solid";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import styles from "./reload-prompt.module.css";
