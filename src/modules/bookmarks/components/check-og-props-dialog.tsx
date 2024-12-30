@@ -48,6 +48,7 @@ export const CheckOgPropsDialog: Component<CheckOgPropsDialogProps> = (
         size="xs"
         onClick={onCheckClick}
         isLoading={isPending()}
+        disabled={isPending()}
       >
         {t("bookmarks.form.check")}
       </Button>
