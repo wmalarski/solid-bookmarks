@@ -1,3 +1,4 @@
+import { createVisibilityObserver } from "@solid-primitives/intersection-observer";
 import {
   type Component,
   For,
@@ -129,12 +130,10 @@ const BookmarkPreview: Component<BookmarkPreviewProps> = (props) => {
           <CarouselContent>
             <For each={images()}>
               {(image) => (
-                <CarouselItem>
-                  <BookmarkPreviewImage
-                    image={image}
-                    title={props.bookmark.title}
-                  />
-                </CarouselItem>
+                <BookmarkPreviewImage
+                  image={image}
+                  title={props.bookmark.title}
+                />
               )}
             </For>
           </CarouselContent>
@@ -154,12 +153,23 @@ type BookmarkPreviewImageProps = {
 const BookmarkPreviewImage: Component<BookmarkPreviewImageProps> = (props) => {
   const { t } = useI18n();
 
+  let el: HTMLDivElement | undefined;
+  const useVisibilityObserver = createVisibilityObserver({ threshold: 0.5 });
+  const visible = useVisibilityObserver(() => el);
+
   return (
-    <img
-      src={props.image}
-      alt={t("bookmarks.item.preview", { preview: props.title })}
-      loading="lazy"
-    />
+    <CarouselItem ref={el} class="min-h-72">
+      <Show when={visible()}>
+        <img
+          src={props.image}
+          alt={t("bookmarks.item.preview", { preview: props.title })}
+          loading="lazy"
+          height={250}
+          width={250}
+          class="text-base-300 h-64"
+        />
+      </Show>
+    </CarouselItem>
   );
 };
 

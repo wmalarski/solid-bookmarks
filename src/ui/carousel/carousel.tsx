@@ -18,7 +18,7 @@ import { ArrowLeftIcon } from "../icons/arrow-left-icon";
 import { ArrowRightIcon } from "../icons/arrow-right-icon";
 import { twCx } from "../utils/tw-cva";
 
-type CarouselApi = ReturnType<CreateEmblaCarouselType[1]>;
+type CarouselApi = NonNullable<ReturnType<CreateEmblaCarouselType[1]>>;
 
 type UseCarouselParameters = Parameters<typeof createEmblaCarousel>;
 type CarouselOptions = ReturnType<NonNullable<UseCarouselParameters[0]>>;
@@ -39,10 +39,6 @@ const createCarouselContext = (args: CreateCarouselContextArgs) => {
   const [canScrollNext, setCanScrollNext] = createSignal(false);
 
   const onSelect = (api: CarouselApi) => {
-    if (!api) {
-      return;
-    }
-
     setCanScrollPrev(api.canScrollPrev());
     setCanScrollNext(api.canScrollNext());
   };
@@ -50,10 +46,13 @@ const createCarouselContext = (args: CreateCarouselContextArgs) => {
   createEffect(() => {
     const apiValue = api();
 
-    onSelect(apiValue);
+    if (!apiValue) {
+      return;
+    }
 
-    apiValue?.on("select", onSelect);
-    onCleanup(() => apiValue?.off("select", onSelect));
+    onSelect(apiValue);
+    apiValue.on("select", onSelect);
+    onCleanup(() => apiValue.off("select", onSelect));
   });
 
   const scrollPrevious = () => {
@@ -80,7 +79,7 @@ const CarouselContext = createContext<CarouselContextValue>(() => {
   throw new Error("useCarousel must be used within a <Carousel />");
 });
 
-const useCarousel = () => {
+export const useCarousel = () => {
   return useContext(CarouselContext);
 };
 
