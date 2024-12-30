@@ -16,9 +16,14 @@ export const getOgProps = async (text?: string) => {
   }
 
   try {
+    console.log("test1");
     const api = await cheerio.fromURL(parsed.output);
+    console.log("test2", api);
     const metaTags = api("meta[property^='og:']").toArray();
+    console.log("test3", metaTags);
     const props = metaTags.map((element) => element.attribs) as OgProp[];
+    console.log("test4", props);
+
     return { props };
   } catch (error: unknown) {
     console.error(error);

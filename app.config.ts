@@ -4,14 +4,12 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   middleware: "./src/middleware.ts",
   server: {
-    // https: true,
     preset: "cloudflare-pages",
   },
   vite: {
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
-        // devOptions: { enabled: true },
         includeAssets: ["favicon.ico"],
         manifest: {
           name: "Solid Bookmarks",
