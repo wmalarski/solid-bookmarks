@@ -16,17 +16,10 @@ export const getOgProps = async (text?: string) => {
   }
 
   try {
-    console.log("test1");
-    const response = await fetch(parsed.output);
-    console.log("test1.25");
-    const html = await response.text();
-    console.log("test1.5");
+    const html = await fetch(parsed.output).then((response) => response.text());
     const api = cheerio.load(html);
-    console.log("test2", api);
     const metaTags = api("meta[property^='og:']").toArray();
-    console.log("test3", metaTags);
     const props = metaTags.map((element) => element.attribs) as OgProp[];
-    console.log("test4", props);
 
     return { props };
   } catch (error: unknown) {
