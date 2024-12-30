@@ -45,7 +45,10 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
         <Show when={props.bookmark.title}>
           <BookmarkLinks bookmark={props.bookmark} />
         </Show>
-        <div class="grid grid-cols-[1fr_2fr] gap-2 pb-4">
+        <div
+          style={{ "grid-template-columns": "minmax(0, 1fr) minmax(0, 3fr)" }}
+          class="grid gap-2 pb-4 w-full"
+        >
           <GridTitle>{t("bookmarks.item.title")}</GridTitle>
           <GridText>{props.bookmark.title}</GridText>
           <GridTitle>{t("bookmarks.item.text")}</GridTitle>
