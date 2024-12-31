@@ -32,6 +32,7 @@ const enDict = {
     title: "Bookmarks",
     loadMore: "Load More",
     share: "Share",
+    history: "History",
     complete: {
       complete: "Complete",
       done: "Done",

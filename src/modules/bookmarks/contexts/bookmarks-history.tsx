@@ -3,7 +3,6 @@ import {
   type Accessor,
   type Component,
   createContext,
-  createEffect,
   createMemo,
   type ParentProps,
   useContext,
@@ -11,12 +10,12 @@ import {
 import { createStore, produce } from "solid-js/store";
 
 const createBookmarksHistoryContext = (userId?: string) => {
-  const [history, setHistory] = makePersisted(createStore<number[]>([]), {
+  const [ids, setIds] = makePersisted(createStore<number[]>([]), {
     name: `bookmarks-${userId}`,
   });
 
   const addToHistory = (id: number) => {
-    setHistory(
+    setIds(
       produce((state) => {
         const index = state.indexOf(id);
 
@@ -26,18 +25,14 @@ const createBookmarksHistoryContext = (userId?: string) => {
 
         state.push(id);
 
-        if (state.length > 2) {
+        if (state.length > 20) {
           state.splice(0, 1);
         }
       }),
     );
   };
 
-  createEffect(() => {
-    console.log("history", history);
-  });
-
-  return { history, addToHistory };
+  return { ids, addToHistory };
 };
 
 type BookmarksHistoryContextValue = Accessor<

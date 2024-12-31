@@ -40,6 +40,13 @@ export const TopNavbar: Component = () => {
         >
           {t("bookmarks.share")}
         </Link>
+        <Link
+          class="text-sm sm:text-md lg:text-xl uppercase"
+          hover={true}
+          href={paths.history}
+        >
+          {t("bookmarks.history")}
+        </Link>
       </NavbarStart>
       <NavbarEnd>
         <Show
