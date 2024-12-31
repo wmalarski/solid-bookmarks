@@ -206,6 +206,7 @@ const createSelectBookmarksSchema = () => {
     tags: v.array(v.number()),
     done: createDoneSchema(),
     random: v.boolean(),
+    query: v.optional(v.string()),
   });
 };
 
@@ -219,6 +220,7 @@ const selectBookmarksFromDb = async ({
   done,
   tags,
   random,
+  query,
 }: SelectBookmarksArgs) => {
   const event = getRequestEventOrThrow();
 
@@ -247,6 +249,10 @@ const selectBookmarksFromDb = async ({
     builder = builder.eq("done", true);
   } else if (done === "uncompleted") {
     builder = builder.eq("done", false);
+  }
+
+  if (query && query.length > 0) {
+    builder = builder.textSearch("title", query, { type: "phrase" });
   }
 
   const result = await builder;

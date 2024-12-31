@@ -52,5 +52,6 @@ const mapToSelectBookmarksArgs = (
     tags: params["tags[]"],
     done: params.done,
     random: params.random === "on",
+    query: params.query,
   };
 };

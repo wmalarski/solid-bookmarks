@@ -21,10 +21,15 @@ const createRandomSchema = () => {
   );
 };
 
+const createQuerySchema = () => {
+  return v.optional(v.string());
+};
+
 const createFiltersFormSchema = () => {
   return v.object({
     done: createDoneSchema(),
     random: createRandomSchema(),
+    query: createQuerySchema(),
     "tags[]": v.optional(v.array(v.number()), []),
   });
 };
@@ -33,6 +38,7 @@ export const createFiltersSearchParamsSchema = () => {
   return v.object({
     done: createDoneSchema(),
     random: createRandomSchema(),
+    query: createQuerySchema(),
     "tags[]": v.optional(
       v.union([
         v.array(v.pipe(v.string(), v.transform(Number))),
@@ -51,7 +57,7 @@ export type FiltersSearchParams = v.InferOutput<
   ReturnType<typeof createFiltersSearchParamsSchema>
 >;
 
-export type SearchParams = ReturnType<typeof useSearchParams>[0];
+type SearchParams = ReturnType<typeof useSearchParams>[0];
 
 export const parseFiltersSearchParams = (params: SearchParams) => {
   const schema = createFiltersSearchParamsSchema();

@@ -15,6 +15,7 @@ import { FormControl } from "~/ui/form-control/form-control";
 import { FilterIcon } from "~/ui/icons/filter-icon";
 import { Label, LabelText } from "~/ui/label/label";
 import { Radio } from "~/ui/radio/radio";
+import { TextFieldInput } from "~/ui/text-field/text-field";
 import {
   type FiltersSearchParams,
   useSetFiltersSearchParams,
@@ -54,6 +55,7 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
           <form id={formId()} onSubmit={onSubmit} class="flex flex-col gap-4">
             <RandomFilter random={props.params.random} />
             <DoneFilter done={props.params.done} />
+            <QueryFilter query={props.params.query} />
             <BookmarkTagsField initialTags={props.params["tags[]"]} />
           </form>
           <DialogActions>
@@ -113,6 +115,29 @@ const RandomFilter: Component<RandomFilterProps> = (props) => {
       <Label for="random">
         <LabelText>{t("bookmarks.filters.random")}</LabelText>
       </Label>
+    </FormControl>
+  );
+};
+
+type QueryFilterProps = {
+  query: FiltersSearchParams["query"];
+};
+
+const QueryFilter: Component<QueryFilterProps> = (props) => {
+  const { t } = useI18n();
+
+  return (
+    <FormControl>
+      <Label for="query">
+        <LabelText>{t("bookmarks.filters.query")}</LabelText>
+      </Label>
+      <TextFieldInput
+        id="query"
+        name="query"
+        placeholder={t("bookmarks.filters.query")}
+        value={props.query}
+        variant="bordered"
+      />
     </FormControl>
   );
 };

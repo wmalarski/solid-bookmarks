@@ -68,6 +68,7 @@ const enDict = {
       uncompleted: "Uncompleted",
       all: "All",
       filters: "Filters",
+      query: "Query",
     },
   },
   tags: {
