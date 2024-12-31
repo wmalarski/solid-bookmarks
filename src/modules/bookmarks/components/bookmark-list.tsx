@@ -1,6 +1,6 @@
 import { createWritableMemo } from "@solid-primitives/memo";
 import { createAsync } from "@solidjs/router";
-import { type Component, For, Suspense } from "solid-js";
+import { type Component, For, type ParentProps, Suspense } from "solid-js";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
@@ -39,14 +39,14 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
         <h2 class="text-xl">{t("bookmarks.title")}</h2>
         <BookmarkFilters params={props.filterSearchParams} />
       </div>
-      <ul class="flex flex-col gap-4">
-        <BookmarkListPart offset={0} bookmarks={props.initialBookmarks} />
+      <BookmarkListContainer>
+        <BookmarkListPart bookmarks={props.initialBookmarks} />
         <For each={offsets()}>
           {(offset) => (
             <BookmarkLazy offset={offset} queryArgs={props.queryArgs} />
           )}
         </For>
-      </ul>
+      </BookmarkListContainer>
       <Button size="sm" color="secondary" onClick={onLoadMoreClick}>
         {t("bookmarks.loadMore")}
       </Button>
@@ -67,23 +67,17 @@ const BookmarkLazy: Component<BookmarkLazyProps> = (props) => {
   return (
     <Suspense fallback={<BookmarkListLoadingPlaceholder />}>
       <RpcShow result={bookmarks()}>
-        {(bookmarks) => (
-          <BookmarkListPart
-            offset={props.offset}
-            bookmarks={bookmarks().data ?? []}
-          />
-        )}
+        {(bookmarks) => <BookmarkListPart bookmarks={bookmarks().data ?? []} />}
       </RpcShow>
     </Suspense>
   );
 };
 
 type BookmarkListPartProps = {
-  offset: number;
   bookmarks: BookmarkWithTagsModel[];
 };
 
-const BookmarkListPart: Component<BookmarkListPartProps> = (props) => {
+export const BookmarkListPart: Component<BookmarkListPartProps> = (props) => {
   return (
     <For each={props.bookmarks}>
       {(bookmark) => (
@@ -93,6 +87,10 @@ const BookmarkListPart: Component<BookmarkListPartProps> = (props) => {
       )}
     </For>
   );
+};
+
+export const BookmarkListContainer: Component<ParentProps> = (props) => {
+  return <ul class="flex flex-col gap-4">{props.children}</ul>;
 };
 
 export const BookmarkListPlaceholder: Component = () => {
