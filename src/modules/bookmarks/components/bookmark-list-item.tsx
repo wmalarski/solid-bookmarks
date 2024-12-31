@@ -23,6 +23,7 @@ import {
 } from "~/ui/carousel/carousel";
 import { ChevronRightIcon } from "~/ui/icons/chevron-right-icon";
 import { Link } from "~/ui/link/link";
+import { useBookmarksHistory } from "../contexts/bookmarks-history";
 import type { BookmarkWithTagsModel } from "../server";
 import { CompleteDialog } from "./complete-dialog";
 import { DeleteBookmarkForm } from "./delete-bookmark-form";
@@ -205,6 +206,12 @@ type BookmarkLinksProps = {
 
 const BookmarkLinks: Component<BookmarkLinksProps> = (props) => {
   const { t } = useI18n();
+
+  const history = useBookmarksHistory();
+
+  const onClick = () => {
+    history().addToHistory(props.bookmark.id);
+  };
 
   const commonProps: Partial<ComponentProps<typeof LinkButton>> = {
     rel: "noopener noreferrer",

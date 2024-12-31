@@ -5,6 +5,7 @@ import {
 } from "@solidjs/router";
 import { getUserQuery } from "~/modules/auth/client";
 import { UserProvider } from "~/modules/auth/contexts/user-context";
+import { BookmarksHistoryProvider } from "~/modules/bookmarks/contexts/bookmarks-history";
 import { PageLayout } from "~/modules/common/components/layout";
 import { TopNavbar } from "~/modules/common/components/top-navbar";
 
@@ -19,10 +20,12 @@ export default function ProtectedLayout(props: RouteSectionProps) {
 
   return (
     <UserProvider user={user()}>
-      <PageLayout>
-        <TopNavbar />
-        {props.children}
-      </PageLayout>
+      <BookmarksHistoryProvider>
+        <PageLayout>
+          <TopNavbar />
+          {props.children}
+        </PageLayout>
+      </BookmarksHistoryProvider>
     </UserProvider>
   );
 }
