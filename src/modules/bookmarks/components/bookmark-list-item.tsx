@@ -38,6 +38,12 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
 
   const formatDate = createDateFormatter();
 
+  const history = useBookmarksHistory();
+
+  const onDetailsClick = () => {
+    history().addToHistory(props.bookmark.id);
+  };
+
   return (
     <Card variant="bordered" size="compact" class="w-full">
       <CardBody class="">
@@ -53,9 +59,9 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
           <GridTitle>{t("bookmarks.item.title")}</GridTitle>
           <GridText>{props.bookmark.title}</GridText>
           <GridTitle>{t("bookmarks.item.text")}</GridTitle>
-          <GridLink href={props.bookmark.text} />
+          <GridLink bookmarkId={props.bookmark.id} href={props.bookmark.text} />
           <GridTitle>{t("bookmarks.item.url")}</GridTitle>
-          <GridLink href={props.bookmark.url} />
+          <GridLink bookmarkId={props.bookmark.id} href={props.bookmark.url} />
           <GridTitle>{t("bookmarks.item.createdAt")}</GridTitle>
           <GridText>{formatDate(props.bookmark.created_at)}</GridText>
           <GridTitle>{t("bookmarks.item.done")}</GridTitle>
@@ -76,6 +82,7 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
           <CompleteDialog bookmark={props.bookmark} />
           <UpdateBookmarkDialog bookmark={props.bookmark} />
           <LinkButton
+            onClick={onDetailsClick}
             href={paths.bookmark(props.bookmark.id)}
             size="sm"
             color="secondary"
@@ -98,15 +105,27 @@ const GridText: Component<ParentProps> = (props) => {
 };
 
 type GridLinkProps = {
+  bookmarkId: number;
   href: string;
 };
 
 const GridLink: Component<GridLinkProps> = (props) => {
   const isLink = createIsLink(() => props.href);
 
+  const history = useBookmarksHistory();
+
+  const onClick = () => {
+    history().addToHistory(props.bookmarkId);
+  };
+
   return (
     <Show when={isLink()} fallback={<GridText>{props.href}</GridText>}>
-      <Link hover={true} href={props.href} class="break-words">
+      <Link
+        onClick={onClick}
+        hover={true}
+        href={props.href}
+        class="break-words"
+      >
         {props.href}
       </Link>
     </Show>
@@ -218,6 +237,7 @@ const BookmarkLinks: Component<BookmarkLinksProps> = (props) => {
     target: "_blank",
     size: "xs",
     color: "secondary",
+    onClick,
   };
 
   return (

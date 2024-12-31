@@ -13,12 +13,14 @@ export const Dialog: Component<DialogProps> = (props) => {
 
 export type DialogTriggerProps = ComponentProps<typeof Button> & {
   for: string;
+  onClick?: (event: MouseEvent) => void;
 };
 
 export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
-  const [forValue, withoutFor] = splitProps(props, ["for"]);
+  const [forValue, withoutFor] = splitProps(props, ["for", "onClick"]);
 
-  const onClick: ComponentProps<"button">["onClick"] = () => {
+  const onClick: ComponentProps<"button">["onClick"] = (event) => {
+    props.onClick?.(event);
     const id = `#${forValue.for}`;
     const dialog = document.querySelector<HTMLDialogElement>(id);
     dialog?.showModal();

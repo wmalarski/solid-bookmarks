@@ -14,6 +14,7 @@ import {
 } from "~/ui/dialog/dialog";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { updateBookmarkAction } from "../client";
+import { useBookmarksHistory } from "../contexts/bookmarks-history";
 import type { BookmarkWithTagsModel } from "../server";
 import { BookmarkFields } from "./bookmark-fields";
 
@@ -48,9 +49,20 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
     };
   };
 
+  const history = useBookmarksHistory();
+
+  const onClick = () => {
+    history().addToHistory(props.bookmark.id);
+  };
+
   return (
     <>
-      <DialogTrigger for={dialogId()} size="sm" color="secondary">
+      <DialogTrigger
+        onClick={onClick}
+        for={dialogId()}
+        size="sm"
+        color="secondary"
+      >
         <PencilIcon class="size-4" />
         {t("common.update")}
       </DialogTrigger>

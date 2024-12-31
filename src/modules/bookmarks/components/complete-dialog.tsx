@@ -14,6 +14,7 @@ import {
 } from "~/ui/dialog/dialog";
 import { CheckIcon } from "~/ui/icons/check-icon";
 import { completeBookmarkAction } from "../client";
+import { useBookmarksHistory } from "../contexts/bookmarks-history";
 import type { BookmarkWithTagsModel } from "../server";
 import { CompleteFields } from "./complete-fields";
 
@@ -32,14 +33,27 @@ export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
     ([form]) => form.get("bookmarkId") === String(props.bookmark.id),
   );
 
+  const history = useBookmarksHistory();
+
+  const onClick = () => {
+    history().addToHistory(props.bookmark.id);
+  };
+
   const onSubmit = useActionOnSubmit({
     action: completeBookmarkAction,
-    onSuccess: () => closeDialog(dialogId()),
+    onSuccess: () => {
+      closeDialog(dialogId());
+    },
   });
 
   return (
     <>
-      <DialogTrigger for={dialogId()} size="sm" color="primary">
+      <DialogTrigger
+        onClick={onClick}
+        for={dialogId()}
+        size="sm"
+        color="primary"
+      >
         <CheckIcon class="size-4" />
         {t("bookmarks.complete.complete")}
       </DialogTrigger>
