@@ -38,7 +38,7 @@ export const DialogBox: Component<DialogBoxProps> = (props) => {
 export type DialogTitleProps = ComponentProps<"h3">;
 
 export const DialogTitle: Component<DialogTitleProps> = (props) => {
-  return <h3 {...props} class={twCx("text-xl pb-6", props.class)} />;
+  return <h3 {...props} class={twCx("pb-6 text-xl", props.class)} />;
 };
 
 export type DialogBackdropProps = Record<string, never>;

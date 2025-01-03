@@ -54,7 +54,7 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
         </Show>
         <div
           style={{ "grid-template-columns": "minmax(0, 1fr) minmax(0, 3fr)" }}
-          class="grid gap-2 pb-4 w-full"
+          class="grid w-full gap-2 pb-4"
         >
           <GridTitle>{t("bookmarks.item.title")}</GridTitle>
           <GridText>{props.bookmark.title}</GridText>
@@ -194,7 +194,7 @@ const BookmarkPreviewImage: Component<BookmarkPreviewImageProps> = (props) => {
           loading="lazy"
           height={250}
           width={250}
-          class="text-base-300 h-64"
+          class="h-64 text-base-300"
         />
       </Show>
     </CarouselItem>
@@ -207,7 +207,7 @@ type BookmarkTagsListProps = {
 
 const BookmarkTagsList: Component<BookmarkTagsListProps> = (props) => {
   return (
-    <ul class="flex flex-wrap flex-row gap-2">
+    <ul class="flex flex-row flex-wrap gap-2">
       <For each={props.bookmark.bookmarks_tags}>
         {(bookmarkTag) => (
           <li>
@@ -241,7 +241,7 @@ const BookmarkLinks: Component<BookmarkLinksProps> = (props) => {
   };
 
   return (
-    <ul class="flex flex-wrap flex-row gap-2">
+    <ul class="flex flex-row flex-wrap gap-2">
       <li>
         <LinkButton
           {...commonProps}

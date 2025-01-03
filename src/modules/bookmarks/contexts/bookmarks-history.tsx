@@ -2,9 +2,9 @@ import { makePersisted } from "@solid-primitives/storage";
 import {
   type Accessor,
   type Component,
+  type ParentProps,
   createContext,
   createMemo,
-  type ParentProps,
   useContext,
 } from "solid-js";
 import { createStore, produce } from "solid-js/store";

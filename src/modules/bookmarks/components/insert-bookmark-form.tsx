@@ -20,7 +20,7 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
   const submission = useSubmission(insertBookmarkAction);
 
   return (
-    <Card class="w-full max-w-md mt-4" variant="bordered">
+    <Card class="mt-4 w-full max-w-md" variant="bordered">
       <CardBody>
         <header class="flex items-center justify-between gap-2">
           <h2 class={cardTitleRecipe()}>{t("bookmarks.share")}</h2>

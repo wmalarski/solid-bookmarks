@@ -124,7 +124,7 @@ export const CarouselContent: Component<CarouselContentProps> = (props) => {
 
   return (
     <div ref={carousel().carouselRef} class="overflow-hidden">
-      <div class={twCx("flex -ml-4", props.class)} {...props} />
+      <div class={twCx("-ml-4 flex", props.class)} {...props} />
     </div>
   );
 };
@@ -155,7 +155,7 @@ export const CarouselPrevious: Component<CarouselPreviousProps> = (props) => {
       shape="circle"
       size="sm"
       {...props}
-      class={twCx("absolute -left-12 top-1/2 -translate-y-1/2", props.class)}
+      class={twCx("-left-12 -translate-y-1/2 absolute top-1/2", props.class)}
       disabled={!carousel().canScrollPrev()}
       onClick={carousel().scrollPrevious}
     >
@@ -178,7 +178,7 @@ export const CarouselNext: Component<CarouselNextProps> = (props) => {
       shape="circle"
       size="sm"
       {...props}
-      class={twCx("absolute -right-12 top-1/2 -translate-y-1/2", props.class)}
+      class={twCx("-right-12 -translate-y-1/2 absolute top-1/2", props.class)}
       disabled={!carousel().canScrollNext()}
       onClick={carousel().scrollNext}
     >

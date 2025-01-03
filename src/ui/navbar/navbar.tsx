@@ -11,7 +11,7 @@ export type NavbarStartProps = ComponentProps<"div">;
 
 export const NavbarStart = (props: NavbarStartProps) => {
   return (
-    <div {...props} class={twCx("flex-wrap navbar-start w-fit", props.class)} />
+    <div {...props} class={twCx("navbar-start w-fit flex-wrap", props.class)} />
   );
 };
 

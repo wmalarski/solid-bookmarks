@@ -18,7 +18,7 @@ export const TopNavbar: Component = () => {
       <NavbarStart class="gap-2">
         <h1>
           <Link
-            class="flex gap-1 text-md sm:text-xl lg:text-3xl uppercase items-center"
+            class="flex items-center gap-1 text-md uppercase sm:text-xl lg:text-3xl"
             hover={true}
             href={paths.home}
           >
@@ -27,21 +27,21 @@ export const TopNavbar: Component = () => {
           </Link>
         </h1>
         <Link
-          class="text-sm sm:text-md lg:text-xl uppercase"
+          class="text-sm uppercase sm:text-md lg:text-xl"
           hover={true}
           href={paths.tags}
         >
           {t("tags.heading")}
         </Link>
         <Link
-          class="text-sm sm:text-md lg:text-xl uppercase"
+          class="text-sm uppercase sm:text-md lg:text-xl"
           hover={true}
           href={paths.share}
         >
           {t("bookmarks.share")}
         </Link>
         <Link
-          class="text-sm sm:text-md lg:text-xl uppercase"
+          class="text-sm uppercase sm:text-md lg:text-xl"
           hover={true}
           href={paths.history}
         >

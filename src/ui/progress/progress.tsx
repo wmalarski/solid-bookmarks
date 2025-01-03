@@ -8,7 +8,7 @@ export const Progress: Component<ProgressProps> = (props) => {
   return (
     <div
       {...props}
-      class={twCx("absolute w-screen h-1", styles.progress, props.class)}
+      class={twCx("absolute h-1 w-screen", styles.progress, props.class)}
     />
   );
 };

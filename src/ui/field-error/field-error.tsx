@@ -19,7 +19,7 @@ export const FieldError: Component<FieldErrorProps> = (props) => {
       <span
         role="alert"
         {...withoutVariants}
-        class={twCx("text-sm text-error pt-2", props.class)}
+        class={twCx("pt-2 text-error text-sm", props.class)}
       >
         {variants.message}
       </span>

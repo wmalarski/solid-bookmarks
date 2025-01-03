@@ -34,8 +34,8 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
   };
 
   return (
-    <div class="w-full max-w-xl flex flex-col gap-2 py-4 px-2">
-      <div class="w-full flex justify-between gap-2">
+    <div class="flex w-full max-w-xl flex-col gap-2 px-2 py-4">
+      <div class="flex w-full justify-between gap-2">
         <h2 class="text-xl">{t("bookmarks.title")}</h2>
         <BookmarkFilters params={props.filterSearchParams} />
       </div>
@@ -95,7 +95,7 @@ export const BookmarkListContainer: Component<ParentProps> = (props) => {
 
 export const BookmarkListPlaceholder: Component = () => {
   return (
-    <ul class="w-full max-w-xl flex flex-col gap-2 py-4 px-2">
+    <ul class="flex w-full max-w-xl flex-col gap-2 px-2 py-4">
       <BookmarkListLoadingPlaceholder />
     </ul>
   );
@@ -108,7 +108,7 @@ const BookmarkListLoadingPlaceholder: Component = () => {
     <For each={list}>
       {() => (
         <li>
-          <Skeleton class="w-full h-48" />
+          <Skeleton class="h-48 w-full" />
         </li>
       )}
     </For>

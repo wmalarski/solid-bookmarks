@@ -40,6 +40,9 @@
       },
       "complexity": {
         "noVoid": "off"
+      },
+      "nursery": {
+        "useSortedClasses": "error"
       }
     }
   },

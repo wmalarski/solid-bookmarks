@@ -167,7 +167,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
 
 const LabelRow: Component<ParentProps> = (props) => {
   return (
-    <div class="flex justify-between gap-2 w-full items-center">
+    <div class="flex w-full items-center justify-between gap-2">
       {props.children}
     </div>
   );
