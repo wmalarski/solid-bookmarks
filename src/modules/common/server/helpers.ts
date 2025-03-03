@@ -29,10 +29,7 @@ export type RpcSuccess<T = any> = {
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export type RpcResult<T = any> =
-  | RpcFailure
-  | RpcSuccess<T>
-  | CustomResponse<RpcSuccess<T>>;
+export type RpcResult<T = any> = RpcFailure | RpcSuccess<T>;
 
 export const rpcParseIssueResult = (
   issues: v.BaseIssue<unknown>[],
@@ -88,7 +85,9 @@ export const getParsedCookie = async <
 
 type HandleRpcArgs<
   TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>,
-  THandler extends (args: v.InferOutput<TSchema>) => Promise<RpcResult>,
+  THandler extends (
+    args: v.InferOutput<TSchema>,
+  ) => Promise<RpcResult | CustomResponse<RpcSuccess>>,
 > = {
   schema: TSchema;
   data: Record<string, unknown>;
@@ -97,7 +96,9 @@ type HandleRpcArgs<
 
 export const handleRpc = async <
   TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>,
-  THandler extends (args: v.InferOutput<TSchema>) => Promise<RpcResult>,
+  THandler extends (
+    args: v.InferOutput<TSchema>,
+  ) => Promise<RpcResult | CustomResponse<RpcSuccess>>,
 >({
   data,
   handler,
