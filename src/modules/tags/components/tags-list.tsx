@@ -1,4 +1,4 @@
-import type { Component } from "solid-js";
+import { type Component, For } from "solid-js";
 import type { TagModel } from "../server";
 import { TagsListItem } from "./tag-list-item";
 
@@ -9,11 +9,13 @@ type TagsListProps = {
 export const TagsList: Component<TagsListProps> = (props) => {
   return (
     <ul class="flex flex-col gap-2">
-      {props.tags.map((tag) => (
-        <li>
-          <TagsListItem tag={tag} />
-        </li>
-      ))}
+      <For each={props.tags}>
+        {(tag) => (
+          <li>
+            <TagsListItem tag={tag} />
+          </li>
+        )}
+      </For>
     </ul>
   );
 };
