@@ -1,4 +1,4 @@
-import { redirect } from "@solidjs/router";
+import { type CustomResponse, redirect } from "@solidjs/router";
 import { type RequestEvent, getRequestEvent } from "solid-js/web";
 import * as v from "valibot";
 import { getCookie, type setCookie } from "vinxi/http";
@@ -29,7 +29,10 @@ export type RpcSuccess<T = any> = {
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export type RpcResult<T = any> = RpcFailure | RpcSuccess<T>;
+export type RpcResult<T = any> =
+  | RpcFailure
+  | RpcSuccess<T>
+  | CustomResponse<RpcSuccess<T>>;
 
 export const rpcParseIssueResult = (
   issues: v.BaseIssue<unknown>[],
@@ -81,4 +84,34 @@ export const getParsedCookie = async <
   } catch {
     return null;
   }
+};
+
+type HandleRpcArgs<
+  TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>,
+  THandler extends (args: v.InferOutput<TSchema>) => Promise<RpcResult>,
+> = {
+  schema: TSchema;
+  data: Record<string, unknown>;
+  handler: THandler;
+};
+
+export const handleRpc = async <
+  TSchema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>,
+  THandler extends (args: v.InferOutput<TSchema>) => Promise<RpcResult>,
+>({
+  data,
+  handler,
+  schema,
+}: HandleRpcArgs<TSchema, THandler>): Promise<
+  Awaited<ReturnType<THandler>>
+> => {
+  type Result = Awaited<ReturnType<THandler>>;
+  const parsed = await v.safeParseAsync(schema, data);
+
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues) as Result;
+  }
+
+  const result = await handler(parsed.output);
+  return result as Result;
 };

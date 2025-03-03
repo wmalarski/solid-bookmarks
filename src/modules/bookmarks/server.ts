@@ -5,6 +5,7 @@ import { decode } from "decode-formdata";
 import * as v from "valibot";
 import {
   getRequestEventOrThrow,
+  handleRpc,
   rpcErrorResult,
   rpcParseIssueResult,
   rpcSuccessResult,
@@ -14,71 +15,67 @@ import { BOOKMARKS_QUERY_KEY, SELECT_BOOKMARKS_DEFAULT_LIMIT } from "./const";
 import { createDoneSchema } from "./utils/use-filters-search-params";
 
 export const insertBookmark = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
-
-  const parsed = await v.safeParseAsync(
-    v.object({
+  return handleRpc({
+    data: decode(form, { arrays: ["tags[]"], numbers: ["tags[]"] }),
+    schema: v.object({
       title: v.optional(v.string()),
       text: v.optional(v.string()),
       url: v.optional(v.string()),
       preview: v.optional(v.string()),
       "tags[]": v.optional(v.array(v.number()), []),
     }),
-    decode(form, { arrays: ["tags[]"], numbers: ["tags[]"] }),
-  );
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      const { "tags[]": tags, ...values } = args;
 
-  const { "tags[]": tags, ...values } = parsed.output;
+      const result = await event.locals.supabase
+        .from("bookmarks")
+        .insert(values)
+        .select()
+        .single();
 
-  const result = await event.locals.supabase
-    .from("bookmarks")
-    .insert(values)
-    .select()
-    .single();
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
+      const tagsResult = await event.locals.supabase
+        .from("bookmarks_tags")
+        .insert(
+          tags.map((tagId) => ({
+            bookmark_id: result.data.id,
+            tag_id: tagId,
+          })),
+        );
 
-  const tagsResult = await event.locals.supabase.from("bookmarks_tags").insert(
-    tags.map((tagId) => ({
-      bookmark_id: result.data.id,
-      tag_id: tagId,
-    })),
-  );
+      if (tagsResult.error) {
+        return rpcErrorResult(tagsResult.error);
+      }
 
-  if (tagsResult.error) {
-    return rpcErrorResult(tagsResult.error);
-  }
-
-  throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
+      throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
+    },
+  });
 };
 
-export const deleteBookmark = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
+export const deleteBookmark = (form: FormData) => {
+  return handleRpc({
+    data: decode(form, { numbers: ["bookmarkId"] }),
+    schema: v.object({ bookmarkId: v.number() }),
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  const parsed = await v.safeParseAsync(
-    v.object({ bookmarkId: v.number() }),
-    decode(form, { numbers: ["bookmarkId"] }),
-  );
+      const result = await event.locals.supabase
+        .from("bookmarks")
+        .delete()
+        .eq("id", args.bookmarkId);
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  const result = await event.locals.supabase
-    .from("bookmarks")
-    .delete()
-    .eq("id", parsed.output.bookmarkId);
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+      throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+    },
+  });
 };
 
 type UpdateBookmarkTagsArgs = {
@@ -113,11 +110,13 @@ const updateBookmarkTags = ({
   ]);
 };
 
-export const updateBookmark = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
-
-  const parsed = await v.safeParseAsync(
-    v.object({
+export const updateBookmark = (form: FormData) => {
+  return handleRpc({
+    data: decode(form, {
+      numbers: ["bookmarkId", "tags[]"],
+      arrays: ["tags[]"],
+    }),
+    schema: v.object({
       bookmarkId: v.number(),
       text: v.optional(v.string()),
       title: v.optional(v.string()),
@@ -125,78 +124,70 @@ export const updateBookmark = async (form: FormData) => {
       preview: v.optional(v.string()),
       "tags[]": v.optional(v.array(v.number()), []),
     }),
-    decode(form, {
-      numbers: ["bookmarkId", "tags[]"],
-      arrays: ["tags[]"],
-    }),
-  );
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      const { bookmarkId, "tags[]": tags, ...values } = args;
 
-  const { bookmarkId, "tags[]": tags, ...values } = parsed.output;
+      const result = await event.locals.supabase
+        .from("bookmarks")
+        .update(values)
+        .eq("id", bookmarkId)
+        .select("*, bookmarks_tags ( id, tag_id )")
+        .single();
 
-  const result = await event.locals.supabase
-    .from("bookmarks")
-    .update(values)
-    .eq("id", bookmarkId)
-    .select("*, bookmarks_tags ( id, tag_id )")
-    .single();
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
+      const [deleteResult, insertResult] = await updateBookmarkTags({
+        bookmarkId,
+        existingTags: result.data.bookmarks_tags,
+        formTags: tags,
+      });
 
-  const [deleteResult, insertResult] = await updateBookmarkTags({
-    bookmarkId,
-    existingTags: result.data.bookmarks_tags,
-    formTags: tags,
+      if (deleteResult.error) {
+        return rpcErrorResult(deleteResult.error);
+      }
+
+      if (insertResult.error) {
+        return rpcErrorResult(insertResult.error);
+      }
+
+      throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+    },
   });
-
-  if (deleteResult.error) {
-    return rpcErrorResult(deleteResult.error);
-  }
-
-  if (insertResult.error) {
-    return rpcErrorResult(insertResult.error);
-  }
-
-  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
 };
 
-export const completeBookmark = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
-
-  const parsed = await v.safeParseAsync(
-    v.object({
+export const completeBookmark = (form: FormData) => {
+  return handleRpc({
+    data: decode(form, {
+      numbers: ["bookmarkId", "rate"],
+      booleans: ["done"],
+    }),
+    schema: v.object({
       bookmarkId: v.number(),
       done: v.optional(v.boolean()),
       note: v.optional(v.string()),
       rate: v.optional(v.number()),
     }),
-    decode(form, {
-      numbers: ["bookmarkId", "rate"],
-      booleans: ["done"],
-    }),
-  );
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      const { bookmarkId, ...values } = args;
 
-  const { bookmarkId, ...values } = parsed.output;
+      const result = await event.locals.supabase
+        .from("bookmarks")
+        .update({ ...values, done_at: new Date().toISOString() })
+        .eq("id", bookmarkId);
 
-  const result = await event.locals.supabase
-    .from("bookmarks")
-    .update({ ...values, done_at: new Date().toISOString() })
-    .eq("id", bookmarkId);
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+      throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+    },
+  });
 };
 
 const createSelectBookmarksSchema = () => {
@@ -263,20 +254,20 @@ export type BookmarkWithTagsModel = NonNullable<
   Awaited<ReturnType<typeof selectBookmarksFromDb>>["data"]
 >[0];
 
-export const selectBookmarks = async (args: SelectBookmarksArgs) => {
-  const parsed = await v.safeParseAsync(createSelectBookmarksSchema(), args);
+export const selectBookmarks = (args: SelectBookmarksArgs) => {
+  return handleRpc({
+    data: args,
+    schema: createSelectBookmarksSchema(),
+    async handler(args) {
+      const result = await selectBookmarksFromDb(args);
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  const result = await selectBookmarksFromDb(parsed.output);
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return rpcSuccessResult({ data: result.data, count: result.count });
+      return rpcSuccessResult({ data: result.data, count: result.count });
+    },
+  });
 };
 
 const createSelectBookmarkSchema = () => {
@@ -289,26 +280,26 @@ export type SelectBookmarkArgs = v.InferOutput<
   ReturnType<typeof createSelectBookmarkSchema>
 >;
 
-export const selectBookmark = async (args: SelectBookmarkArgs) => {
-  const event = getRequestEventOrThrow();
+export const selectBookmark = (args: SelectBookmarkArgs) => {
+  return handleRpc({
+    data: args,
+    schema: createSelectBookmarkSchema(),
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  const parsed = await v.safeParseAsync(createSelectBookmarkSchema(), args);
+      const result = await event.locals.supabase
+        .from("bookmarks")
+        .select("*, bookmarks_tags ( id, tags ( id, name ) )")
+        .eq("id", args.bookmarkId)
+        .single();
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  const result = await event.locals.supabase
-    .from("bookmarks")
-    .select("*, bookmarks_tags ( id, tags ( id, name ) )")
-    .eq("id", parsed.output.bookmarkId)
-    .single();
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return rpcSuccessResult({ data: result.data });
+      return rpcSuccessResult({ data: result.data });
+    },
+  });
 };
 
 const createSelectBookmarksByIdsSchema = () => {
@@ -321,26 +312,32 @@ export type SelectBookmarksByIdsArgs = v.InferOutput<
   ReturnType<typeof createSelectBookmarksByIdsSchema>
 >;
 
-export const selectBookmarksByIds = async (args: SelectBookmarksByIdsArgs) => {
-  const event = getRequestEventOrThrow();
+export const selectBookmarksByIds = (args: SelectBookmarksByIdsArgs) => {
+  return handleRpc({
+    data: args,
+    schema: createSelectBookmarksByIdsSchema(),
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  const parsed = await v.safeParseAsync(
-    createSelectBookmarksByIdsSchema(),
-    args,
-  );
+      const parsed = await v.safeParseAsync(
+        createSelectBookmarksByIdsSchema(),
+        args,
+      );
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      if (!parsed.success) {
+        return rpcParseIssueResult(parsed.issues);
+      }
 
-  const result = await event.locals.supabase
-    .from("bookmarks")
-    .select("*, bookmarks_tags ( id, tags ( id, name ) )")
-    .in("id", parsed.output.bookmarkIds);
+      const result = await event.locals.supabase
+        .from("bookmarks")
+        .select("*, bookmarks_tags ( id, tags ( id, name ) )")
+        .in("id", parsed.output.bookmarkIds);
 
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  return rpcSuccessResult({ data: result.data });
+      return rpcSuccessResult({ data: result.data });
+    },
+  });
 };

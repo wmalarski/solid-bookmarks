@@ -5,81 +5,72 @@ import { decode } from "decode-formdata";
 import * as v from "valibot";
 import {
   getRequestEventOrThrow,
+  handleRpc,
   rpcErrorResult,
-  rpcParseIssueResult,
   rpcSuccessResult,
 } from "../common/server/helpers";
 import { SELECT_TAGS_DEFAULT_LIMIT, TAGS_QUERY_KEY } from "./const";
 
-export const insertTag = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
+export const insertTag = (form: FormData) => {
+  return handleRpc({
+    data: decode(form),
+    schema: v.object({ name: v.string() }),
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  const parsed = await v.safeParseAsync(
-    v.object({ name: v.string() }),
-    decode(form),
-  );
+      const result = await event.locals.supabase.from("tags").insert(args);
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  const result = await event.locals.supabase.from("tags").insert(parsed.output);
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
+      return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
+    },
+  });
 };
 
-export const deleteTag = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
+export const deleteTag = (form: FormData) => {
+  return handleRpc({
+    data: decode(form, { numbers: ["tagId"] }),
+    schema: v.object({ tagId: v.number() }),
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  const parsed = await v.safeParseAsync(
-    v.object({ tagId: v.number() }),
-    decode(form, { numbers: ["tagId"] }),
-  );
+      const result = await event.locals.supabase
+        .from("tags")
+        .delete()
+        .eq("id", args.tagId);
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  const result = await event.locals.supabase
-    .from("tags")
-    .delete()
-    .eq("id", parsed.output.tagId);
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
+      return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
+    },
+  });
 };
 
-export const updateTag = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
+export const updateTag = (form: FormData) => {
+  return handleRpc({
+    data: decode(form, { numbers: ["tagId"] }),
+    schema: v.object({ tagId: v.number(), name: v.string() }),
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  const parsed = await v.safeParseAsync(
-    v.object({ tagId: v.number(), name: v.string() }),
-    decode(form, { numbers: ["tagId"] }),
-  );
+      const { tagId, ...values } = args;
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      const result = await event.locals.supabase
+        .from("tags")
+        .update(values)
+        .eq("id", tagId);
 
-  const { tagId, ...values } = parsed.output;
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  const result = await event.locals.supabase
-    .from("tags")
-    .update(values)
-    .eq("id", tagId);
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
+      return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
+    },
+  });
 };
 
 type SelectTagsArgs = {
@@ -107,21 +98,21 @@ export type TagModel = NonNullable<
   Awaited<ReturnType<typeof selectTagsFromDb>>["data"]
 >[0];
 
-export const selectTags = async (args: SelectTagsArgs) => {
-  const parsed = await v.safeParseAsync(
-    v.object({ limit: v.optional(v.number()), offset: v.optional(v.number()) }),
-    args,
-  );
+export const selectTags = (args: SelectTagsArgs) => {
+  return handleRpc({
+    data: args,
+    schema: v.object({
+      limit: v.optional(v.number()),
+      offset: v.optional(v.number()),
+    }),
+    async handler(args) {
+      const result = await selectTagsFromDb(args);
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  const result = await selectTagsFromDb(parsed.output);
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return rpcSuccessResult({ data: result.data, count: result.count });
+      return rpcSuccessResult({ data: result.data, count: result.count });
+    },
+  });
 };

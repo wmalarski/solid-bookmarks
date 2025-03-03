@@ -7,8 +7,8 @@ import * as v from "valibot";
 
 import {
   getRequestEventOrThrow,
+  handleRpc,
   rpcErrorResult,
-  rpcParseIssueResult,
   rpcSuccessResult,
 } from "../common/server/helpers";
 import { paths } from "../common/utils/paths";
@@ -19,58 +19,50 @@ const getRedirectUrl = (event: RequestEvent, path: string) => {
   return origin + path;
 };
 
-export const signUpServerAction = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
-
-  const parsed = await v.safeParseAsync(
-    v.object({
+export const signUpServerAction = (form: FormData) => {
+  return handleRpc({
+    data: decode(form),
+    schema: v.object({
       email: v.pipe(v.string(), v.email()),
       password: v.pipe(v.string(), v.minLength(6), v.maxLength(20)),
     }),
-    decode(form),
-  );
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      const result = await event.locals.supabase.auth.signUp({
+        ...args,
+        options: {
+          emailRedirectTo: getRedirectUrl(event, paths.signUpSuccess),
+        },
+      });
 
-  const result = await event.locals.supabase.auth.signUp({
-    ...parsed.output,
-    options: { emailRedirectTo: getRedirectUrl(event, paths.signUpSuccess) },
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
+
+      return rpcSuccessResult(result.data);
+    },
   });
-
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  return rpcSuccessResult(result.data);
 };
 
-export const signInServerAction = async (form: FormData) => {
-  const event = getRequestEventOrThrow();
-
-  const parsed = await v.safeParseAsync(
-    v.object({
+export const signInServerAction = (form: FormData) => {
+  return handleRpc({
+    data: decode(form),
+    schema: v.object({
       email: v.pipe(v.string(), v.email()),
       password: v.pipe(v.string(), v.minLength(3)),
     }),
-    decode(form),
-  );
+    async handler(args) {
+      const event = getRequestEventOrThrow();
 
-  if (!parsed.success) {
-    return rpcParseIssueResult(parsed.issues);
-  }
+      const result = await event.locals.supabase.auth.signInWithPassword(args);
 
-  const result = await event.locals.supabase.auth.signInWithPassword(
-    parsed.output,
-  );
+      if (result.error) {
+        return rpcErrorResult(result.error);
+      }
 
-  if (result.error) {
-    return rpcErrorResult(result.error);
-  }
-
-  throw redirect(paths.home, {
-    revalidate: USER_QUERY_KEY,
+      throw redirect(paths.home, { revalidate: USER_QUERY_KEY });
+    },
   });
 };
 
@@ -83,13 +75,12 @@ export const signOutServerAction = async () => {
     return rpcErrorResult(result.error);
   }
 
-  throw redirect(paths.signIn, {
-    revalidate: USER_QUERY_KEY,
-  });
+  throw redirect(paths.signIn, { revalidate: USER_QUERY_KEY });
 };
 
 export const getUserServerLoader = async () => {
   const event = getRequestEventOrThrow();
+
   const response = await event.locals.supabase.auth.getUser();
   const user = response.data.user;
 
