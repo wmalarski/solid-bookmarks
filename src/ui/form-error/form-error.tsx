@@ -8,7 +8,7 @@ type FormErrorProps = {
 export const FormError: Component<FormErrorProps> = (props) => {
   return (
     <Show when={props.message}>
-      <Alert variant="error">
+      <Alert color="error">
         <AlertIcon variant="error" />
         {props.message}
       </Alert>

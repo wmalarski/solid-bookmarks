@@ -15,7 +15,7 @@ export const TagsListItem: Component<TagsListItemProps> = (props) => {
   return (
     <Card variant="bordered" size="compact">
       <CardBody class="flex flex-col gap-2">
-        <div class="flex flex-grow flex-col gap-2 pr-6">
+        <div class="flex grow flex-col gap-2 pr-6">
           <span class="text-lg">{props.tag.name}</span>
           <span>{formatDate(props.tag.created_at)}</span>
         </div>

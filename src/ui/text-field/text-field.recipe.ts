@@ -16,15 +16,16 @@ export const textFieldInputRecipe = twCva("input", {
       secondary: "input-secondary",
       success: "input-success",
       warning: "input-warning",
+      neutral: "input-neutral",
     },
     size: {
       lg: "input-lg",
       md: "input-md",
       sm: "input-sm",
       xs: "input-xs",
+      xl: "input-xl",
     },
     variant: {
-      bordered: "input-bordered",
       ghost: "input-ghost",
     },
     width: {

@@ -23,7 +23,7 @@ export const SignUpForm: Component = () => {
         </header>
         <form action={signUpAction} class="flex flex-col gap-4" method="post">
           <Show when={submission.result?.success}>
-            <Alert variant="success">
+            <Alert color="success">
               <AlertIcon variant="success" />
               {t("auth.success")}
             </Alert>

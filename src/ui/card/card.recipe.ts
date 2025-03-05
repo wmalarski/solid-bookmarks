@@ -19,12 +19,12 @@ export const cardRecipe = twCva("card", {
       warning: "border-l-8 border-l-warning",
     },
     size: {
-      compact: "card-compact",
+      compact: "card-sm",
       normal: "card-normal",
       side: "card-side",
     },
     variant: {
-      bordered: "card-bordered",
+      bordered: "card-border",
     },
   },
 });
