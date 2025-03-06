@@ -4,8 +4,8 @@ import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
 import { FormControl } from "~/ui/form-control/form-control";
 import { FormError } from "~/ui/form-error/form-error";
+import { Input } from "~/ui/input/input";
 import { Label, LabelText } from "~/ui/label/label";
-import { TextFieldInput } from "~/ui/text-field/text-field";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 
 type AuthFieldsProps = {
@@ -24,7 +24,7 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
         <Label for="email">
           <LabelText>{t("auth.email")}</LabelText>
         </Label>
-        <TextFieldInput
+        <Input
           disabled={props.pending}
           id="email"
           inputMode="email"
@@ -43,7 +43,7 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
         <Label for="password">
           <LabelText>{t("auth.password")}</LabelText>
         </Label>
-        <TextFieldInput
+        <Input
           disabled={props.pending}
           id="password"
           name="password"

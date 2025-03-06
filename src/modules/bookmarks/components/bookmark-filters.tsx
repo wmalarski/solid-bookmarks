@@ -13,9 +13,9 @@ import {
 } from "~/ui/dialog/dialog";
 import { FormControl } from "~/ui/form-control/form-control";
 import { FilterIcon } from "~/ui/icons/filter-icon";
+import { Input } from "~/ui/input/input";
 import { Label, LabelText } from "~/ui/label/label";
 import { Radio } from "~/ui/radio/radio";
-import { TextFieldInput } from "~/ui/text-field/text-field";
 import {
   type FiltersSearchParams,
   useSetFiltersSearchParams,
@@ -131,7 +131,7 @@ const QueryFilter: Component<QueryFilterProps> = (props) => {
       <Label for="query">
         <LabelText>{t("bookmarks.filters.query")}</LabelText>
       </Label>
-      <TextFieldInput
+      <Input
         id="query"
         name="query"
         placeholder={t("bookmarks.filters.query")}

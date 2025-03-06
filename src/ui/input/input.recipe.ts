@@ -1,9 +1,9 @@
 import { twCva } from "../utils/tw-cva";
 
-export const textFieldInputRecipe = twCva("input", {
+export const inputRecipe = twCva("input", {
   defaultVariants: {
     color: null,
-    size: "md",
+    size: null,
     variant: null,
     width: null,
   },

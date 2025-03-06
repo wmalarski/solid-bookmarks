@@ -5,8 +5,8 @@ import { Checkbox } from "~/ui/checkbox/checkbox";
 import { FieldError } from "~/ui/field-error/field-error";
 import { FormControl } from "~/ui/form-control/form-control";
 import { FormError } from "~/ui/form-error/form-error";
+import { Input } from "~/ui/input/input";
 import { Label, LabelText } from "~/ui/label/label";
-import { TextFieldInput } from "~/ui/text-field/text-field";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 import type { BookmarkWithTagsModel } from "../server";
 
@@ -44,7 +44,7 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
         <Label for="rate">
           <LabelText>{t("bookmarks.complete.rate")}</LabelText>
         </Label>
-        <TextFieldInput
+        <Input
           id="rate"
           name="rate"
           placeholder={t("bookmarks.complete.rate")}
@@ -67,7 +67,7 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
         <Label for="note">
           <LabelText>{t("bookmarks.complete.note")}</LabelText>
         </Label>
-        <TextFieldInput
+        <Input
           id="note"
           name="note"
           placeholder={t("bookmarks.complete.note")}

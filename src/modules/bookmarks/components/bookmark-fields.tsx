@@ -4,8 +4,8 @@ import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
 import { FormControl } from "~/ui/form-control/form-control";
 import { FormError } from "~/ui/form-error/form-error";
+import { Input } from "~/ui/input/input";
 import { Label, LabelText } from "~/ui/label/label";
-import { TextFieldInput } from "~/ui/text-field/text-field";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 import { BookmarkTagsField } from "./bookmark-tags-field";
 import { CheckOgPropsDialog } from "./check-og-props-dialog";
@@ -61,7 +61,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
             onCheck={onCheckSubmit}
           />
         </LabelRow>
-        <TextFieldInput
+        <Input
           id="title"
           name="title"
           placeholder={t("bookmarks.form.title")}
@@ -86,7 +86,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
             onCheck={onCheckSubmit}
           />
         </LabelRow>
-        <TextFieldInput
+        <Input
           id="text"
           name="text"
           placeholder={t("bookmarks.form.text")}
@@ -110,7 +110,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
             onCheck={onCheckSubmit}
           />
         </LabelRow>
-        <TextFieldInput
+        <Input
           id="url"
           name="url"
           placeholder={t("bookmarks.form.url")}
@@ -135,7 +135,7 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
             onCheck={onCheckSubmit}
           />
         </LabelRow>
-        <TextFieldInput
+        <Input
           id="preview"
           name="preview"
           placeholder={t("bookmarks.form.preview")}
