@@ -31,7 +31,6 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
           name="email"
           placeholder={t("auth.email")}
           type="email"
-          variant="bordered"
           {...getInvalidStateProps({
             errorMessageId: "email-error",
             isInvalid: !!props.result?.errors?.email,
@@ -50,7 +49,6 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
           name="password"
           placeholder={t("auth.password")}
           type="password"
-          variant="bordered"
           {...getInvalidStateProps({
             errorMessageId: "password-error",
             isInvalid: !!props.result?.errors?.password,

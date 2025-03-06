@@ -67,7 +67,6 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           placeholder={t("bookmarks.form.title")}
           value={props.initialData?.title}
           disabled={props.pending}
-          variant="bordered"
           ref={setTitleRef}
           {...getInvalidStateProps({
             errorMessageId: "title-error",
@@ -93,7 +92,6 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           placeholder={t("bookmarks.form.text")}
           value={props.initialData?.text}
           disabled={props.pending}
-          variant="bordered"
           {...getInvalidStateProps({
             errorMessageId: "text-error",
             isInvalid: !!props.result?.errors?.text,
@@ -118,7 +116,6 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           placeholder={t("bookmarks.form.url")}
           value={props.initialData?.url}
           disabled={props.pending}
-          variant="bordered"
           ref={setUrlRef}
           {...getInvalidStateProps({
             errorMessageId: "url-error",
@@ -144,7 +141,6 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
           placeholder={t("bookmarks.form.preview")}
           value={props.initialData?.preview ?? undefined}
           disabled={props.pending}
-          variant="bordered"
           ref={setPreviewRef}
           {...getInvalidStateProps({
             errorMessageId: "preview-error",

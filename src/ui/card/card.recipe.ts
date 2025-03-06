@@ -2,34 +2,32 @@ import { twCva } from "../utils/tw-cva";
 
 export const cardRecipe = twCva("card", {
   defaultVariants: {
-    color: null,
+    modifier: null,
     size: null,
     variant: null,
   },
   variants: {
-    color: {
-      accent: "border-l-8 border-l-accent",
-      black: "border-l-8 border-l-neutral",
-      disabled: "border-l-8 border-l-base-200",
-      error: "border-l-8 border-l-error",
-      info: "border-l-8 border-l-info",
-      primary: "border-l-8 border-l-primary",
-      secondary: "border-l-8 border-l-secondary",
-      success: "border-l-8 border-l-success",
-      warning: "border-l-8 border-l-warning",
-    },
     size: {
-      compact: "card-sm",
-      normal: "card-normal",
-      side: "card-side",
+      xs: "card-xs",
+      sm: "card-sm",
+      md: "card-md",
+      lg: "card-lg",
+      xl: "card-xl",
     },
     variant: {
       bordered: "card-border",
+      dash: "card-dash",
+    },
+    modifier: {
+      side: "card-side",
+      imageFull: "image-full",
     },
   },
 });
 
 export const cardTitleRecipe = twCva("card-title");
+
+export const cardBodyRecipe = twCva("card-body");
 
 export const cardActionsRecipe = twCva("card-actions", {
   defaultVariants: {

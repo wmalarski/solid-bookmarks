@@ -7,6 +7,7 @@ export const checkboxRecipe = twCva("checkbox", {
   },
   variants: {
     color: {
+      neutral: "checkbox-neutral",
       accent: "checkbox-accent",
       error: "checkbox-error",
       info: "checkbox-info",
@@ -20,6 +21,7 @@ export const checkboxRecipe = twCva("checkbox", {
       md: "checkbox-md",
       sm: "checkbox-sm",
       xs: "checkbox-xs",
+      xl: "checkbox-xl",
     },
   },
 });

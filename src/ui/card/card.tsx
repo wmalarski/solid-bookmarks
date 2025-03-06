@@ -7,9 +7,12 @@ import {
   splitProps,
 } from "solid-js";
 import { Dynamic, type DynamicProps } from "solid-js/web";
-
-import { twCx } from "../utils/tw-cva";
-import { cardActionsRecipe, cardRecipe, cardTitleRecipe } from "./card.recipe";
+import {
+  cardActionsRecipe,
+  cardBodyRecipe,
+  cardRecipe,
+  cardTitleRecipe,
+} from "./card.recipe";
 
 export type CardProps = ComponentProps<"div"> & VariantProps<typeof cardRecipe>;
 
@@ -43,7 +46,7 @@ export function CardTitle<T extends ValidComponent>(props: CardTitleProps<T>) {
 export type CardBodyProps = ComponentProps<"div">;
 
 export const CardBody: Component<CardBodyProps> = (props) => {
-  return <div {...props} class={twCx("card-body", props.class)} />;
+  return <div {...props} class={cardBodyRecipe({ class: props.class })} />;
 };
 
 export type CardActionsProps = ComponentProps<"div"> &

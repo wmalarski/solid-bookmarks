@@ -136,7 +136,6 @@ const QueryFilter: Component<QueryFilterProps> = (props) => {
         name="query"
         placeholder={t("bookmarks.filters.query")}
         value={props.query ?? ""}
-        variant="bordered"
       />
     </FormControl>
   );
