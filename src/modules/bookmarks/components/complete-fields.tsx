@@ -54,7 +54,6 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
           step={0.1}
           value={props.initialData?.rate ?? 5}
           disabled={props.pending}
-          variant="bordered"
           {...getInvalidStateProps({
             errorMessageId: "rate-error",
             isInvalid: !!props.result?.errors?.rate,
@@ -73,7 +72,6 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
           placeholder={t("bookmarks.complete.note")}
           value={props.initialData?.note ?? ""}
           disabled={props.pending}
-          variant="bordered"
           {...getInvalidStateProps({
             errorMessageId: "note-error",
             isInvalid: !!props.result?.errors?.note,

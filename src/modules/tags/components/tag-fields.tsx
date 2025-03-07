@@ -34,7 +34,6 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
           placeholder={t("tags.form.name")}
           value={props.initialData?.name}
           disabled={props.pending}
-          variant="bordered"
           {...getInvalidStateProps({
             errorMessageId: "name-error",
             isInvalid: !!props.result?.errors?.name,

@@ -45,7 +45,7 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
   };
 
   return (
-    <Card variant="bordered" size="compact" class="w-full">
+    <Card variant="bordered" size="sm" class="w-full">
       <CardBody class="">
         <BookmarkTagsList bookmark={props.bookmark} />
         <BookmarkPreview bookmark={props.bookmark} />
