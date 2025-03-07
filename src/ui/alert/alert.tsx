@@ -1,14 +1,13 @@
-import type { VariantProps } from "class-variance-authority";
-import { type Component, type ComponentProps, splitProps } from "solid-js";
+import { type Component, splitProps } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { AlertCircleIcon } from "../icons/alert-circle-icon";
 import { CheckCircleIcon } from "../icons/check-circle-icon";
 import { InfoIcon } from "../icons/info-icon";
 import { XCircleIcon } from "../icons/x-circle-icon";
+import type { ComponentVariantProps } from "../utils/types";
 import { alertRecipe } from "./alert.recipe";
 
-export type AlertProps = ComponentProps<"div"> &
-  VariantProps<typeof alertRecipe>;
+export type AlertProps = ComponentVariantProps<"div", typeof alertRecipe>;
 
 export const Alert: Component<AlertProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, ["variant"]);

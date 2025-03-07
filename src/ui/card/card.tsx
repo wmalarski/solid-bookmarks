@@ -1,5 +1,3 @@
-import type { VariantProps } from "class-variance-authority";
-
 import {
   type Component,
   type ComponentProps,
@@ -7,6 +5,7 @@ import {
   splitProps,
 } from "solid-js";
 import { Dynamic, type DynamicProps } from "solid-js/web";
+import type { ComponentVariantProps } from "../utils/types";
 import {
   cardActionsRecipe,
   cardBodyRecipe,
@@ -14,7 +13,7 @@ import {
   cardTitleRecipe,
 } from "./card.recipe";
 
-export type CardProps = ComponentProps<"div"> & VariantProps<typeof cardRecipe>;
+export type CardProps = ComponentVariantProps<"div", typeof cardRecipe>;
 
 export const Card: Component<CardProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, [
@@ -49,8 +48,10 @@ export const CardBody: Component<CardBodyProps> = (props) => {
   return <div {...props} class={cardBodyRecipe({ class: props.class })} />;
 };
 
-export type CardActionsProps = ComponentProps<"div"> &
-  VariantProps<typeof cardActionsRecipe>;
+export type CardActionsProps = ComponentVariantProps<
+  "div",
+  typeof cardActionsRecipe
+>;
 
 export const CardActions: Component<CardActionsProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, ["justify"]);

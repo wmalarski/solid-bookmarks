@@ -1,8 +1,8 @@
-import type { VariantProps } from "class-variance-authority";
 import { type Component, type ComponentProps, splitProps } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "../button/button";
 import { twCx } from "../utils/tw-cva";
+import type { ComponentVariantProps } from "../utils/types";
 import {
   modalActionRecipe,
   modalBackdropRecipe,
@@ -10,10 +10,11 @@ import {
   modalRecipe,
 } from "./dialog.recipe";
 
-export type DialogProps = ComponentProps<"dialog"> &
-  VariantProps<typeof modalRecipe> & {
-    id: string;
-  };
+export type DialogProps = ComponentVariantProps<
+  "dialog",
+  typeof modalRecipe,
+  { id: string }
+>;
 
 export const Dialog: Component<DialogProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, [

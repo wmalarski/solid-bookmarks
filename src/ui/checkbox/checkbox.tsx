@@ -1,9 +1,11 @@
-import type { VariantProps } from "class-variance-authority";
-import { type Component, type ComponentProps, splitProps } from "solid-js";
+import { type Component, splitProps } from "solid-js";
+import type { ComponentVariantProps } from "../utils/types";
 import { checkboxRecipe } from "./checkbox.recipe";
 
-export type CheckboxProps = ComponentProps<"input"> &
-  VariantProps<typeof checkboxRecipe>;
+export type CheckboxProps = ComponentVariantProps<
+  "input",
+  typeof checkboxRecipe
+>;
 
 export const Checkbox: Component<CheckboxProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, ["size", "color"]);

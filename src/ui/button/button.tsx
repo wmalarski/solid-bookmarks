@@ -1,6 +1,6 @@
 import { A } from "@solidjs/router";
-import type { VariantProps } from "class-variance-authority";
-import { type Component, type ComponentProps, splitProps } from "solid-js";
+import { type Component, splitProps } from "solid-js";
+import type { ComponentVariantProps } from "../utils/types";
 import { buttonGroupRecipe, buttonRecipe } from "./button.recipe";
 
 const buttonSplitProps = [
@@ -12,8 +12,7 @@ const buttonSplitProps = [
   "variant",
 ] as const;
 
-export type ButtonProps = ComponentProps<"button"> &
-  VariantProps<typeof buttonRecipe>;
+export type ButtonProps = ComponentVariantProps<"button", typeof buttonRecipe>;
 
 export const Button: Component<ButtonProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, buttonSplitProps);
@@ -26,8 +25,10 @@ export const Button: Component<ButtonProps> = (props) => {
   );
 };
 
-export type ButtonGroupProps = ComponentProps<"div"> &
-  VariantProps<typeof buttonGroupRecipe>;
+export type ButtonGroupProps = ComponentVariantProps<
+  "div",
+  typeof buttonGroupRecipe
+>;
 
 export const ButtonGroup: Component<ButtonGroupProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, ["direction"]);
@@ -40,8 +41,10 @@ export const ButtonGroup: Component<ButtonGroupProps> = (props) => {
   );
 };
 
-export type LinkButtonProps = ComponentProps<typeof A> &
-  VariantProps<typeof buttonRecipe>;
+export type LinkButtonProps = ComponentVariantProps<
+  typeof A,
+  typeof buttonRecipe
+>;
 
 export const LinkButton: Component<LinkButtonProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, buttonSplitProps);

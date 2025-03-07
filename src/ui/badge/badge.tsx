@@ -1,9 +1,8 @@
-import type { VariantProps } from "class-variance-authority";
-import { type Component, type ComponentProps, splitProps } from "solid-js";
+import { type Component, splitProps } from "solid-js";
+import type { ComponentVariantProps } from "../utils/types";
 import { badgeRecipe } from "./badge.recipe";
 
-export type BadgeProps = ComponentProps<"div"> &
-  VariantProps<typeof badgeRecipe>;
+export type BadgeProps = ComponentVariantProps<"div", typeof badgeRecipe>;
 
 export const Badge: Component<BadgeProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, [
