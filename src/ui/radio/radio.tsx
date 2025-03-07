@@ -1,9 +1,8 @@
-import type { VariantProps } from "class-variance-authority";
-import { type Component, type ComponentProps, splitProps } from "solid-js";
+import { type Component, splitProps } from "solid-js";
+import type { ComponentVariantProps } from "../utils/types";
 import { radioRecipe } from "./radio.recipe";
 
-export type RadioProps = ComponentProps<"input"> &
-  VariantProps<typeof radioRecipe>;
+type RadioProps = ComponentVariantProps<"input", typeof radioRecipe>;
 
 export const Radio: Component<RadioProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, ["size", "color"]);

@@ -9,7 +9,7 @@ export const radioRecipe = twCva("radio", {
     color: {
       accent: "radio-accent",
       error: "radio-error",
-      ghost: "radio-ghost",
+      neutral: "radio-neutral",
       info: "radio-info",
       primary: "radio-primary",
       secondary: "radio-secondary",

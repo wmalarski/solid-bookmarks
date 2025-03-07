@@ -1,22 +1,25 @@
-import type { Component, ComponentProps } from "solid-js";
-import { twCx } from "../utils/tw-cva";
+import type { Component } from "solid-js";
+import type { ComponentVariantProps } from "../utils/types";
+import {
+  navbarEndRecipe,
+  navbarRecipe,
+  navbarStartRecipe,
+} from "./navbar.recipe";
 
-export type NavbarProps = ComponentProps<"nav">;
+type NavbarProps = ComponentVariantProps<"nav", typeof navbarRecipe>;
 
 export const Navbar: Component<NavbarProps> = (props) => {
-  return <nav {...props} class={twCx("navbar justify-between", props.class)} />;
+  return <nav {...props} class={navbarRecipe({ class: props.class })} />;
 };
 
-export type NavbarStartProps = ComponentProps<"div">;
+type NavbarStartProps = ComponentVariantProps<"div", typeof navbarStartRecipe>;
 
 export const NavbarStart = (props: NavbarStartProps) => {
-  return (
-    <div {...props} class={twCx("navbar-start w-fit flex-wrap", props.class)} />
-  );
+  return <div {...props} class={navbarStartRecipe({ class: props.class })} />;
 };
 
-export type NavbarEndProps = ComponentProps<"div">;
+type NavbarEndProps = ComponentVariantProps<"div", typeof navbarEndRecipe>;
 
 export const NavbarEnd = (props: NavbarEndProps) => {
-  return <div {...props} class={twCx("navbar-end gap-2", props.class)} />;
+  return <div {...props} class={navbarEndRecipe({ class: props.class })} />;
 };

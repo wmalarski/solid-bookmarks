@@ -1,8 +1,8 @@
-import type { Component, JSX } from "solid-js";
+import type { Component, ComponentProps } from "solid-js";
 import { twCx } from "../utils/tw-cva";
 import styles from "./progress.module.css";
 
-export type ProgressProps = JSX.IntrinsicElements["div"];
+type ProgressProps = ComponentProps<"div">;
 
 export const Progress: Component<ProgressProps> = (props) => {
   return (

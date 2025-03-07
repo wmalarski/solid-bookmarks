@@ -1,12 +1,10 @@
-import type { VariantProps } from "class-variance-authority";
-
-import { type Component, type ComponentProps, splitProps } from "solid-js";
+import { type Component, splitProps } from "solid-js";
 
 import { A } from "@solidjs/router";
+import type { ComponentVariantProps } from "../utils/types";
 import { linkRecipe } from "./link.recipe";
 
-export type LinkProps = ComponentProps<typeof A> &
-  VariantProps<typeof linkRecipe>;
+type LinkProps = ComponentVariantProps<typeof A, typeof linkRecipe>;
 
 export const Link: Component<LinkProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, [
