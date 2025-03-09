@@ -5,7 +5,6 @@ import { paths } from "~/modules/common/utils/paths";
 import { Alert, AlertIcon } from "~/ui/alert/alert";
 import { Button } from "~/ui/button/button";
 import { Card, CardBody } from "~/ui/card/card";
-import { cardTitleRecipe } from "~/ui/card/card.recipe";
 import { Link } from "~/ui/link/link";
 import { signUpAction } from "../client";
 import { AuthFields } from "./auth-fields";
@@ -18,9 +17,6 @@ export const SignUpForm: Component = () => {
   return (
     <Card class="w-full max-w-md" variant="bordered">
       <CardBody>
-        <header class="flex items-center justify-between gap-2">
-          <h2 class={cardTitleRecipe()}>{t("auth.signUp")}</h2>
-        </header>
         <form action={signUpAction} class="flex flex-col gap-4" method="post">
           <Show when={submission.result?.success}>
             <Alert color="success">
@@ -31,6 +27,7 @@ export const SignUpForm: Component = () => {
           <AuthFields
             pending={submission.pending}
             result={submission.result?.success ? undefined : submission.result}
+            legend={t("auth.signUp")}
           />
           <Button
             color="primary"

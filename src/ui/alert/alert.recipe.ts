@@ -1,6 +1,6 @@
 import { twCva } from "../utils/tw-cva";
 
-export const alertRecipe = twCva("alert justify-start", {
+export const alertRecipe = twCva("alert justify-start text-xs", {
   defaultVariants: {
     color: null,
     variant: null,

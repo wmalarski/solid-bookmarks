@@ -2,63 +2,63 @@ import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
-import { FormControl } from "~/ui/form-control/form-control";
+import {
+  Fieldset,
+  FieldsetLabel,
+  FieldsetLegend,
+} from "~/ui/fieldset/fieldset";
 import { FormError } from "~/ui/form-error/form-error";
 import { Input } from "~/ui/input/input";
-import { Label, LabelText } from "~/ui/label/label";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 
 type AuthFieldsProps = {
   pending?: boolean;
   result?: RpcFailure;
+  legend: string;
 };
 
 export const AuthFields: Component<AuthFieldsProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <div class="flex flex-col gap-6">
+    <Fieldset>
+      <FieldsetLegend>{props.legend}</FieldsetLegend>
       <FormError message={props.result?.error} />
 
-      <FormControl>
-        <Label for="email">
-          <LabelText>{t("auth.email")}</LabelText>
-        </Label>
-        <Input
-          disabled={props.pending}
-          id="email"
-          inputMode="email"
-          name="email"
-          placeholder={t("auth.email")}
-          type="email"
-          {...getInvalidStateProps({
-            errorMessageId: "email-error",
-            isInvalid: !!props.result?.errors?.email,
-          })}
-        />
-        <FieldError id="email-error" message={props.result?.errors?.email} />
-      </FormControl>
+      <FieldsetLabel for="email">{t("auth.email")}</FieldsetLabel>
+      <Input
+        disabled={props.pending}
+        id="email"
+        inputMode="email"
+        name="email"
+        placeholder={t("auth.email")}
+        type="email"
+        required={true}
+        width="full"
+        {...getInvalidStateProps({
+          errorMessageId: "email-error",
+          isInvalid: !!props.result?.errors?.email,
+        })}
+      />
+      <FieldError id="email-error" message={props.result?.errors?.email} />
 
-      <FormControl>
-        <Label for="password">
-          <LabelText>{t("auth.password")}</LabelText>
-        </Label>
-        <Input
-          disabled={props.pending}
-          id="password"
-          name="password"
-          placeholder={t("auth.password")}
-          type="password"
-          {...getInvalidStateProps({
-            errorMessageId: "password-error",
-            isInvalid: !!props.result?.errors?.password,
-          })}
-        />
-        <FieldError
-          id="password-error"
-          message={props.result?.errors?.password}
-        />
-      </FormControl>
-    </div>
+      <FieldsetLabel for="password">{t("auth.password")}</FieldsetLabel>
+      <Input
+        disabled={props.pending}
+        id="password"
+        name="password"
+        placeholder={t("auth.password")}
+        type="password"
+        width="full"
+        {...getInvalidStateProps({
+          errorMessageId: "password-error",
+          isInvalid: !!props.result?.errors?.password,
+        })}
+      />
+      <FieldError
+        id="password-error"
+        message={props.result?.errors?.password}
+      />
+    </Fieldset>
   );
 };

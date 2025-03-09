@@ -10,7 +10,11 @@ import { alertRecipe } from "./alert.recipe";
 export type AlertProps = ComponentVariantProps<"div", typeof alertRecipe>;
 
 export const Alert: Component<AlertProps> = (props) => {
-  const [variants, withoutVariants] = splitProps(props, ["variant"]);
+  const [variants, withoutVariants] = splitProps(props, [
+    "variant",
+    "color",
+    "direction",
+  ]);
 
   return (
     <div

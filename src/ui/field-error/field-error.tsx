@@ -4,7 +4,7 @@ import {
   Show,
   splitProps,
 } from "solid-js";
-import { twCx } from "../utils/tw-cva";
+import { fieldErrorRecipe } from "./field-error.recipe";
 
 export type FieldErrorProps = Omit<ComponentProps<"span">, "children"> & {
   message?: string;
@@ -19,7 +19,7 @@ export const FieldError: Component<FieldErrorProps> = (props) => {
       <span
         role="alert"
         {...withoutVariants}
-        class={twCx("pt-2 text-error text-sm", props.class)}
+        class={fieldErrorRecipe({ class: props.class })}
       >
         {variants.message}
       </span>

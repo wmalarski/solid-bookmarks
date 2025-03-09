@@ -1,3 +1,3 @@
 import { twCva } from "../utils/tw-cva";
 
-export const inputRecipe = twCva("validator-hint");
+export const fieldErrorRecipe = twCva("text-error text-xs");
