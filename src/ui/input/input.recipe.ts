@@ -1,6 +1,6 @@
 import { twCva } from "../utils/tw-cva";
 
-export const inputRecipe = twCva("input", {
+export const inputRecipe = twCva("input validator", {
   defaultVariants: {
     color: null,
     size: null,
