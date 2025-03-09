@@ -1,9 +1,10 @@
 import type { FetchEvent } from "@solidjs/start/server";
-import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { createServerClient, parseCookieHeader } from "@supabase/ssr";
 import { getHeader, setCookie } from "vinxi/http";
 
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { getRequestEventOrThrow } from "../common/server/helpers";
 import type { Database } from "./types";
 
 export const supabaseMiddleware = async (event: FetchEvent) => {
@@ -28,6 +29,12 @@ export const supabaseMiddleware = async (event: FetchEvent) => {
   );
 
   event.locals.supabase = supabase;
+};
+
+export const getRequestSupabase = () => {
+  const event = getRequestEventOrThrow();
+  const supabase: SupabaseClient<Database> = event.locals.supabase;
+  return supabase;
 };
 
 declare module "@solidjs/start/server" {

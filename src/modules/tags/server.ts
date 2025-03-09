@@ -4,11 +4,11 @@ import { json } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import * as v from "valibot";
 import {
-  getRequestEventOrThrow,
   handleRpc,
   rpcErrorResult,
   rpcSuccessResult,
 } from "../common/server/helpers";
+import { getRequestSupabase } from "../supabase/middleware";
 import { SELECT_TAGS_DEFAULT_LIMIT, TAGS_QUERY_KEY } from "./const";
 
 export const insertTag = (form: FormData) => {
@@ -16,9 +16,9 @@ export const insertTag = (form: FormData) => {
     data: decode(form),
     schema: v.object({ name: v.string() }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
-      const result = await event.locals.supabase.from("tags").insert(args);
+      const result = await supabase.from("tags").insert(args);
 
       if (result.error) {
         return rpcErrorResult(result.error);
@@ -34,12 +34,9 @@ export const deleteTag = (form: FormData) => {
     data: decode(form, { numbers: ["tagId"] }),
     schema: v.object({ tagId: v.number() }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
-      const result = await event.locals.supabase
-        .from("tags")
-        .delete()
-        .eq("id", args.tagId);
+      const result = await supabase.from("tags").delete().eq("id", args.tagId);
 
       if (result.error) {
         return rpcErrorResult(result.error);
@@ -55,14 +52,11 @@ export const updateTag = (form: FormData) => {
     data: decode(form, { numbers: ["tagId"] }),
     schema: v.object({ tagId: v.number(), name: v.string() }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
       const { tagId, ...values } = args;
 
-      const result = await event.locals.supabase
-        .from("tags")
-        .update(values)
-        .eq("id", tagId);
+      const result = await supabase.from("tags").update(values).eq("id", tagId);
 
       if (result.error) {
         return rpcErrorResult(result.error);
@@ -82,9 +76,9 @@ const selectTagsFromDb = async ({
   limit = SELECT_TAGS_DEFAULT_LIMIT,
   offset = 0,
 }: SelectTagsArgs) => {
-  const event = getRequestEventOrThrow();
+  const supabase = getRequestSupabase();
 
-  const builder = event.locals.supabase
+  const builder = supabase
     .from("tags")
     .select("*", { count: "estimated" })
     .range(offset, offset + limit)

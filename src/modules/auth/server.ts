@@ -12,6 +12,7 @@ import {
   rpcSuccessResult,
 } from "../common/server/helpers";
 import { paths } from "../common/utils/paths";
+import { getRequestSupabase } from "../supabase/middleware";
 import { USER_QUERY_KEY } from "./const";
 
 const getRedirectUrl = (event: RequestEvent, path: string) => {
@@ -28,8 +29,9 @@ export const signUpServerAction = (form: FormData) => {
     }),
     async handler(args) {
       const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
-      const result = await event.locals.supabase.auth.signUp({
+      const result = await supabase.auth.signUp({
         ...args,
         options: {
           emailRedirectTo: getRedirectUrl(event, paths.signUpSuccess),
@@ -53,9 +55,9 @@ export const signInServerAction = (form: FormData) => {
       password: v.pipe(v.string(), v.minLength(3)),
     }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
-      const result = await event.locals.supabase.auth.signInWithPassword(args);
+      const result = await supabase.auth.signInWithPassword(args);
 
       if (result.error) {
         return rpcErrorResult(result.error);
@@ -67,9 +69,9 @@ export const signInServerAction = (form: FormData) => {
 };
 
 export const signOutServerAction = async () => {
-  const event = getRequestEventOrThrow();
+  const supabase = getRequestSupabase();
 
-  const result = await event.locals.supabase.auth.signOut();
+  const result = await supabase.auth.signOut();
 
   if (result.error) {
     return rpcErrorResult(result.error);
@@ -79,9 +81,9 @@ export const signOutServerAction = async () => {
 };
 
 export const getUserServerLoader = async () => {
-  const event = getRequestEventOrThrow();
+  const supabase = getRequestSupabase();
 
-  const response = await event.locals.supabase.auth.getUser();
+  const response = await supabase.auth.getUser();
   const user = response.data.user;
 
   if (!user) {

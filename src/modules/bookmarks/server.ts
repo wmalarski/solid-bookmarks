@@ -4,13 +4,12 @@ import { redirect, reload } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import * as v from "valibot";
 import {
-  getRequestEventOrThrow,
   handleRpc,
   rpcErrorResult,
-  rpcParseIssueResult,
   rpcSuccessResult,
 } from "../common/server/helpers";
 import { paths } from "../common/utils/paths";
+import { getRequestSupabase } from "../supabase/middleware";
 import { BOOKMARKS_QUERY_KEY, SELECT_BOOKMARKS_DEFAULT_LIMIT } from "./const";
 import { createDoneSchema } from "./utils/use-filters-search-params";
 
@@ -25,11 +24,11 @@ export const insertBookmark = async (form: FormData) => {
       "tags[]": v.optional(v.array(v.number()), []),
     }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
       const { "tags[]": tags, ...values } = args;
 
-      const result = await event.locals.supabase
+      const result = await supabase
         .from("bookmarks")
         .insert(values)
         .select()
@@ -39,14 +38,12 @@ export const insertBookmark = async (form: FormData) => {
         return rpcErrorResult(result.error);
       }
 
-      const tagsResult = await event.locals.supabase
-        .from("bookmarks_tags")
-        .insert(
-          tags.map((tagId) => ({
-            bookmark_id: result.data.id,
-            tag_id: tagId,
-          })),
-        );
+      const tagsResult = await supabase.from("bookmarks_tags").insert(
+        tags.map((tagId) => ({
+          bookmark_id: result.data.id,
+          tag_id: tagId,
+        })),
+      );
 
       if (tagsResult.error) {
         return rpcErrorResult(tagsResult.error);
@@ -62,9 +59,9 @@ export const deleteBookmark = (form: FormData) => {
     data: decode(form, { numbers: ["bookmarkId"] }),
     schema: v.object({ bookmarkId: v.number() }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
-      const result = await event.locals.supabase
+      const result = await supabase
         .from("bookmarks")
         .delete()
         .eq("id", args.bookmarkId);
@@ -89,7 +86,7 @@ const updateBookmarkTags = ({
   existingTags,
   formTags,
 }: UpdateBookmarkTagsArgs) => {
-  const event = getRequestEventOrThrow();
+  const supabase = getRequestSupabase();
 
   const existingTagsSet = new Set(existingTags.map((tag) => tag.tag_id));
   const formTagsSet = new Set(formTags);
@@ -100,8 +97,8 @@ const updateBookmarkTags = ({
     .map((tag) => tag.id);
 
   return Promise.all([
-    event.locals.supabase.from("bookmarks_tags").delete().in("id", toRemove),
-    event.locals.supabase.from("bookmarks_tags").insert(
+    supabase.from("bookmarks_tags").delete().in("id", toRemove),
+    supabase.from("bookmarks_tags").insert(
       toAdd.map((tagId) => ({
         bookmark_id: bookmarkId,
         tag_id: tagId,
@@ -125,11 +122,11 @@ export const updateBookmark = (form: FormData) => {
       "tags[]": v.optional(v.array(v.number()), []),
     }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
       const { bookmarkId, "tags[]": tags, ...values } = args;
 
-      const result = await event.locals.supabase
+      const result = await supabase
         .from("bookmarks")
         .update(values)
         .eq("id", bookmarkId)
@@ -172,11 +169,11 @@ export const completeBookmark = (form: FormData) => {
       rate: v.optional(v.number()),
     }),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
       const { bookmarkId, ...values } = args;
 
-      const result = await event.locals.supabase
+      const result = await supabase
         .from("bookmarks")
         .update({ ...values, done_at: new Date().toISOString() })
         .eq("id", bookmarkId);
@@ -213,17 +210,17 @@ const selectBookmarksFromDb = async ({
   random,
   query,
 }: SelectBookmarksArgs) => {
-  const event = getRequestEventOrThrow();
+  const supabase = getRequestSupabase();
 
   let builder = (
     tags.length > 0
-      ? event.locals.supabase
+      ? supabase
           .from("bookmarks")
           .select("*, bookmarks_tags!inner ( id, tags!inner ( id, name ) )", {
             count: "estimated",
           })
           .in("bookmarks_tags.tag_id", tags)
-      : event.locals.supabase
+      : supabase
           .from("bookmarks")
           .select("*, bookmarks_tags ( id, tags ( id, name ) )", {
             count: "estimated",
@@ -285,9 +282,9 @@ export const selectBookmark = (args: SelectBookmarkArgs) => {
     data: args,
     schema: createSelectBookmarkSchema(),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
-      const result = await event.locals.supabase
+      const result = await supabase
         .from("bookmarks")
         .select("*, bookmarks_tags ( id, tags ( id, name ) )")
         .eq("id", args.bookmarkId)
@@ -317,21 +314,12 @@ export const selectBookmarksByIds = (args: SelectBookmarksByIdsArgs) => {
     data: args,
     schema: createSelectBookmarksByIdsSchema(),
     async handler(args) {
-      const event = getRequestEventOrThrow();
+      const supabase = getRequestSupabase();
 
-      const parsed = await v.safeParseAsync(
-        createSelectBookmarksByIdsSchema(),
-        args,
-      );
-
-      if (!parsed.success) {
-        return rpcParseIssueResult(parsed.issues);
-      }
-
-      const result = await event.locals.supabase
+      const result = await supabase
         .from("bookmarks")
         .select("*, bookmarks_tags ( id, tags ( id, name ) )")
-        .in("id", parsed.output.bookmarkIds);
+        .in("id", args.bookmarkIds);
 
       if (result.error) {
         return rpcErrorResult(result.error);
