@@ -14,7 +14,7 @@ import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 type AuthFieldsProps = {
   pending?: boolean;
   result?: RpcFailure;
-  legend: string;
+  title: string;
 };
 
 export const AuthFields: Component<AuthFieldsProps> = (props) => {
@@ -22,7 +22,8 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
 
   return (
     <Fieldset>
-      <FieldsetLegend>{props.legend}</FieldsetLegend>
+      <FieldsetLegend>{props.title}</FieldsetLegend>
+
       <FormError message={props.result?.error} />
 
       <FieldsetLabel for="email">{t("auth.email")}</FieldsetLabel>

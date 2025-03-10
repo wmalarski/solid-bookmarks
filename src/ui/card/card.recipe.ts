@@ -1,8 +1,9 @@
 import { twCva } from "../utils/tw-cva";
 
-export const cardRecipe = twCva("card", {
+export const cardRecipe = twCva("card bg-base-200", {
   defaultVariants: {
-    modifier: null,
+    side: null,
+    imageFull: null,
     size: null,
     variant: null,
   },
@@ -18,9 +19,11 @@ export const cardRecipe = twCva("card", {
       bordered: "card-border",
       dash: "card-dash",
     },
-    modifier: {
-      side: "card-side",
-      imageFull: "image-full",
+    imageFull: {
+      true: "image-full",
+    },
+    side: {
+      true: "card-side",
     },
   },
 });

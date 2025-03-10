@@ -2,10 +2,13 @@ import { type Component, type ParentProps, createSignal } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
-import { FormControl } from "~/ui/form-control/form-control";
+import {
+  Fieldset,
+  FieldsetLabel,
+  FieldsetLegend,
+} from "~/ui/fieldset/fieldset";
 import { FormError } from "~/ui/form-error/form-error";
 import { Input } from "~/ui/input/input";
-import { Label, LabelText } from "~/ui/label/label";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 import { BookmarkTagsField } from "./bookmark-tags-field";
 import { CheckOgPropsDialog } from "./check-og-props-dialog";
@@ -22,6 +25,7 @@ type BookmarkFieldsProps = {
   initialData?: BookmarkFieldsData;
   pending?: boolean;
   result?: RpcFailure;
+  title: string;
 };
 
 export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
@@ -48,116 +52,105 @@ export const BookmarkFields: Component<BookmarkFieldsProps> = (props) => {
   };
 
   return (
-    <div class="flex flex-col gap-4">
+    <Fieldset>
+      <FieldsetLegend>{props.title}</FieldsetLegend>
+
       <FormError message={props.result?.error} />
 
-      <FormControl>
-        <LabelRow>
-          <Label for="title">
-            <LabelText>{t("bookmarks.form.title")}</LabelText>
-          </Label>
-          <CheckOgPropsDialog
-            value={props.initialData?.title}
-            onCheck={onCheckSubmit}
-          />
-        </LabelRow>
-        <Input
-          id="title"
-          name="title"
-          placeholder={t("bookmarks.form.title")}
+      <LabelRow>
+        <FieldsetLabel for="title">{t("bookmarks.form.title")}</FieldsetLabel>
+        <CheckOgPropsDialog
           value={props.initialData?.title}
-          disabled={props.pending}
-          ref={setTitleRef}
-          {...getInvalidStateProps({
-            errorMessageId: "title-error",
-            isInvalid: !!props.result?.errors?.title,
-          })}
+          onCheck={onCheckSubmit}
         />
-        <FieldError id="title-error" message={props.result?.errors?.title} />
-      </FormControl>
+      </LabelRow>
+      <Input
+        id="title"
+        name="title"
+        placeholder={t("bookmarks.form.title")}
+        value={props.initialData?.title}
+        disabled={props.pending}
+        ref={setTitleRef}
+        width="full"
+        {...getInvalidStateProps({
+          errorMessageId: "title-error",
+          isInvalid: !!props.result?.errors?.title,
+        })}
+      />
+      <FieldError id="title-error" message={props.result?.errors?.title} />
 
-      <FormControl>
-        <LabelRow>
-          <Label for="text">
-            <LabelText>{t("bookmarks.form.text")}</LabelText>
-          </Label>
-          <CheckOgPropsDialog
-            value={props.initialData?.text}
-            onCheck={onCheckSubmit}
-          />
-        </LabelRow>
-        <Input
-          id="text"
-          name="text"
-          placeholder={t("bookmarks.form.text")}
+      <LabelRow>
+        <FieldsetLabel for="text">{t("bookmarks.form.text")}</FieldsetLabel>
+        <CheckOgPropsDialog
           value={props.initialData?.text}
-          disabled={props.pending}
-          {...getInvalidStateProps({
-            errorMessageId: "text-error",
-            isInvalid: !!props.result?.errors?.text,
-          })}
+          onCheck={onCheckSubmit}
         />
-        <FieldError id="text-error" message={props.result?.errors?.text} />
-      </FormControl>
+      </LabelRow>
+      <Input
+        id="text"
+        name="text"
+        placeholder={t("bookmarks.form.text")}
+        value={props.initialData?.text}
+        disabled={props.pending}
+        width="full"
+        {...getInvalidStateProps({
+          errorMessageId: "text-error",
+          isInvalid: !!props.result?.errors?.text,
+        })}
+      />
+      <FieldError id="text-error" message={props.result?.errors?.text} />
 
-      <FormControl>
-        <LabelRow>
-          <Label for="url">
-            <LabelText>{t("bookmarks.form.url")}</LabelText>
-          </Label>
-          <CheckOgPropsDialog
-            value={props.initialData?.url}
-            onCheck={onCheckSubmit}
-          />
-        </LabelRow>
-        <Input
-          id="url"
-          name="url"
-          placeholder={t("bookmarks.form.url")}
+      <LabelRow>
+        <FieldsetLabel for="url">{t("bookmarks.form.url")}</FieldsetLabel>
+        <CheckOgPropsDialog
           value={props.initialData?.url}
-          disabled={props.pending}
-          ref={setUrlRef}
-          {...getInvalidStateProps({
-            errorMessageId: "url-error",
-            isInvalid: !!props.result?.errors?.url,
-          })}
+          onCheck={onCheckSubmit}
         />
-        <FieldError id="url-error" message={props.result?.errors?.url} />
-      </FormControl>
+      </LabelRow>
+      <Input
+        id="url"
+        name="url"
+        placeholder={t("bookmarks.form.url")}
+        value={props.initialData?.url}
+        disabled={props.pending}
+        ref={setUrlRef}
+        width="full"
+        {...getInvalidStateProps({
+          errorMessageId: "url-error",
+          isInvalid: !!props.result?.errors?.url,
+        })}
+      />
+      <FieldError id="url-error" message={props.result?.errors?.url} />
 
-      <FormControl>
-        <LabelRow>
-          <Label for="preview">
-            <LabelText>{t("bookmarks.form.preview")}</LabelText>
-          </Label>
-          <CheckOgPropsDialog
-            value={props.initialData?.preview ?? undefined}
-            onCheck={onCheckSubmit}
-          />
-        </LabelRow>
-        <Input
-          id="preview"
-          name="preview"
-          placeholder={t("bookmarks.form.preview")}
+      <LabelRow>
+        <FieldsetLabel for="preview">
+          {t("bookmarks.form.preview")}
+        </FieldsetLabel>
+        <CheckOgPropsDialog
           value={props.initialData?.preview ?? undefined}
-          disabled={props.pending}
-          ref={setPreviewRef}
-          {...getInvalidStateProps({
-            errorMessageId: "preview-error",
-            isInvalid: !!props.result?.errors?.preview,
-          })}
+          onCheck={onCheckSubmit}
         />
-        <FieldError
-          id="preview-error"
-          message={props.result?.errors?.preview}
-        />
-      </FormControl>
+      </LabelRow>
+      <Input
+        id="preview"
+        name="preview"
+        placeholder={t("bookmarks.form.preview")}
+        value={props.initialData?.preview ?? undefined}
+        disabled={props.pending}
+        ref={setPreviewRef}
+        width="full"
+        {...getInvalidStateProps({
+          errorMessageId: "preview-error",
+          isInvalid: !!props.result?.errors?.preview,
+        })}
+      />
+      <FieldError id="preview-error" message={props.result?.errors?.preview} />
 
       <BookmarkTagsField
         disabled={props.pending}
         initialTags={props.initialData?.tags}
       />
-    </div>
+    </Fieldset>
   );
 };
 

@@ -48,6 +48,7 @@ export const BookmarkTagsField: Component<BookmarkTagsFieldProps> = (props) => {
                 );
               }}
             </For>
+            {/* <input type="checkbox" class="checkbox" /> */}
           </ul>
         )}
       </RpcShow>

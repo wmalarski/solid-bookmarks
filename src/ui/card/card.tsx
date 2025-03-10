@@ -19,7 +19,8 @@ export const Card: Component<CardProps> = (props) => {
   const [variants, withoutVariants] = splitProps(props, [
     "variant",
     "size",
-    "color",
+    "imageFull",
+    "side",
   ]);
 
   return (

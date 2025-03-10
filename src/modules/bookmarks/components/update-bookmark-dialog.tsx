@@ -75,6 +75,7 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
               initialData={initialData()}
               pending={submission.pending}
               result={submission.result}
+              title={t("common.update")}
             />
           </form>
           <DialogActions>
