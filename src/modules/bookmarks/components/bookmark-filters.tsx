@@ -11,10 +11,9 @@ import {
   DialogTrigger,
   closeDialog,
 } from "~/ui/dialog/dialog";
-import { FormControl } from "~/ui/form-control/form-control";
+import { FieldsetLabel } from "~/ui/fieldset/fieldset";
 import { FilterIcon } from "~/ui/icons/filter-icon";
 import { Input } from "~/ui/input/input";
-import { Label, LabelText } from "~/ui/label/label";
 import { Radio } from "~/ui/radio/radio";
 import {
   type FiltersSearchParams,
@@ -85,17 +84,10 @@ const DoneFilter: Component<DoneFilterProps> = (props) => {
     <div class="flex flex-col gap-4">
       <For each={options}>
         {(option) => (
-          <FormControl direction="horizontal">
-            <Radio
-              id={option}
-              value={option}
-              checked={props.done === option}
-              name="done"
-            />
-            <Label for={option}>
-              <LabelText class="capitalize">{option}</LabelText>
-            </Label>
-          </FormControl>
+          <FieldsetLabel class="capitalize">
+            <Radio value={option} checked={props.done === option} name="done" />
+            {option}
+          </FieldsetLabel>
         )}
       </For>
     </div>
@@ -110,12 +102,10 @@ const RandomFilter: Component<RandomFilterProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <FormControl direction="horizontal">
-      <Checkbox id="random" checked={props.random === "on"} name="random" />
-      <Label for="random">
-        <LabelText>{t("bookmarks.filters.random")}</LabelText>
-      </Label>
-    </FormControl>
+    <FieldsetLabel>
+      <Checkbox checked={props.random === "on"} name="random" />
+      {t("bookmarks.filters.random")}
+    </FieldsetLabel>
   );
 };
 
@@ -127,16 +117,15 @@ const QueryFilter: Component<QueryFilterProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <FormControl>
-      <Label for="query">
-        <LabelText>{t("bookmarks.filters.query")}</LabelText>
-      </Label>
+    <>
+      <FieldsetLabel for="query">{t("bookmarks.filters.query")}</FieldsetLabel>
       <Input
         id="query"
         name="query"
         placeholder={t("bookmarks.filters.query")}
         value={props.query ?? ""}
+        width="full"
       />
-    </FormControl>
+    </>
   );
 };

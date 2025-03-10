@@ -2,10 +2,9 @@ import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
-import { FormControl } from "~/ui/form-control/form-control";
+import { FieldsetLabel } from "~/ui/fieldset/fieldset";
 import { FormError } from "~/ui/form-error/form-error";
 import { Input } from "~/ui/input/input";
-import { Label, LabelText } from "~/ui/label/label";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
 import type { TagModel } from "../server";
 
@@ -24,23 +23,20 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
     <div class="flex flex-col gap-4">
       <FormError message={props.result?.error} />
 
-      <FormControl>
-        <Label for="name">
-          <LabelText>{t("tags.form.name")}</LabelText>
-        </Label>
-        <Input
-          id="name"
-          name="name"
-          placeholder={t("tags.form.name")}
-          value={props.initialData?.name}
-          disabled={props.pending}
-          {...getInvalidStateProps({
-            errorMessageId: "name-error",
-            isInvalid: !!props.result?.errors?.name,
-          })}
-        />
-        <FieldError id="name-error" message={props.result?.errors?.name} />
-      </FormControl>
+      <FieldsetLabel for="name">{t("tags.form.name")}</FieldsetLabel>
+      <Input
+        id="name"
+        name="name"
+        placeholder={t("tags.form.name")}
+        value={props.initialData?.name}
+        disabled={props.pending}
+        width="full"
+        {...getInvalidStateProps({
+          errorMessageId: "name-error",
+          isInvalid: !!props.result?.errors?.name,
+        })}
+      />
+      <FieldError id="name-error" message={props.result?.errors?.name} />
     </div>
   );
 };
