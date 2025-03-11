@@ -3,6 +3,7 @@ import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { paths } from "~/modules/common/utils/paths";
 import { Button } from "~/ui/button/button";
+import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { Link } from "~/ui/link/link";
 import { signInAction } from "../client";
 import { AuthFields } from "./auth-fields";
@@ -13,11 +14,7 @@ export const SignInForm: Component = () => {
   const submission = useSubmission(signInAction);
 
   return (
-    <form
-      action={signInAction}
-      method="post"
-      class="flex w-full max-w-md flex-col gap-4"
-    >
+    <form action={signInAction} method="post" class={formContainerRecipe()}>
       <AuthFields
         pending={submission.pending}
         result={submission.result}

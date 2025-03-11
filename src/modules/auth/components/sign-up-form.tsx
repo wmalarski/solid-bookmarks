@@ -4,6 +4,7 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import { paths } from "~/modules/common/utils/paths";
 import { Alert, AlertIcon } from "~/ui/alert/alert";
 import { Button } from "~/ui/button/button";
+import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { Link } from "~/ui/link/link";
 import { signUpAction } from "../client";
 import { AuthFields } from "./auth-fields";
@@ -14,11 +15,7 @@ export const SignUpForm: Component = () => {
   const submission = useSubmission(signUpAction);
 
   return (
-    <form
-      action={signUpAction}
-      class="flex w-full max-w-md flex-col gap-4"
-      method="post"
-    >
+    <form action={signUpAction} class={formContainerRecipe()} method="post">
       <Show when={submission.result?.success}>
         <Alert color="success">
           <AlertIcon variant="success" />

@@ -2,6 +2,7 @@ import { useSubmission } from "@solidjs/router";
 import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
+import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import { insertBookmarkAction } from "../client";
 import { BookmarkFields, type BookmarkFieldsData } from "./bookmark-fields";
@@ -21,7 +22,7 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
     <form
       action={insertBookmarkAction}
       method="post"
-      class="flex w-full max-w-md flex-col gap-4"
+      class={formContainerRecipe()}
     >
       <BookmarkFields
         initialData={props.initialData}

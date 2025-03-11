@@ -2,7 +2,7 @@ import type { Component } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { FieldError } from "~/ui/field-error/field-error";
-import { FieldsetLabel } from "~/ui/fieldset/fieldset";
+import { Fieldset, FieldsetLabel } from "~/ui/fieldset/fieldset";
 import { FormError } from "~/ui/form-error/form-error";
 import { Input } from "~/ui/input/input";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
@@ -20,7 +20,7 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <div class="flex flex-col gap-4">
+    <Fieldset>
       <FormError message={props.result?.error} />
 
       <FieldsetLabel for="name">{t("tags.form.name")}</FieldsetLabel>
@@ -37,6 +37,6 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
         })}
       />
       <FieldError id="name-error" message={props.result?.errors?.name} />
-    </div>
+    </Fieldset>
   );
 };

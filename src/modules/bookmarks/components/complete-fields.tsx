@@ -3,7 +3,7 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import type { RpcFailure } from "~/modules/common/server/helpers";
 import { Checkbox } from "~/ui/checkbox/checkbox";
 import { FieldError } from "~/ui/field-error/field-error";
-import { FieldsetLabel } from "~/ui/fieldset/fieldset";
+import { Fieldset, FieldsetLabel } from "~/ui/fieldset/fieldset";
 import { FormError } from "~/ui/form-error/form-error";
 import { Input } from "~/ui/input/input";
 import { getInvalidStateProps } from "~/ui/utils/get-invalid-state-props";
@@ -19,7 +19,7 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <div class="flex flex-col gap-4">
+    <Fieldset>
       <FormError message={props.result?.error} />
 
       <FieldsetLabel>
@@ -69,6 +69,6 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
         })}
       />
       <FieldError id="url-note" message={props.result?.errors?.note} />
-    </div>
+    </Fieldset>
   );
 };

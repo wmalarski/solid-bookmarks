@@ -11,7 +11,8 @@ import {
   DialogTrigger,
   closeDialog,
 } from "~/ui/dialog/dialog";
-import { FieldsetLabel } from "~/ui/fieldset/fieldset";
+import { Fieldset, FieldsetLabel } from "~/ui/fieldset/fieldset";
+import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { FilterIcon } from "~/ui/icons/filter-icon";
 import { Input } from "~/ui/input/input";
 import { Radio } from "~/ui/radio/radio";
@@ -51,11 +52,13 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
       <Dialog id={dialogId()}>
         <DialogBox>
           <DialogTitle>{t("bookmarks.filters.filters")}</DialogTitle>
-          <form id={formId()} onSubmit={onSubmit} class="flex flex-col gap-4">
-            <RandomFilter random={props.params.random} />
-            <DoneFilter done={props.params.done} />
-            <QueryFilter query={props.params.query} />
-            <BookmarkTagsField initialTags={props.params["tags[]"]} />
+          <form id={formId()} onSubmit={onSubmit} class={formContainerRecipe()}>
+            <Fieldset>
+              <RandomFilter random={props.params.random} />
+              <DoneFilter done={props.params.done} />
+              <QueryFilter query={props.params.query} />
+              <BookmarkTagsField initialTags={props.params["tags[]"]} />
+            </Fieldset>
           </form>
           <DialogActions>
             <DialogClose />

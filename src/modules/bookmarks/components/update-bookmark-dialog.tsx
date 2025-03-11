@@ -12,6 +12,7 @@ import {
   DialogTrigger,
   closeDialog,
 } from "~/ui/dialog/dialog";
+import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { updateBookmarkAction } from "../client";
 import { useBookmarksHistory } from "../contexts/bookmarks-history";
@@ -69,7 +70,7 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
       <Dialog id={dialogId()}>
         <DialogBox>
           <DialogTitle>{t("common.update")}</DialogTitle>
-          <form id={formId()} onSubmit={onSubmit} class="flex flex-col gap-6">
+          <form id={formId()} onSubmit={onSubmit} class={formContainerRecipe()}>
             <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
             <BookmarkFields
               initialData={initialData()}
