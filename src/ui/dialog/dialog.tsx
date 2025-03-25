@@ -42,6 +42,9 @@ export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
     props.onClick?.(event);
     const id = `#${forValue.for}`;
     const dialog = document.querySelector<HTMLDialogElement>(id);
+
+    console.log("onClick", id, dialog);
+
     dialog?.showModal();
   };
 

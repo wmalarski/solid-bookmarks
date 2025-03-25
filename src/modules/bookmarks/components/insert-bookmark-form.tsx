@@ -22,7 +22,7 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
     <form
       action={insertBookmarkAction}
       method="post"
-      class={formContainerRecipe()}
+      class={formContainerRecipe({ class: "px-4" })}
     >
       <BookmarkFields
         initialData={props.initialData}

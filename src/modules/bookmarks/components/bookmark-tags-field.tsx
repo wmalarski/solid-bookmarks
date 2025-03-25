@@ -23,7 +23,7 @@ export const BookmarkTagsField: Component<BookmarkTagsFieldProps> = (props) => {
     <Suspense>
       <RpcShow result={tags()}>
         {(tags) => (
-          <ul>
+          <ul class="flex flex-col gap-2 pt-4">
             <For each={tags().data}>
               {(tag) => (
                 <li>
