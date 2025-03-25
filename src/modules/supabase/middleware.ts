@@ -1,9 +1,12 @@
 import type { FetchEvent } from "@solidjs/start/server";
 
-import { createServerClient, parseCookieHeader } from "@supabase/ssr";
-import { getHeader, setCookie } from "vinxi/http";
-
+import {
+  createServerClient,
+  type GetAllCookies,
+  parseCookieHeader,
+} from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { getHeader, setCookie } from "vinxi/http";
 import { getRequestEventOrThrow } from "../common/server/helpers";
 import type { Database } from "./types";
 
@@ -15,9 +18,12 @@ export const supabaseMiddleware = async (event: FetchEvent) => {
       auth: { flowType: "pkce" },
       cookies: {
         getAll: () => {
-          return parseCookieHeader(
-            getHeader(event.nativeEvent, "Cookie") ?? "",
-          );
+          const result: Awaited<ReturnType<GetAllCookies>> = [];
+          const header = getHeader(event.nativeEvent, "Cookie") ?? "";
+          parseCookieHeader(header).forEach(({ name, value }) => {
+            value && result.push({ name, value });
+          });
+          return result;
         },
         setAll: (cookiesToSet) => {
           for (const { name, options, value } of cookiesToSet) {

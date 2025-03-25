@@ -2,10 +2,10 @@ import { createVisibilityObserver } from "@solid-primitives/intersection-observe
 import {
   type Component,
   type ComponentProps,
+  createMemo,
   For,
   type ParentProps,
   Show,
-  createMemo,
 } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { createIsLink } from "~/modules/common/utils/create-is-link";

@@ -1,6 +1,5 @@
-import { type Component, splitProps } from "solid-js";
-
 import { A } from "@solidjs/router";
+import { type Component, splitProps } from "solid-js";
 import type { ComponentVariantProps } from "../utils/types";
 import { linkRecipe } from "./link.recipe";
 

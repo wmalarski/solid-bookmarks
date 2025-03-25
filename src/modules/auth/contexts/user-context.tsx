@@ -2,9 +2,9 @@ import type { User } from "@supabase/supabase-js";
 import {
   type Accessor,
   type Component,
-  type ParentProps,
   createContext,
   createMemo,
+  type ParentProps,
   useContext,
 } from "solid-js";
 

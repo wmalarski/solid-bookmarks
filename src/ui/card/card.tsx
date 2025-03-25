@@ -1,8 +1,8 @@
 import {
   type Component,
   type ComponentProps,
-  type ValidComponent,
   splitProps,
+  type ValidComponent,
 } from "solid-js";
 import { Dynamic, type DynamicProps } from "solid-js/web";
 import type { ComponentVariantProps } from "../utils/types";

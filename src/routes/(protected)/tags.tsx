@@ -1,4 +1,4 @@
-import { type RouteDefinition, createAsync } from "@solidjs/router";
+import { createAsync, type RouteDefinition } from "@solidjs/router";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { selectTagsQuery } from "~/modules/tags/client";

@@ -3,7 +3,7 @@ import { type Component, createMemo } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { AlertDialog } from "~/ui/alert-dialog/alert-dialog";
-import { DialogTrigger, closeDialog } from "~/ui/dialog/dialog";
+import { closeDialog, DialogTrigger } from "~/ui/dialog/dialog";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { deleteBookmarkAction } from "../client";
 import type { BookmarkWithTagsModel } from "../server";

@@ -1,9 +1,9 @@
 import { action, query } from "@solidjs/router";
 
 import {
+  BOOKMARK_QUERY_KEY,
   BOOKMARKS_BY_IDS_QUERY_KEY,
   BOOKMARKS_QUERY_KEY,
-  BOOKMARK_QUERY_KEY,
   OG_PROPS_QUERY_KEY,
 } from "./const";
 import { getOgProps } from "./og-scrapper";

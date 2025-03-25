@@ -4,13 +4,13 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { Button } from "~/ui/button/button";
 import {
+  closeDialog,
   Dialog,
   DialogActions,
   DialogBox,
   DialogClose,
   DialogTitle,
   DialogTrigger,
-  closeDialog,
 } from "~/ui/dialog/dialog";
 import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { PencilIcon } from "~/ui/icons/pencil-icon";

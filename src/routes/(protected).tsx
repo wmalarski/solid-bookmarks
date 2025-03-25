@@ -1,7 +1,7 @@
 import {
+  createAsync,
   type RouteDefinition,
   type RouteSectionProps,
-  createAsync,
 } from "@solidjs/router";
 import { getUserQuery } from "~/modules/auth/client";
 import { UserProvider } from "~/modules/auth/contexts/user-context";

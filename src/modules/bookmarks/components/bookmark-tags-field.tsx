@@ -1,5 +1,5 @@
 import { createAsync } from "@solidjs/router";
-import { type Component, For, Suspense, createMemo } from "solid-js";
+import { type Component, createMemo, For, Suspense } from "solid-js";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { selectTagsQuery } from "~/modules/tags/client";
 import { Checkbox } from "~/ui/checkbox/checkbox";

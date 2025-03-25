@@ -1,15 +1,15 @@
-import { type Component, type ComponentProps, For, createMemo } from "solid-js";
+import { type Component, type ComponentProps, createMemo, For } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import { Checkbox } from "~/ui/checkbox/checkbox";
 import {
+  closeDialog,
   Dialog,
   DialogActions,
   DialogBox,
   DialogClose,
   DialogTitle,
   DialogTrigger,
-  closeDialog,
 } from "~/ui/dialog/dialog";
 import { Fieldset, FieldsetLabel } from "~/ui/fieldset/fieldset";
 import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";

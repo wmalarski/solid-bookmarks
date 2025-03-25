@@ -1,5 +1,5 @@
 import { type CustomResponse, redirect } from "@solidjs/router";
-import { type RequestEvent, getRequestEvent } from "solid-js/web";
+import { getRequestEvent, type RequestEvent } from "solid-js/web";
 import * as v from "valibot";
 import { getCookie, type setCookie } from "vinxi/http";
 import { paths } from "../utils/paths";

@@ -1,4 +1,3 @@
-// biome-ignore lint/correctness/noNodejsModules: <explanation>
 import fs from "node:fs/promises";
 
 export const loadDumpData = async () => {
