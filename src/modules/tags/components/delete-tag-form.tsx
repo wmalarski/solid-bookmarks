@@ -29,20 +29,20 @@ export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <input type="hidden" value={props.tag.id} name="tagId" />
-      <DialogTrigger for={dialogId()} color="error" size="sm">
+      <input name="tagId" type="hidden" value={props.tag.id} />
+      <DialogTrigger color="error" for={dialogId()} size="sm">
         <TrashIcon class="size-4" />
         {t("common.delete")}
       </DialogTrigger>
       <AlertDialog
         confirm={t("common.delete")}
         confirmColor="error"
-        title={t("common.delete")}
-        pending={submission.pending}
-        id={dialogId()}
         errorMessage={
           submission.result?.success ? undefined : submission.result?.error
         }
+        id={dialogId()}
+        pending={submission.pending}
+        title={t("common.delete")}
       />
     </form>
   );

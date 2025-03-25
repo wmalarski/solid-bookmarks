@@ -29,11 +29,11 @@ export const BookmarkTagsField: Component<BookmarkTagsFieldProps> = (props) => {
                 <li>
                   <FieldsetLabel>
                     <Checkbox
+                      checked={initialTagIds().has(tag.id)}
+                      disabled={props.disabled}
+                      name="tags[]"
                       type="checkbox"
                       value={tag.id}
-                      checked={initialTagIds().has(tag.id)}
-                      name="tags[]"
-                      disabled={props.disabled}
                     />
                     {tag.name}
                   </FieldsetLabel>

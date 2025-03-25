@@ -1,7 +1,7 @@
 {
   "editor.quickSuggestions": {
-    "other": "on",
     "comments": "on",
+    "other": "on",
     "strings": "on"
   }
 }

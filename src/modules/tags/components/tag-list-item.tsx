@@ -13,7 +13,7 @@ export const TagsListItem: Component<TagsListItemProps> = (props) => {
   const formatDate = createDateFormatter();
 
   return (
-    <Card variant="bordered" size="sm">
+    <Card size="sm" variant="bordered">
       <CardBody class="flex flex-col gap-2">
         <div class="flex grow flex-col gap-2 pr-6">
           <span class="text-lg">{props.tag.name}</span>

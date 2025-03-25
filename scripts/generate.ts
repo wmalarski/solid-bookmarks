@@ -53,7 +53,6 @@ export const parseDumpData = async () => {
     const artistName = artists.get(album.artistId);
 
     return {
-      user_id: "a83bdb3c-3faa-4090-9c24-fe1f077574b6",
       done: !!review,
       done_at:
         review &&
@@ -67,6 +66,7 @@ export const parseDumpData = async () => {
       text: "",
       title: `${artistName} - ${album.title}${album.year ? ` (${album.year})` : ""}`,
       url: album.release,
+      user_id: "a83bdb3c-3faa-4090-9c24-fe1f077574b6",
     };
   });
 

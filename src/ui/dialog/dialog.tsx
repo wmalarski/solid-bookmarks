@@ -48,7 +48,7 @@ export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
     dialog?.showModal();
   };
 
-  return <Button type="button" onClick={onClick} {...withoutFor} />;
+  return <Button onClick={onClick} type="button" {...withoutFor} />;
 };
 
 export type DialogBoxProps = ComponentProps<"div">;
@@ -69,7 +69,7 @@ export const DialogBackdrop: Component<DialogBackdropProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <form method="dialog" class={modalBackdropRecipe({ class: props.class })}>
+    <form class={modalBackdropRecipe({ class: props.class })} method="dialog">
       <button type="submit">{t("common.closeDialog")}</button>
     </form>
   );

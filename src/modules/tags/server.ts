@@ -14,7 +14,6 @@ import { SELECT_TAGS_DEFAULT_LIMIT, TAGS_QUERY_KEY } from "./const";
 export const insertTag = (form: FormData) => {
   return handleRpc({
     data: decode(form),
-    schema: v.object({ name: v.string() }),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -26,13 +25,13 @@ export const insertTag = (form: FormData) => {
 
       return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
     },
+    schema: v.object({ name: v.string() }),
   });
 };
 
 export const deleteTag = (form: FormData) => {
   return handleRpc({
     data: decode(form, { numbers: ["tagId"] }),
-    schema: v.object({ tagId: v.number() }),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -44,13 +43,13 @@ export const deleteTag = (form: FormData) => {
 
       return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
     },
+    schema: v.object({ tagId: v.number() }),
   });
 };
 
 export const updateTag = (form: FormData) => {
   return handleRpc({
     data: decode(form, { numbers: ["tagId"] }),
-    schema: v.object({ tagId: v.number(), name: v.string() }),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -64,6 +63,7 @@ export const updateTag = (form: FormData) => {
 
       return json(rpcSuccessResult({}), { revalidate: TAGS_QUERY_KEY });
     },
+    schema: v.object({ name: v.string(), tagId: v.number() }),
   });
 };
 
@@ -95,10 +95,6 @@ export type TagModel = NonNullable<
 export const selectTags = (args: SelectTagsArgs) => {
   return handleRpc({
     data: args,
-    schema: v.object({
-      limit: v.optional(v.number()),
-      offset: v.optional(v.number()),
-    }),
     async handler(args) {
       const result = await selectTagsFromDb(args);
 
@@ -106,7 +102,11 @@ export const selectTags = (args: SelectTagsArgs) => {
         return rpcErrorResult(result.error);
       }
 
-      return rpcSuccessResult({ data: result.data, count: result.count });
+      return rpcSuccessResult({ count: result.count, data: result.data });
     },
+    schema: v.object({
+      limit: v.optional(v.number()),
+      offset: v.optional(v.number()),
+    }),
   });
 };

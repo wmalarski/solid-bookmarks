@@ -10,8 +10,8 @@ export const Radio: Component<RadioProps> = (props) => {
   return (
     <input
       {...withoutVariants}
-      type="radio"
       class={radioRecipe({ ...variants, class: props.class })}
+      type="radio"
     />
   );
 };

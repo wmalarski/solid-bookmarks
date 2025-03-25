@@ -1,23 +1,4 @@
 {
-  "name": "solid-bookmarks",
-  "type": "module",
-  "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start",
-    "=== LINTERS ===": "",
-    "format-and-lint": "biome check .",
-    "format-and-lint:fix": "biome check . --write",
-    "tsc": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.0.0-beta.1",
-    "@tailwindcss/vite": "^4.0.16",
-    "daisyui": "5.0.9",
-    "tailwindcss": "4.0.16",
-    "vite-plugin-pwa": "^0.21.2",
-    "workbox-window": "^7.3.0"
-  },
   "dependencies": {
     "@solid-primitives/i18n": "2.2.0",
     "@solid-primitives/intersection-observer": "^2.2.0",
@@ -38,13 +19,32 @@
     "vinxi": "^0.5.3",
     "vite": "6.2.3"
   },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.0-beta.1",
+    "@tailwindcss/vite": "^4.0.16",
+    "daisyui": "5.0.9",
+    "tailwindcss": "4.0.16",
+    "vite-plugin-pwa": "^0.21.2",
+    "workbox-window": "^7.3.0"
+  },
   "engines": {
     "node": ">=20"
   },
+  "name": "solid-bookmarks",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@biomejs/biome",
       "esbuild"
     ]
-  }
+  },
+  "scripts": {
+    "=== LINTERS ===": "",
+    "build": "vinxi build",
+    "dev": "vinxi dev",
+    "format-and-lint": "biome check .",
+    "format-and-lint:fix": "biome check . --write",
+    "start": "vinxi start",
+    "tsc": "tsc --noEmit"
+  },
+  "type": "module"
 }

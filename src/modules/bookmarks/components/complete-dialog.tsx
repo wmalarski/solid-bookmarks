@@ -49,10 +49,10 @@ export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
   return (
     <>
       <DialogTrigger
-        onClick={onClick}
-        for={dialogId()}
-        size="sm"
         color="primary"
+        for={dialogId()}
+        onClick={onClick}
+        size="sm"
       >
         <CheckIcon class="size-4" />
         {t("bookmarks.complete.complete")}
@@ -61,7 +61,7 @@ export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
         <DialogBox>
           <DialogTitle>{t("bookmarks.complete.complete")}</DialogTitle>
           <form id={formId()} onSubmit={onSubmit}>
-            <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
+            <input name="bookmarkId" type="hidden" value={props.bookmark.id} />
             <CompleteFields
               initialData={props.bookmark}
               pending={submission.pending}
@@ -71,9 +71,9 @@ export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
           <DialogActions>
             <DialogClose />
             <Button
-              form={formId()}
               color="primary"
               disabled={submission.pending}
+              form={formId()}
               isLoading={submission.pending}
               type="submit"
             >

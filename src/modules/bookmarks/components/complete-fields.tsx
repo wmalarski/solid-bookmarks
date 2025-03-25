@@ -24,9 +24,9 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
 
       <FieldsetLabel>
         <Checkbox
-          name="done"
           checked={props.initialData?.done}
           disabled={props.pending}
+          name="done"
           {...getInvalidStateProps({
             errorMessageId: "title-error",
             isInvalid: !!props.result?.errors?.done,
@@ -38,15 +38,15 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
 
       <FieldsetLabel for="rate">{t("bookmarks.complete.rate")}</FieldsetLabel>
       <Input
+        disabled={props.pending}
         id="rate"
+        max={10}
+        min={0}
         name="rate"
         placeholder={t("bookmarks.complete.rate")}
-        type="number"
-        min={0}
-        max={10}
         step={0.1}
+        type="number"
         value={props.initialData?.rate ?? 5}
-        disabled={props.pending}
         width="full"
         {...getInvalidStateProps({
           errorMessageId: "rate-error",
@@ -57,11 +57,11 @@ export const CompleteFields: Component<CompleteFieldsProps> = (props) => {
 
       <FieldsetLabel for="note">{t("bookmarks.complete.note")}</FieldsetLabel>
       <Input
+        disabled={props.pending}
         id="note"
         name="note"
         placeholder={t("bookmarks.complete.note")}
         value={props.initialData?.note ?? ""}
-        disabled={props.pending}
         width="full"
         {...getInvalidStateProps({
           errorMessageId: "note-error",

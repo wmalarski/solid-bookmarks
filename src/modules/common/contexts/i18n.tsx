@@ -10,6 +10,71 @@ import {
 } from "solid-js";
 
 const enDict = {
+  auth: {
+    email: "Email",
+    password: "Password",
+    signIn: "Sign In",
+    signOut: "Sign Out",
+    signUp: "Sign Up",
+    signUpSuccess: {
+      description:
+        "Congratulations! your account has been successfully created",
+      title: "Sign Up Success",
+    },
+    success: "Success",
+  },
+  bookmarks: {
+    complete: {
+      complete: "Complete",
+      done: "Done",
+      note: "Note",
+      rate: "Rate",
+    },
+    filters: {
+      all: "All",
+      completed: "Completed",
+      filters: "Filters",
+      query: "Query",
+      random: "Random",
+      tags: "Tags",
+      uncompleted: "Uncompleted",
+    },
+    form: {
+      check: "OG Check",
+      delete: "Delete",
+      preview: "Preview",
+      text: "Text",
+      title: "Title",
+      url: "URL",
+    },
+    history: "History",
+    item: {
+      createdAt: "Created:",
+      details: "Details",
+      done: "Done:",
+      doneAt: "Completed:",
+      google: "Google",
+      note: "Note:",
+      preview: "{{preview}} preview",
+      rate: "Rate:",
+      spotify: "Spotify",
+      text: "Text:",
+      title: "Title:",
+      url: "Url:",
+      youtube: "Youtube",
+    },
+    loadMore: "Load More",
+    share: "Share",
+    title: "Bookmarks",
+  },
+  common: {
+    closeDialog: "Close",
+    delete: "Delete",
+    nextSlide: "Next slide",
+    previousSlide: "Previous slide",
+    save: "Save",
+    update: "Update",
+  },
   error: {
     description: "Something went wrong: {{message}}",
     home: "Home",
@@ -23,87 +88,22 @@ const enDict = {
   notFound: {
     title: "Not Found",
   },
+  pwa: {
+    readyOffline: "App ready to work offline",
+    reload: "Reload",
+    update: "New content available, click on reload button to update.",
+  },
   seo: {
     description:
       "Solid Bookmarks app is a non-trivial local first demo application built using Solid Start.",
     title: "Solid Bookmarks",
   },
-  bookmarks: {
-    title: "Bookmarks",
-    loadMore: "Load More",
-    share: "Share",
-    history: "History",
-    complete: {
-      complete: "Complete",
-      done: "Done",
-      rate: "Rate",
-      note: "Note",
-    },
-    form: {
-      title: "Title",
-      text: "Text",
-      url: "URL",
-      preview: "Preview",
-      delete: "Delete",
-      check: "OG Check",
-    },
-    item: {
-      title: "Title:",
-      text: "Text:",
-      url: "Url:",
-      createdAt: "Created:",
-      done: "Done:",
-      doneAt: "Completed:",
-      rate: "Rate:",
-      note: "Note:",
-      preview: "{{preview}} preview",
-      details: "Details",
-      google: "Google",
-      youtube: "Youtube",
-      spotify: "Spotify",
-    },
-    filters: {
-      random: "Random",
-      tags: "Tags",
-      completed: "Completed",
-      uncompleted: "Uncompleted",
-      all: "All",
-      filters: "Filters",
-      query: "Query",
-    },
-  },
   tags: {
-    heading: "Tags",
     form: {
       add: "Add tag",
       name: "Name",
     },
-  },
-  auth: {
-    email: "Email",
-    password: "Password",
-    signIn: "Sign In",
-    signOut: "Sign Out",
-    signUp: "Sign Up",
-    success: "Success",
-    signUpSuccess: {
-      description:
-        "Congratulations! your account has been successfully created",
-      title: "Sign Up Success",
-    },
-  },
-  pwa: {
-    reload: "Reload",
-    readyOffline: "App ready to work offline",
-    update: "New content available, click on reload button to update.",
-  },
-  common: {
-    closeDialog: "Close",
-    save: "Save",
-    update: "Update",
-    delete: "Delete",
-    nextSlide: "Next slide",
-    previousSlide: "Previous slide",
+    heading: "Tags",
   },
 };
 

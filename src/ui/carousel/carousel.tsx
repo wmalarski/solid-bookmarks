@@ -64,12 +64,12 @@ const createCarouselContext = (args: CreateCarouselContextArgs) => {
   };
 
   return {
-    carouselRef,
+    api,
     canScrollNext,
     canScrollPrev,
-    scrollPrevious,
+    carouselRef,
     scrollNext,
-    api,
+    scrollPrevious,
   };
 };
 
@@ -106,9 +106,9 @@ export const Carousel: Component<CarouselRootProps> = (props) => {
   return (
     <CarouselContext.Provider value={context}>
       <div
-        onKeyDown={onKeyDown}
-        class={twCx("relative", props.class)}
         aria-roledescription="carousel"
+        class={twCx("relative", props.class)}
+        onKeyDown={onKeyDown}
         {...props}
       >
         {props.children}
@@ -123,7 +123,7 @@ export const CarouselContent: Component<CarouselContentProps> = (props) => {
   const carousel = useCarousel();
 
   return (
-    <div ref={carousel().carouselRef} class="overflow-hidden">
+    <div class="overflow-hidden" ref={carousel().carouselRef}>
       <div class={twCx("-ml-4 flex", props.class)} {...props} />
     </div>
   );
@@ -135,9 +135,9 @@ export const CarouselItem: Component<CarouselItemProps> = (props) => {
   return (
     <div
       {...props}
-      role="group"
       aria-roledescription="slide"
       class={twCx("min-w-0 shrink-0 grow-0 basis-full pl-4", props.class)}
+      role="group"
     />
   );
 };
@@ -151,9 +151,9 @@ export const CarouselPrevious: Component<CarouselPreviousProps> = (props) => {
 
   return (
     <Button
-      type="button"
       shape="circle"
       size="sm"
+      type="button"
       {...props}
       class={twCx("-left-12 -translate-y-1/2 absolute top-1/2", props.class)}
       disabled={!carousel().canScrollPrev()}
@@ -174,9 +174,9 @@ export const CarouselNext: Component<CarouselNextProps> = (props) => {
 
   return (
     <Button
-      type="button"
       shape="circle"
       size="sm"
+      type="button"
       {...props}
       class={twCx("-right-12 -translate-y-1/2 absolute top-1/2", props.class)}
       disabled={!carousel().canScrollNext()}

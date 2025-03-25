@@ -16,13 +16,6 @@ import { createDoneSchema } from "./utils/use-filters-search-params";
 export const insertBookmark = async (form: FormData) => {
   return handleRpc({
     data: decode(form, { arrays: ["tags[]"], numbers: ["tags[]"] }),
-    schema: v.object({
-      title: v.optional(v.string()),
-      text: v.optional(v.string()),
-      url: v.optional(v.string()),
-      preview: v.optional(v.string()),
-      "tags[]": v.optional(v.array(v.number()), []),
-    }),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -51,13 +44,19 @@ export const insertBookmark = async (form: FormData) => {
 
       throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
     },
+    schema: v.object({
+      preview: v.optional(v.string()),
+      "tags[]": v.optional(v.array(v.number()), []),
+      text: v.optional(v.string()),
+      title: v.optional(v.string()),
+      url: v.optional(v.string()),
+    }),
   });
 };
 
 export const deleteBookmark = (form: FormData) => {
   return handleRpc({
     data: decode(form, { numbers: ["bookmarkId"] }),
-    schema: v.object({ bookmarkId: v.number() }),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -72,6 +71,7 @@ export const deleteBookmark = (form: FormData) => {
 
       throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
     },
+    schema: v.object({ bookmarkId: v.number() }),
   });
 };
 
@@ -110,16 +110,8 @@ const updateBookmarkTags = ({
 export const updateBookmark = (form: FormData) => {
   return handleRpc({
     data: decode(form, {
-      numbers: ["bookmarkId", "tags[]"],
       arrays: ["tags[]"],
-    }),
-    schema: v.object({
-      bookmarkId: v.number(),
-      text: v.optional(v.string()),
-      title: v.optional(v.string()),
-      url: v.optional(v.string()),
-      preview: v.optional(v.string()),
-      "tags[]": v.optional(v.array(v.number()), []),
+      numbers: ["bookmarkId", "tags[]"],
     }),
     async handler(args) {
       const supabase = getRequestSupabase();
@@ -153,20 +145,22 @@ export const updateBookmark = (form: FormData) => {
 
       throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
     },
+    schema: v.object({
+      bookmarkId: v.number(),
+      preview: v.optional(v.string()),
+      "tags[]": v.optional(v.array(v.number()), []),
+      text: v.optional(v.string()),
+      title: v.optional(v.string()),
+      url: v.optional(v.string()),
+    }),
   });
 };
 
 export const completeBookmark = (form: FormData) => {
   return handleRpc({
     data: decode(form, {
-      numbers: ["bookmarkId", "rate"],
       booleans: ["done"],
-    }),
-    schema: v.object({
-      bookmarkId: v.number(),
-      done: v.optional(v.boolean()),
-      note: v.optional(v.string()),
-      rate: v.optional(v.number()),
+      numbers: ["bookmarkId", "rate"],
     }),
     async handler(args) {
       const supabase = getRequestSupabase();
@@ -184,17 +178,23 @@ export const completeBookmark = (form: FormData) => {
 
       throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
     },
+    schema: v.object({
+      bookmarkId: v.number(),
+      done: v.optional(v.boolean()),
+      note: v.optional(v.string()),
+      rate: v.optional(v.number()),
+    }),
   });
 };
 
 const createSelectBookmarksSchema = () => {
   return v.object({
+    done: createDoneSchema(),
     limit: v.optional(v.number()),
     offset: v.optional(v.number()),
-    tags: v.array(v.number()),
-    done: createDoneSchema(),
-    random: v.boolean(),
     query: v.optional(v.string()),
+    random: v.boolean(),
+    tags: v.array(v.number()),
   });
 };
 
@@ -254,7 +254,6 @@ export type BookmarkWithTagsModel = NonNullable<
 export const selectBookmarks = (args: SelectBookmarksArgs) => {
   return handleRpc({
     data: args,
-    schema: createSelectBookmarksSchema(),
     async handler(args) {
       const result = await selectBookmarksFromDb(args);
 
@@ -262,8 +261,9 @@ export const selectBookmarks = (args: SelectBookmarksArgs) => {
         return rpcErrorResult(result.error);
       }
 
-      return rpcSuccessResult({ data: result.data, count: result.count });
+      return rpcSuccessResult({ count: result.count, data: result.data });
     },
+    schema: createSelectBookmarksSchema(),
   });
 };
 
@@ -280,7 +280,6 @@ export type SelectBookmarkArgs = v.InferOutput<
 export const selectBookmark = (args: SelectBookmarkArgs) => {
   return handleRpc({
     data: args,
-    schema: createSelectBookmarkSchema(),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -296,6 +295,7 @@ export const selectBookmark = (args: SelectBookmarkArgs) => {
 
       return rpcSuccessResult({ data: result.data });
     },
+    schema: createSelectBookmarkSchema(),
   });
 };
 
@@ -312,7 +312,6 @@ export type SelectBookmarksByIdsArgs = v.InferOutput<
 export const selectBookmarksByIds = (args: SelectBookmarksByIdsArgs) => {
   return handleRpc({
     data: args,
-    schema: createSelectBookmarksByIdsSchema(),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -327,5 +326,6 @@ export const selectBookmarksByIds = (args: SelectBookmarksByIdsArgs) => {
 
       return rpcSuccessResult({ data: result.data });
     },
+    schema: createSelectBookmarksByIdsSchema(),
   });
 };

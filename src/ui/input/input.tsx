@@ -11,8 +11,8 @@ export const Input: Component<InputProps> = (props) => {
 
   return (
     <input
-      autocorrect="off"
       autocomplete="off"
+      autocorrect="off"
       {...withoutVariants}
       class={inputRecipe({ ...variants, class: props.class })}
     />

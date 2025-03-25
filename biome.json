@@ -1,14 +1,17 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.0.0-beta.1/schema.json",
-  "files": {
-    "includes": ["**", "!**/dev-dist", "!**/src/modules/supabase/types.ts"]
-  },
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedKeys": "on",
+        "useSortedProperties": "on"
       }
     }
+  },
+  "files": {
+    "includes": ["**", "!**/dev-dist", "!**/src/modules/supabase/types.ts"]
   },
   "formatter": {
     "enabled": true,
@@ -16,11 +19,34 @@
     "indentWidth": 2
   },
   "linter": {
+    "domains": {
+      "solid": "all"
+    },
     "enabled": true,
     "rules": {
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      },
+      "nursery": {
+        "noUselessStringRaw": "error",
+        "useSortedClasses": "error"
+      },
       "style": {
+        "noArguments": "error",
+        "noCommaOperator": "error",
         "noDefaultExport": "off",
+        "noInferrableTypes": "error",
         "noNamespaceImport": "off",
+        "noNonNullAssertion": "error",
+        "noParameterAssign": "error",
+        "noUnusedTemplateLiteral": "error",
+        "noUselessElse": "error",
+        "useAsConstAssertion": "error",
+        "useConst": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useExponentiationOperator": "error",
+        "useExportType": "error",
         "useFilenamingConvention": {
           "level": "error",
           "options": {
@@ -28,43 +54,16 @@
             "requireAscii": true
           }
         },
-        "useNamingConvention": "off",
-        "useLiteralEnumMembers": "error",
-        "noCommaOperator": "error",
-        "useNodejsImportProtocol": "error",
-        "useAsConstAssertion": "error",
-        "useNumericLiterals": "error",
-        "useEnumInitializers": "error",
-        "useSelfClosingElements": "error",
-        "useConst": "error",
-        "useSingleVarDeclarator": "error",
-        "noUnusedTemplateLiteral": "error",
-        "useNumberNamespace": "error",
-        "noInferrableTypes": "error",
-        "useExponentiationOperator": "error",
-        "useTemplate": "error",
-        "noParameterAssign": "error",
-        "noNonNullAssertion": "error",
-        "useDefaultParameterLast": "error",
-        "noArguments": "error",
         "useImportType": "error",
-        "useExportType": "error",
-        "noUselessElse": "error",
-        "useShorthandFunctionType": "error"
-      },
-      "a11y": {
-        "noSvgWithoutTitle": "off"
-      },
-      "correctness": {
-        "useHookAtTopLevel": "off",
-        "useImportExtensions": "off",
-        "useJsxKeyInIterable": "off"
-      },
-      "nursery": {
-        "useSortedClasses": "error"
-      },
-      "complexity": {
-        "noVoid": "off"
+        "useLiteralEnumMembers": "error",
+        "useNamingConvention": "off",
+        "useNodejsImportProtocol": "error",
+        "useNumberNamespace": "error",
+        "useNumericLiterals": "error",
+        "useSelfClosingElements": "error",
+        "useShorthandFunctionType": "error",
+        "useSingleVarDeclarator": "error",
+        "useTemplate": "error"
       },
       "suspicious": {
         "noConsole": "off"
@@ -72,8 +71,8 @@
     }
   },
   "vcs": {
-    "enabled": true,
     "clientKind": "git",
+    "enabled": true,
     "useIgnoreFile": true
   }
 }

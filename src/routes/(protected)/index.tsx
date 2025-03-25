@@ -34,10 +34,10 @@ export default function HomePage() {
       <RpcShow result={bookmarks()}>
         {(bookmarks) => (
           <BookmarkList
-            queryArgs={queryArgs()}
-            filterSearchParams={filterSearchParams()}
             count={bookmarks().count ?? 0}
+            filterSearchParams={filterSearchParams()}
             initialBookmarks={bookmarks().data}
+            queryArgs={queryArgs()}
           />
         )}
       </RpcShow>
@@ -49,9 +49,9 @@ const mapToSelectBookmarksArgs = (
   params: FiltersSearchParams,
 ): SelectBookmarksArgs => {
   return {
-    tags: params["tags[]"],
     done: params.done,
-    random: params.random === "on",
     query: params.query,
+    random: params.random === "on",
+    tags: params["tags[]"],
   };
 };

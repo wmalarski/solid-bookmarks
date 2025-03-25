@@ -13,8 +13,8 @@ export const Checkbox: Component<CheckboxProps> = (props) => {
   return (
     <input
       {...withoutVariants}
-      type="checkbox"
       class={checkboxRecipe({ ...variants, class: props.class })}
+      type="checkbox"
     />
   );
 };

@@ -22,7 +22,7 @@ export const loadDumpData = async () => {
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       const end = detectedChanges[index * 2 + 1]!;
       const table = start.start?.[0].match(/"(.+)"$/g)?.[0].replaceAll('"', "");
-      return { end: end.index, table, start: start.index };
+      return { end: end.index, start: start.index, table };
     },
   );
 
@@ -63,11 +63,11 @@ export const loadDumpData = async () => {
     ] = entry;
 
     return {
+      _creationTime: new Date(createdAt).getTime(),
       artistId,
       covers: parseCovers(covers),
-      _creationTime: new Date(createdAt).getTime(),
-      release: parseNull(release),
       id,
+      release: parseNull(release),
       sid: parseNull(sid),
       title,
       year: parseNumberNull(year),
@@ -78,8 +78,8 @@ export const loadDumpData = async () => {
   const reviews = tables.get("Review")?.map((entry) => {
     const [_id, albumId, createdAt, rate, text] = entry;
     return {
-      albumId,
       _creationTime: new Date(createdAt).getTime(),
+      albumId,
       rate: Number(rate),
       text,
       userId,

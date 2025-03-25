@@ -7,9 +7,9 @@ export const createDateFormatter = () => {
   const formatter = createMemo(
     () =>
       new Intl.DateTimeFormat(locale(), {
-        timeStyle: "medium",
         dateStyle: "medium",
         hour12: false,
+        timeStyle: "medium",
       }),
   );
   return (date: string) => formatter().format(new Date(date));

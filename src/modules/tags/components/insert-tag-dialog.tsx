@@ -27,8 +27,8 @@ export const InsertTagDialog: Component = () => {
 
   const onSubmit = useActionOnSubmit({
     action: insertTagAction,
-    resetOnSuccess: true,
     onSuccess: () => closeDialog(dialogId),
+    resetOnSuccess: true,
   });
 
   return (
@@ -51,9 +51,9 @@ export const InsertTagDialog: Component = () => {
           <DialogActions>
             <DialogClose />
             <Button
-              form={formId}
               color="primary"
               disabled={submission.pending}
+              form={formId}
               isLoading={submission.pending}
               type="submit"
             >

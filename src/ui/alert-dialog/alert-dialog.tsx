@@ -32,10 +32,10 @@ export const AlertDialog: Component<AlertDialogProps> = (props) => {
         <DialogActions>
           <DialogClose />
           <Button
-            type="submit"
             color={props.confirmColor}
             disabled={props.pending}
             isLoading={props.pending}
+            type="submit"
           >
             {props.confirm}
           </Button>

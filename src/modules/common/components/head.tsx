@@ -41,7 +41,7 @@ export const Head: Component<HeadProps> = (props) => {
       <Meta content="461" property="og:image:width" />
       <Meta content="460" property="og:image:height" />
       {pwaInfo?.webManifest?.href ? (
-        <Link rel="manifest" href={pwaInfo.webManifest.href} />
+        <Link href={pwaInfo.webManifest.href} rel="manifest" />
       ) : null}
     </>
   );

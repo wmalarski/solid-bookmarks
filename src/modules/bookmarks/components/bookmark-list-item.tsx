@@ -45,7 +45,7 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
   };
 
   return (
-    <Card variant="bordered" size="sm" class="w-full">
+    <Card class="w-full" size="sm" variant="bordered">
       <CardBody class="">
         <BookmarkTagsList bookmark={props.bookmark} />
         <BookmarkPreview bookmark={props.bookmark} />
@@ -53,8 +53,8 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
           <BookmarkLinks bookmark={props.bookmark} />
         </Show>
         <div
-          style={{ "grid-template-columns": "minmax(0, 1fr) minmax(0, 3fr)" }}
           class="grid w-full gap-2 pb-4"
+          style={{ "grid-template-columns": "minmax(0, 1fr) minmax(0, 3fr)" }}
         >
           <GridTitle>{t("bookmarks.item.title")}</GridTitle>
           <GridText>{props.bookmark.title}</GridText>
@@ -82,10 +82,10 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
           <CompleteDialog bookmark={props.bookmark} />
           <UpdateBookmarkDialog bookmark={props.bookmark} />
           <LinkButton
-            onClick={onDetailsClick}
-            href={paths.bookmark(props.bookmark.id)}
-            size="sm"
             color="secondary"
+            href={paths.bookmark(props.bookmark.id)}
+            onClick={onDetailsClick}
+            size="sm"
           >
             <ChevronRightIcon class="size-4" />
             {t("bookmarks.item.details")}
@@ -119,12 +119,12 @@ const GridLink: Component<GridLinkProps> = (props) => {
   };
 
   return (
-    <Show when={isLink()} fallback={<GridText>{props.href}</GridText>}>
+    <Show fallback={<GridText>{props.href}</GridText>} when={isLink()}>
       <Link
-        onClick={onClick}
+        class="break-words"
         hover={true}
         href={props.href}
-        class="break-words"
+        onClick={onClick}
       >
         {props.href}
       </Link>
@@ -186,15 +186,15 @@ const BookmarkPreviewImage: Component<BookmarkPreviewImageProps> = (props) => {
   const shouldShow = createMemo<boolean>((previous) => previous || visible());
 
   return (
-    <CarouselItem ref={el} class="min-h-72">
+    <CarouselItem class="min-h-72" ref={el}>
       <Show when={shouldShow()}>
         <img
-          src={props.image}
           alt={t("bookmarks.item.preview", { preview: props.title })}
-          loading="lazy"
-          height={250}
-          width={250}
           class="h-64 text-base-300"
+          height={250}
+          loading="lazy"
+          src={props.image}
+          width={250}
         />
       </Show>
     </CarouselItem>
@@ -233,11 +233,11 @@ const BookmarkLinks: Component<BookmarkLinksProps> = (props) => {
   };
 
   const commonProps: Partial<ComponentProps<typeof LinkButton>> = {
-    rel: "noopener noreferrer",
-    target: "_blank",
-    size: "xs",
     color: "secondary",
     onClick,
+    rel: "noopener noreferrer",
+    size: "xs",
+    target: "_blank",
   };
 
   return (

@@ -23,10 +23,6 @@ const getRedirectUrl = (event: RequestEvent, path: string) => {
 export const signUpServerAction = (form: FormData) => {
   return handleRpc({
     data: decode(form),
-    schema: v.object({
-      email: v.pipe(v.string(), v.email()),
-      password: v.pipe(v.string(), v.minLength(6), v.maxLength(20)),
-    }),
     async handler(args) {
       const event = getRequestEventOrThrow();
       const supabase = getRequestSupabase();
@@ -44,16 +40,16 @@ export const signUpServerAction = (form: FormData) => {
 
       return rpcSuccessResult(result.data);
     },
+    schema: v.object({
+      email: v.pipe(v.string(), v.email()),
+      password: v.pipe(v.string(), v.minLength(6), v.maxLength(20)),
+    }),
   });
 };
 
 export const signInServerAction = (form: FormData) => {
   return handleRpc({
     data: decode(form),
-    schema: v.object({
-      email: v.pipe(v.string(), v.email()),
-      password: v.pipe(v.string(), v.minLength(3)),
-    }),
     async handler(args) {
       const supabase = getRequestSupabase();
 
@@ -65,6 +61,10 @@ export const signInServerAction = (form: FormData) => {
 
       throw redirect(paths.home, { revalidate: USER_QUERY_KEY });
     },
+    schema: v.object({
+      email: v.pipe(v.string(), v.email()),
+      password: v.pipe(v.string(), v.minLength(3)),
+    }),
   });
 };
 

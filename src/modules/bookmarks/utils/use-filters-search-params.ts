@@ -28,8 +28,8 @@ const createQuerySchema = () => {
 const createFiltersFormSchema = () => {
   return v.object({
     done: createDoneSchema(),
-    random: createRandomSchema(),
     query: createQuerySchema(),
+    random: createRandomSchema(),
     "tags[]": v.optional(v.array(v.number()), []),
   });
 };
@@ -37,8 +37,8 @@ const createFiltersFormSchema = () => {
 export const createFiltersSearchParamsSchema = () => {
   return v.object({
     done: createDoneSchema(),
-    random: createRandomSchema(),
     query: createQuerySchema(),
+    random: createRandomSchema(),
     "tags[]": v.optional(
       v.union([
         v.array(v.pipe(v.string(), v.transform(Number))),

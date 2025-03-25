@@ -33,8 +33,8 @@ export const AuthFields: Component<AuthFieldsProps> = (props) => {
         inputMode="email"
         name="email"
         placeholder={t("auth.email")}
-        type="email"
         required={true}
+        type="email"
         width="full"
         {...getInvalidStateProps({
           errorMessageId: "email-error",

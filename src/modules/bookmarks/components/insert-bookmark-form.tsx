@@ -21,8 +21,8 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
   return (
     <form
       action={insertBookmarkAction}
-      method="post"
       class={formContainerRecipe({ class: "px-4" })}
+      method="post"
     >
       <BookmarkFields
         initialData={props.initialData}
@@ -32,10 +32,10 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
       />
       <Button
         color="primary"
+        disabled={submission.pending}
+        isLoading={submission.pending}
         size="sm"
         type="submit"
-        isLoading={submission.pending}
-        disabled={submission.pending}
       >
         <PlusIcon class="size-4" />
         {t("common.save")}

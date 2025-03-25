@@ -10,10 +10,10 @@ type RpcShowProps<T> = {
 export function RpcShow<T>(props: RpcShowProps<T>) {
   return (
     <Show
-      when={props.result?.success ? props.result.data : undefined}
+      children={props.children}
       fallback={props.fallback}
       // biome-ignore lint/correctness/noChildrenProp: <explanation>
-      children={props.children}
+      when={props.result?.success ? props.result.data : undefined}
     />
   );
 }

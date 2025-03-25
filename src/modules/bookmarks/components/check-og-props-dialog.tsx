@@ -32,8 +32,8 @@ export const CheckOgPropsDialog: Component<CheckOgPropsDialogProps> = (
     const url = map.get("og:url");
 
     props.onCheck({
-      title: description,
       preview: image,
+      title: description,
       url,
     });
 
@@ -43,12 +43,12 @@ export const CheckOgPropsDialog: Component<CheckOgPropsDialogProps> = (
   return (
     <Show when={isLink()}>
       <Button
-        type="button"
         color="secondary"
-        size="xs"
-        onClick={onCheckClick}
-        isLoading={isPending()}
         disabled={isPending()}
+        isLoading={isPending()}
+        onClick={onCheckClick}
+        size="xs"
+        type="button"
       >
         {t("bookmarks.form.check")}
       </Button>

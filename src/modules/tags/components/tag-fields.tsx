@@ -25,11 +25,11 @@ export const TagFields: Component<TagFieldsProps> = (props) => {
 
       <FieldsetLabel for="name">{t("tags.form.name")}</FieldsetLabel>
       <Input
+        disabled={props.pending}
         id="name"
         name="name"
         placeholder={t("tags.form.name")}
         value={props.initialData?.name}
-        disabled={props.pending}
         width="full"
         {...getInvalidStateProps({
           errorMessageId: "name-error",

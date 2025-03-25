@@ -40,7 +40,7 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
 
   return (
     <>
-      <DialogTrigger for={dialogId()} size="sm" color="secondary">
+      <DialogTrigger color="secondary" for={dialogId()} size="sm">
         <PencilIcon class="size-4" />
         {t("common.update")}
       </DialogTrigger>
@@ -48,7 +48,7 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
         <DialogBox>
           <DialogTitle>{t("common.update")}</DialogTitle>
           <form id={formId()} onSubmit={onSubmit}>
-            <input type="hidden" value={props.tag.id} name="tagId" />
+            <input name="tagId" type="hidden" value={props.tag.id} />
             <TagFields
               pending={submission.pending}
               result={
@@ -59,9 +59,9 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
           <DialogActions>
             <DialogClose />
             <Button
-              form={formId()}
               color="primary"
               disabled={submission.pending}
+              form={formId()}
               isLoading={submission.pending}
               type="submit"
             >

@@ -59,10 +59,10 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
   return (
     <>
       <DialogTrigger
-        onClick={onClick}
-        for={dialogId()}
-        size="sm"
         color="secondary"
+        for={dialogId()}
+        onClick={onClick}
+        size="sm"
       >
         <PencilIcon class="size-4" />
         {t("common.update")}
@@ -70,8 +70,8 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
       <Dialog id={dialogId()}>
         <DialogBox>
           <DialogTitle>{t("common.update")}</DialogTitle>
-          <form id={formId()} onSubmit={onSubmit} class={formContainerRecipe()}>
-            <input type="hidden" value={props.bookmark.id} name="bookmarkId" />
+          <form class={formContainerRecipe()} id={formId()} onSubmit={onSubmit}>
+            <input name="bookmarkId" type="hidden" value={props.bookmark.id} />
             <BookmarkFields
               initialData={initialData()}
               pending={submission.pending}
@@ -82,9 +82,9 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
           <DialogActions>
             <DialogClose />
             <Button
-              form={formId()}
               color="primary"
               disabled={submission.pending}
+              form={formId()}
               isLoading={submission.pending}
               type="submit"
             >

@@ -47,7 +47,7 @@ export const BookmarkList: Component<BookmarkListProps> = (props) => {
           )}
         </For>
       </BookmarkListContainer>
-      <Button size="sm" color="secondary" onClick={onLoadMoreClick}>
+      <Button color="secondary" onClick={onLoadMoreClick} size="sm">
         {t("bookmarks.loadMore")}
       </Button>
     </div>

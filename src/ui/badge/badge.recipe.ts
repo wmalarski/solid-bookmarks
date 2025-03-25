@@ -8,27 +8,27 @@ export const badgeRecipe = twCva("badge", {
   },
   variants: {
     color: {
+      accent: "badge-accent",
+      error: "badge-error",
+      info: "badge-info",
       neutral: "badge-neutral",
       primary: "badge-primary",
       secondary: "badge-secondary",
-      accent: "badge-accent",
-      info: "badge-info",
       success: "badge-success",
       warning: "badge-warning",
-      error: "badge-error",
     },
     size: {
       lg: "badge-lg",
       md: "badge-md",
       sm: "badge-sm",
-      xs: "badge-xs",
       xl: "badge-xl",
+      xs: "badge-xs",
     },
     variant: {
-      outline: "badge-outline",
       dash: "badge-dash",
-      soft: "badge-soft",
       ghost: "badge-ghost",
+      outline: "badge-outline",
+      soft: "badge-soft",
     },
   },
 });

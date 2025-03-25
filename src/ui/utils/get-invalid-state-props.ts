@@ -12,7 +12,7 @@ export const getInvalidStateProps = ({
   }
 
   return {
-    "aria-invalid": true,
     "aria-describedby": errorMessageId,
+    "aria-invalid": true,
   };
 };

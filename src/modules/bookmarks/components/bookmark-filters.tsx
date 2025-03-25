@@ -45,14 +45,14 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
 
   return (
     <>
-      <DialogTrigger for={dialogId()} size="sm" color="secondary">
+      <DialogTrigger color="secondary" for={dialogId()} size="sm">
         <FilterIcon class="size-4" />
         {t("bookmarks.filters.filters")}
       </DialogTrigger>
       <Dialog id={dialogId()}>
         <DialogBox>
           <DialogTitle>{t("bookmarks.filters.filters")}</DialogTitle>
-          <form id={formId()} onSubmit={onSubmit} class={formContainerRecipe()}>
+          <form class={formContainerRecipe()} id={formId()} onSubmit={onSubmit}>
             <Fieldset>
               <RandomFilter random={props.params.random} />
               <DoneFilter done={props.params.done} />
@@ -62,7 +62,7 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
           </form>
           <DialogActions>
             <DialogClose />
-            <Button form={formId()} color="primary" type="submit">
+            <Button color="primary" form={formId()} type="submit">
               {t("common.save")}
             </Button>
           </DialogActions>
@@ -88,7 +88,7 @@ const DoneFilter: Component<DoneFilterProps> = (props) => {
       <For each={options}>
         {(option) => (
           <FieldsetLabel class="capitalize">
-            <Radio value={option} checked={props.done === option} name="done" />
+            <Radio checked={props.done === option} name="done" value={option} />
             {option}
           </FieldsetLabel>
         )}

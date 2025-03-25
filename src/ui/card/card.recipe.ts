@@ -2,28 +2,28 @@ import { twCva } from "../utils/tw-cva";
 
 export const cardRecipe = twCva("card bg-base-200", {
   defaultVariants: {
-    side: null,
     imageFull: null,
+    side: null,
     size: null,
     variant: null,
   },
   variants: {
-    size: {
-      xs: "card-xs",
-      sm: "card-sm",
-      md: "card-md",
-      lg: "card-lg",
-      xl: "card-xl",
-    },
-    variant: {
-      bordered: "card-border",
-      dash: "card-dash",
-    },
     imageFull: {
       true: "image-full",
     },
     side: {
       true: "card-side",
+    },
+    size: {
+      lg: "card-lg",
+      md: "card-md",
+      sm: "card-sm",
+      xl: "card-xl",
+      xs: "card-xs",
+    },
+    variant: {
+      bordered: "card-border",
+      dash: "card-dash",
     },
   },
 });

@@ -32,7 +32,7 @@ const createBookmarksHistoryContext = (userId?: string) => {
     );
   };
 
-  return { ids, addToHistory };
+  return { addToHistory, ids };
 };
 
 type BookmarksHistoryContextValue = Accessor<

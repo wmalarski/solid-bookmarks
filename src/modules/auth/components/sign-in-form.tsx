@@ -14,7 +14,7 @@ export const SignInForm: Component = () => {
   const submission = useSubmission(signInAction);
 
   return (
-    <form action={signInAction} method="post" class={formContainerRecipe()}>
+    <form action={signInAction} class={formContainerRecipe()} method="post">
       <AuthFields
         pending={submission.pending}
         result={submission.result}

@@ -7,10 +7,10 @@ export default function SharePage() {
   return (
     <InsertBookmarkForm
       initialData={{
+        tags: [],
         text: searchParams.text?.toString(),
         title: searchParams.title?.toString(),
         url: searchParams.url?.toString(),
-        tags: [],
       }}
     />
   );
