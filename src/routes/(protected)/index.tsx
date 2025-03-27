@@ -8,15 +8,14 @@ import {
 import type { SelectBookmarksArgs } from "~/modules/bookmarks/server";
 import {
   type FiltersSearchParams,
-  parseFiltersSearchParams,
   useFiltersSearchParams,
 } from "~/modules/bookmarks/utils/use-filters-search-params";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 
 export const route = {
   load: async ({ location }) => {
-    const filterSearchParams = parseFiltersSearchParams(location.query);
-    await selectBookmarksQuery(mapToSelectBookmarksArgs(filterSearchParams));
+    // const filterSearchParams = parseFiltersSearchParams(location.query);
+    // await selectBookmarksQuery(mapToSelectBookmarksArgs(filterSearchParams));
   },
 } satisfies RouteDefinition;
 

@@ -8,7 +8,7 @@ import { RpcShow } from "~/modules/common/components/rpc-show";
 
 export const route = {
   load: async ({ params }) => {
-    await selectBookmarkQuery({ bookmarkId: +params.id });
+    // await selectBookmarkQuery({ bookmarkId: +params.id });
   },
 } satisfies RouteDefinition;
 

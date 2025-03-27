@@ -7,7 +7,7 @@ import { TagsList } from "~/modules/tags/components/tags-list";
 
 export const route = {
   load: async () => {
-    await selectTagsQuery({});
+    // await selectTagsQuery({});
   },
 } satisfies RouteDefinition;
 
