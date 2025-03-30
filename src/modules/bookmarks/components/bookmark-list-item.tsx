@@ -46,7 +46,7 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
 
   return (
     <Card class="w-full" size="sm" variant="bordered">
-      <CardBody class="">
+      <CardBody>
         <BookmarkTagsList bookmark={props.bookmark} />
         <BookmarkPreview bookmark={props.bookmark} />
         <Show when={props.bookmark.title}>
@@ -97,7 +97,7 @@ export const BookmarkListItem: Component<BookmarkListItemProps> = (props) => {
 };
 
 const GridTitle: Component<ParentProps> = (props) => {
-  return <span class="font-semibold text-base">{props.children}</span>;
+  return <span class="font-semibold text-sm">{props.children}</span>;
 };
 
 const GridText: Component<ParentProps> = (props) => {

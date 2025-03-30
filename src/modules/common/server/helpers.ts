@@ -1,10 +1,7 @@
 import { redirect } from "@solidjs/router";
 import { getRequestEvent } from "solid-js/web";
 import type * as v from "valibot";
-import type { setCookie } from "vinxi/http";
 import { paths } from "../utils/paths";
-
-export type CookieSerializeOptions = Parameters<typeof setCookie>[2];
 
 export const getRequestEventOrThrow = () => {
   const event = getRequestEvent();

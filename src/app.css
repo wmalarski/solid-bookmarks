@@ -1,24 +1,21 @@
 @import "tailwindcss";
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-/* @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-} */
-
 @plugin "daisyui" {
   /* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
-  themes: light --default, dark --prefersdark, cupcake;
+  themes: cyberpunk;
+}
+
+@plugin "daisyui/theme" {
+  /* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
+  name: "cyberpunk";
+  /* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
+  default: true;
+
+  --color-base-100: #1c1917;
+  --color-base-200: #292524;
+  --color-base-300: #57534e;
+  --color-base-content: #e7e5e4;
+  --color-neutral: #e7e5e4;
+  --color-neutral-content: #191d24;
+  --color-neutral-focus: #f8f8f8;
 }

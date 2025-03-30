@@ -5,9 +5,7 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   middleware: "./src/middleware.ts",
   server: {
-    node: true,
-    preset: "node",
-    // preset: "cloudflare-pages",
+    preset: "cloudflare-pages",
   },
   vite: {
     plugins: [
