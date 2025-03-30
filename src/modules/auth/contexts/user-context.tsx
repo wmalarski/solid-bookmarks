@@ -27,17 +27,3 @@ export const UserProvider: Component<UserProviderProps> = (props) => {
 export const useUserContext = () => {
   return useContext(UserContext);
 };
-
-export const useAuthorizedUserContext = () => {
-  const value = useUserContext();
-
-  return createMemo(() => {
-    const unpack = value();
-
-    if (!unpack) {
-      throw new Error("User is not defined");
-    }
-
-    return unpack;
-  });
-};

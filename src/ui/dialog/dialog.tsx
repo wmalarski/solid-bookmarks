@@ -75,7 +75,7 @@ export const DialogBackdrop: Component<DialogBackdropProps> = (props) => {
 
 export type DialogCloseProps = Omit<ComponentProps<typeof Button>, "children">;
 
-export const DialogClose: Component<DialogBackdropProps> = (props) => {
+export const DialogClose: Component<DialogCloseProps> = (props) => {
   const { t } = useI18n();
 
   return (

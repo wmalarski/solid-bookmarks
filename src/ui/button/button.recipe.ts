@@ -50,15 +50,3 @@ export const buttonRecipe = twCva("btn flex items-center gap-1", {
     },
   },
 });
-
-export const buttonGroupRecipe = twCva("btn-group", {
-  defaultVariants: {
-    direction: null,
-  },
-  variants: {
-    direction: {
-      horizontal: "btn-group-horizontal",
-      vertical: "btn-group-vertical",
-    },
-  },
-});

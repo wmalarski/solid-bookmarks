@@ -5,8 +5,6 @@ import { selectTagsServerQuery } from "~/modules/tags/server";
 import { Checkbox } from "~/ui/checkbox/checkbox";
 import { FieldsetLabel } from "~/ui/fieldset/fieldset";
 
-export const BOOKMARK_TAGS_FIELD_PREFIX = "tags.";
-
 type BookmarkTagsFieldProps = {
   initialTags?: number[];
   disabled?: boolean;

@@ -1,17 +1,6 @@
-import {
-  type Component,
-  type ComponentProps,
-  splitProps,
-  type ValidComponent,
-} from "solid-js";
-import { Dynamic, type DynamicProps } from "solid-js/web";
+import { type Component, type ComponentProps, splitProps } from "solid-js";
 import type { ComponentVariantProps } from "../utils/types";
-import {
-  cardActionsRecipe,
-  cardBodyRecipe,
-  cardRecipe,
-  cardTitleRecipe,
-} from "./card.recipe";
+import { cardActionsRecipe, cardBodyRecipe, cardRecipe } from "./card.recipe";
 
 export type CardProps = ComponentVariantProps<"div", typeof cardRecipe>;
 
@@ -30,18 +19,6 @@ export const Card: Component<CardProps> = (props) => {
     />
   );
 };
-
-export type CardTitleProps<T extends ValidComponent> = DynamicProps<T>;
-
-export function CardTitle<T extends ValidComponent>(props: CardTitleProps<T>) {
-  return (
-    <Dynamic
-      {...props}
-      class={cardTitleRecipe({ class: props.class })}
-      component={props.component}
-    />
-  );
-}
 
 export type CardBodyProps = ComponentProps<"div">;
 

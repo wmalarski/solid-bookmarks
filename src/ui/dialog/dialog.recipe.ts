@@ -27,5 +27,3 @@ export const modalBoxRecipe = twCva("modal-box");
 export const modalBackdropRecipe = twCva("modal-backdrop");
 
 export const modalActionRecipe = twCva("modal-action");
-
-export const modalToggleRecipe = twCva("modal-toggle");
