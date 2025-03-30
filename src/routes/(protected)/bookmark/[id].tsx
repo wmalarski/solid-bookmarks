@@ -1,4 +1,4 @@
-import { createAsync, type RouteDefinition, useParams } from "@solidjs/router";
+import { createAsync, useParams } from "@solidjs/router";
 import { Suspense } from "solid-js";
 import { selectBookmarkQuery } from "~/modules/bookmarks/client";
 import { BookmarkListPlaceholder } from "~/modules/bookmarks/components/bookmark-list";
@@ -6,11 +6,11 @@ import { BookmarkListItem } from "~/modules/bookmarks/components/bookmark-list-i
 import {} from "~/modules/bookmarks/utils/use-filters-search-params";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 
-export const route = {
-  load: async ({ params }) => {
-    // await selectBookmarkQuery({ bookmarkId: +params.id });
-  },
-} satisfies RouteDefinition;
+// export const route = {
+//   load: async ({ params }) => {
+//     await selectBookmarkQuery({ bookmarkId: +params.id });
+//   },
+// } satisfies RouteDefinition;
 
 export default function BookmarkPage() {
   const params = useParams();

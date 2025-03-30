@@ -7,10 +7,10 @@ import * as v from "valibot";
 
 import {
   getRequestEventOrThrow,
-  handleRpc,
   rpcErrorResult,
   rpcSuccessResult,
 } from "../common/server/helpers";
+import { handleRpc } from "../common/server/rpc";
 import { paths } from "../common/utils/paths";
 import { getRequestSupabase } from "../supabase/middleware";
 import { USER_QUERY_KEY } from "./const";

@@ -3,11 +3,8 @@
 import { json } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import * as v from "valibot";
-import {
-  handleRpc,
-  rpcErrorResult,
-  rpcSuccessResult,
-} from "../common/server/helpers";
+import { rpcErrorResult, rpcSuccessResult } from "../common/server/helpers";
+import { handleRpc } from "../common/server/rpc";
 import { getRequestSupabase } from "../supabase/middleware";
 import { SELECT_TAGS_DEFAULT_LIMIT, TAGS_QUERY_KEY } from "./const";
 

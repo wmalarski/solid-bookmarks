@@ -3,11 +3,8 @@
 import { redirect, reload } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import * as v from "valibot";
-import {
-  handleRpc,
-  rpcErrorResult,
-  rpcSuccessResult,
-} from "../common/server/helpers";
+import { rpcErrorResult, rpcSuccessResult } from "../common/server/helpers";
+import { handleRpc } from "../common/server/rpc";
 import { paths } from "../common/utils/paths";
 import { getRequestSupabase } from "../supabase/middleware";
 import { BOOKMARKS_QUERY_KEY, SELECT_BOOKMARKS_DEFAULT_LIMIT } from "./const";

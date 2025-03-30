@@ -39,6 +39,8 @@ export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
   const [forValue, withoutFor] = splitProps(props, ["for", "onClick"]);
 
   const onClick: ComponentProps<"button">["onClick"] = (event) => {
+    console.log("onClick");
+
     props.onClick?.(event);
     const id = `#${forValue.for}`;
     const dialog = document.querySelector<HTMLDialogElement>(id);
@@ -48,7 +50,7 @@ export const DialogTrigger: Component<DialogTriggerProps> = (props) => {
     dialog?.showModal();
   };
 
-  return <Button onClick={onClick} type="button" {...withoutFor} />;
+  return <Button {...withoutFor} onClick={onClick} type="button" />;
 };
 
 export type DialogBoxProps = ComponentProps<"div">;

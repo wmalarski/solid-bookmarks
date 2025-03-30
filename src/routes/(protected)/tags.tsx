@@ -1,15 +1,15 @@
-import { createAsync, type RouteDefinition } from "@solidjs/router";
+import { createAsync } from "@solidjs/router";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { selectTagsQuery } from "~/modules/tags/client";
 import { InsertTagDialog } from "~/modules/tags/components/insert-tag-dialog";
 import { TagsList } from "~/modules/tags/components/tags-list";
 
-export const route = {
-  load: async () => {
-    // await selectTagsQuery({});
-  },
-} satisfies RouteDefinition;
+// export const route = {
+//   load: async () => {
+//     await selectTagsQuery({});
+//   },
+// } satisfies RouteDefinition;
 
 export default function TagsPage() {
   const { t } = useI18n();

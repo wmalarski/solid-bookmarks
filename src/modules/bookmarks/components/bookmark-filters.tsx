@@ -45,6 +45,7 @@ export const BookmarkFilters: Component<BookmarkFiltersProps> = (props) => {
 
   return (
     <>
+      <Button onClick={() => console.log("CCCC")}>BBB</Button>
       <DialogTrigger color="secondary" for={dialogId()} size="sm">
         <FilterIcon class="size-4" />
         {t("bookmarks.filters.filters")}
