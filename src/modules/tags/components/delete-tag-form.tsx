@@ -5,8 +5,7 @@ import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { AlertDialog } from "~/ui/alert-dialog/alert-dialog";
 import { closeDialog, DialogTrigger } from "~/ui/dialog/dialog";
 import { TrashIcon } from "~/ui/icons/trash-icon";
-import { deleteTagAction } from "../client";
-import type { TagModel } from "../server";
+import { deleteTagServerAction, type TagModel } from "../server";
 
 type DeleteTagFormProps = {
   tag: TagModel;
@@ -18,12 +17,12 @@ export const DeleteTagForm: Component<DeleteTagFormProps> = (props) => {
   const dialogId = createMemo(() => `delete-dialog-${props.tag.id}`);
 
   const submission = useSubmission(
-    deleteTagAction,
+    deleteTagServerAction,
     ([form]) => form.get("tagId") === String(props.tag.id),
   );
 
   const onSubmit = useActionOnSubmit({
-    action: deleteTagAction,
+    action: deleteTagServerAction,
     onSuccess: () => closeDialog(dialogId()),
   });
 

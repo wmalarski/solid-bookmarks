@@ -5,9 +5,12 @@ import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import { Skeleton } from "~/ui/skeleton/skeleton";
-import { selectBookmarksQuery } from "../client";
 import { SELECT_BOOKMARKS_DEFAULT_LIMIT } from "../const";
-import type { BookmarkWithTagsModel, SelectBookmarksArgs } from "../server";
+import {
+  type BookmarkWithTagsModel,
+  type SelectBookmarksArgs,
+  selectBookmarksServerQuery,
+} from "../server";
 import type { FiltersSearchParams } from "../utils/use-filters-search-params";
 import { BookmarkFilters } from "./bookmark-filters";
 import { BookmarkListItem } from "./bookmark-list-item";
@@ -61,7 +64,7 @@ type BookmarkLazyProps = {
 
 const BookmarkLazy: Component<BookmarkLazyProps> = (props) => {
   const bookmarks = createAsync(() =>
-    selectBookmarksQuery({ offset: props.offset, ...props.queryArgs }),
+    selectBookmarksServerQuery({ offset: props.offset, ...props.queryArgs }),
   );
 
   return (

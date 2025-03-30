@@ -1,7 +1,7 @@
 import { createAsync } from "@solidjs/router";
 import { type Component, createMemo, For, Suspense } from "solid-js";
 import { RpcShow } from "~/modules/common/components/rpc-show";
-import { selectTagsQuery } from "~/modules/tags/client";
+import { selectTagsServerQuery } from "~/modules/tags/server";
 import { Checkbox } from "~/ui/checkbox/checkbox";
 import { FieldsetLabel } from "~/ui/fieldset/fieldset";
 
@@ -13,7 +13,7 @@ type BookmarkTagsFieldProps = {
 };
 
 export const BookmarkTagsField: Component<BookmarkTagsFieldProps> = (props) => {
-  const tags = createAsync(() => selectTagsQuery({}));
+  const tags = createAsync(() => selectTagsServerQuery({}));
 
   const initialTagIds = createMemo(() => {
     return new Set(props.initialTags);

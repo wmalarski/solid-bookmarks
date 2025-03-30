@@ -5,16 +5,20 @@ import { paths } from "~/modules/common/utils/paths";
 import { Button } from "~/ui/button/button";
 import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { Link } from "~/ui/link/link";
-import { signInAction } from "../client";
+import { signInServerAction } from "../server";
 import { AuthFields } from "./auth-fields";
 
 export const SignInForm: Component = () => {
   const { t } = useI18n();
 
-  const submission = useSubmission(signInAction);
+  const submission = useSubmission(signInServerAction);
 
   return (
-    <form action={signInAction} class={formContainerRecipe()} method="post">
+    <form
+      action={signInServerAction}
+      class={formContainerRecipe()}
+      method="post"
+    >
       <AuthFields
         pending={submission.pending}
         result={submission.result}

@@ -6,16 +6,20 @@ import { Alert, AlertIcon } from "~/ui/alert/alert";
 import { Button } from "~/ui/button/button";
 import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { Link } from "~/ui/link/link";
-import { signUpAction } from "../client";
+import { signUpServerAction } from "../server";
 import { AuthFields } from "./auth-fields";
 
 export const SignUpForm: Component = () => {
   const { t } = useI18n();
 
-  const submission = useSubmission(signUpAction);
+  const submission = useSubmission(signUpServerAction);
 
   return (
-    <form action={signUpAction} class={formContainerRecipe()} method="post">
+    <form
+      action={signUpServerAction}
+      class={formContainerRecipe()}
+      method="post"
+    >
       <Show when={submission.result?.success}>
         <Alert color="success">
           <AlertIcon variant="success" />

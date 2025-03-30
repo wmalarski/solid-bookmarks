@@ -4,7 +4,7 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { PlusIcon } from "~/ui/icons/plus-icon";
-import { insertBookmarkAction } from "../client";
+import { insertBookmarkServerAction } from "../server";
 import { BookmarkFields, type BookmarkFieldsData } from "./bookmark-fields";
 
 type InsertBookmarkFormProps = {
@@ -16,11 +16,11 @@ export const InsertBookmarkForm: Component<InsertBookmarkFormProps> = (
 ) => {
   const { t } = useI18n();
 
-  const submission = useSubmission(insertBookmarkAction);
+  const submission = useSubmission(insertBookmarkServerAction);
 
   return (
     <form
-      action={insertBookmarkAction}
+      action={insertBookmarkServerAction}
       class={formContainerRecipe({ class: "px-4" })}
       method="post"
     >

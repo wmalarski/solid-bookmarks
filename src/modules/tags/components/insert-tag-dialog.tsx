@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "~/ui/dialog/dialog";
 import { PlusIcon } from "~/ui/icons/plus-icon";
-import { insertTagAction } from "../client";
+import { insertTagServerAction } from "../server";
 import { TagFields } from "./tag-fields";
 
 export const InsertTagDialog: Component = () => {
@@ -23,10 +23,10 @@ export const InsertTagDialog: Component = () => {
   const dialogId = "insert-dialog";
   const formId = "insert-form";
 
-  const submission = useSubmission(insertTagAction);
+  const submission = useSubmission(insertTagServerAction);
 
   const onSubmit = useActionOnSubmit({
-    action: insertTagAction,
+    action: insertTagServerAction,
     onSuccess: () => closeDialog(dialogId),
     resetOnSuccess: true,
   });

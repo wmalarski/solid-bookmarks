@@ -14,9 +14,11 @@ import {
 } from "~/ui/dialog/dialog";
 import { formContainerRecipe } from "~/ui/form-container/form-container.recipe";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
-import { updateBookmarkAction } from "../client";
 import { useBookmarksHistory } from "../contexts/bookmarks-history";
-import type { BookmarkWithTagsModel } from "../server";
+import {
+  type BookmarkWithTagsModel,
+  updateBookmarkServerAction,
+} from "../server";
 import { BookmarkFields } from "./bookmark-fields";
 
 type UpdateBookmarkDialogProps = {
@@ -32,12 +34,12 @@ export const UpdateBookmarkDialog: Component<UpdateBookmarkDialogProps> = (
   const formId = createMemo(() => `update-form-${props.bookmark.id}`);
 
   const submission = useSubmission(
-    updateBookmarkAction,
+    updateBookmarkServerAction,
     ([form]) => form.get("bookmarkId") === String(props.bookmark.id),
   );
 
   const onSubmit = useActionOnSubmit({
-    action: updateBookmarkAction,
+    action: updateBookmarkServerAction,
     onSuccess: () => closeDialog(dialogId()),
   });
 

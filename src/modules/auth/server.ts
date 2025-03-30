@@ -1,6 +1,4 @@
-"use server";
-
-import { redirect } from "@solidjs/router";
+import { action, query, redirect } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import type { RequestEvent } from "solid-js/web";
 import * as v from "valibot";
@@ -8,9 +6,9 @@ import * as v from "valibot";
 import {
   getRequestEventOrThrow,
   rpcErrorResult,
+  rpcParseIssueResult,
   rpcSuccessResult,
 } from "../common/server/helpers";
-import { handleRpc } from "../common/server/rpc";
 import { paths } from "../common/utils/paths";
 import { getRequestSupabase } from "../supabase/middleware";
 import { USER_QUERY_KEY } from "./const";
@@ -20,55 +18,67 @@ const getRedirectUrl = (event: RequestEvent, path: string) => {
   return origin + path;
 };
 
-export const signUpServerAction = (form: FormData) => {
-  return handleRpc({
-    data: decode(form),
-    async handler(args) {
-      const event = getRequestEventOrThrow();
-      const supabase = getRequestSupabase();
+export const signUpServerAction = action(async (form: FormData) => {
+  "use server";
 
-      const result = await supabase.auth.signUp({
-        ...args,
-        options: {
-          emailRedirectTo: getRedirectUrl(event, paths.signUpSuccess),
-        },
-      });
-
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
-
-      return rpcSuccessResult(result.data);
-    },
-    schema: v.object({
+  const parsed = await v.safeParseAsync(
+    v.object({
       email: v.pipe(v.string(), v.email()),
       password: v.pipe(v.string(), v.minLength(6), v.maxLength(20)),
     }),
-  });
-};
+    decode(form),
+  );
 
-export const signInServerAction = (form: FormData) => {
-  return handleRpc({
-    data: decode(form),
-    async handler(args) {
-      const supabase = getRequestSupabase();
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
 
-      const result = await supabase.auth.signInWithPassword(args);
+  const event = getRequestEventOrThrow();
+  const supabase = getRequestSupabase();
 
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
-
-      throw redirect(paths.home, { revalidate: USER_QUERY_KEY });
+  const result = await supabase.auth.signUp({
+    ...parsed.output,
+    options: {
+      emailRedirectTo: getRedirectUrl(event, paths.signUpSuccess),
     },
-    schema: v.object({
+  });
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  return rpcSuccessResult(result.data);
+});
+
+export const signInServerAction = action(async (form: FormData) => {
+  "use server";
+
+  const parsed = await v.safeParseAsync(
+    v.object({
       email: v.pipe(v.string(), v.email()),
       password: v.pipe(v.string(), v.minLength(3)),
     }),
-  });
-};
+    decode(form),
+  );
 
-export const signOutServerAction = async () => {
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
+
+  const supabase = getRequestSupabase();
+
+  const result = await supabase.auth.signInWithPassword(parsed.output);
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  throw redirect(paths.home, { revalidate: USER_QUERY_KEY });
+});
+
+export const signOutServerAction = action(async () => {
+  "use server";
+
   const supabase = getRequestSupabase();
 
   const result = await supabase.auth.signOut();
@@ -78,9 +88,11 @@ export const signOutServerAction = async () => {
   }
 
   throw redirect(paths.signIn, { revalidate: USER_QUERY_KEY });
-};
+});
 
-export const getUserServerLoader = async () => {
+export const getUserServerLoader = query(async () => {
+  "use server";
+
   const supabase = getRequestSupabase();
 
   const response = await supabase.auth.getUser();
@@ -91,4 +103,4 @@ export const getUserServerLoader = async () => {
   }
 
   return user;
-};
+}, USER_QUERY_KEY);

@@ -1,6 +1,6 @@
 import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import * as v from "valibot";
-
 import type { Database } from "./types";
 
 const createSupabaseClient = () => {
@@ -20,3 +20,5 @@ const supabase = createSupabaseClient();
 export const getClientSupabase = () => {
   return supabase;
 };
+
+export type SupabaseTypedClient = SupabaseClient<Database>;

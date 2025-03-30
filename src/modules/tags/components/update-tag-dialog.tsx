@@ -14,8 +14,7 @@ import {
   DialogTrigger,
 } from "~/ui/dialog/dialog";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
-import { updateTagAction } from "../client";
-import type { TagModel } from "../server";
+import { type TagModel, updateTagServerAction } from "../server";
 import { TagFields } from "./tag-fields";
 
 type UpdateTagDialogProps = {
@@ -29,12 +28,12 @@ export const UpdateTagDialog: Component<UpdateTagDialogProps> = (props) => {
   const formId = createMemo(() => `update-form-${props.tag.id}`);
 
   const submission = useSubmission(
-    updateTagAction,
+    updateTagServerAction,
     ([form]) => form.get("tagId") === String(props.tag.id),
   );
 
   const onSubmit = useActionOnSubmit({
-    action: updateTagAction,
+    action: updateTagServerAction,
     onSuccess: () => closeDialog(dialogId()),
   });
 

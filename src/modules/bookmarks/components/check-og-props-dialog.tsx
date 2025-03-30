@@ -2,7 +2,7 @@ import { type Component, createSignal, Show } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { createIsLink } from "~/modules/common/utils/create-is-link";
 import { Button } from "~/ui/button/button";
-import { getOgPropsQuery } from "../client";
+import { getOgPropsServerQuery } from "../og-scrapper";
 import type { BookmarkFieldsData } from "./bookmark-fields";
 
 type CheckOgPropsDialogProps = {
@@ -22,7 +22,7 @@ export const CheckOgPropsDialog: Component<CheckOgPropsDialogProps> = (
   const onCheckClick = async () => {
     setIsPending(true);
 
-    const results = await getOgPropsQuery(props.value);
+    const results = await getOgPropsServerQuery(props.value);
     const map = new Map(
       results?.props.map((prop) => [prop.property, prop.content]),
     );

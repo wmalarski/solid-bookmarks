@@ -1,5 +1,6 @@
 import { redirect } from "@solidjs/router";
 import { getRequestEvent } from "solid-js/web";
+import type * as v from "valibot";
 import type { setCookie } from "vinxi/http";
 import { paths } from "../utils/paths";
 
@@ -39,4 +40,18 @@ export const rpcErrorResult = <T extends { message: string }>(
   error: T,
 ): RpcFailure => {
   return { error: error.message, success: false };
+};
+
+export const rpcParseIssueResult = (
+  issues: v.BaseIssue<unknown>[],
+): RpcFailure => {
+  return {
+    errors: Object.fromEntries(
+      issues.map((issue) => [
+        issue.path?.map((item) => item.key).join(".") || "global",
+        issue.message,
+      ]),
+    ),
+    success: false,
+  };
 };

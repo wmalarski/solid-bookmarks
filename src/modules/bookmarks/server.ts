@@ -1,90 +1,106 @@
-"use server";
-
-import { redirect, reload } from "@solidjs/router";
+import { action, query, redirect, reload } from "@solidjs/router";
 import { decode } from "decode-formdata";
 import * as v from "valibot";
-import { rpcErrorResult, rpcSuccessResult } from "../common/server/helpers";
-import { handleRpc } from "../common/server/rpc";
-import { paths } from "../common/utils/paths";
+import {
+  rpcErrorResult,
+  rpcParseIssueResult,
+  rpcSuccessResult,
+} from "../common/server/helpers";
+import type { SupabaseTypedClient } from "../supabase/client";
 import { getRequestSupabase } from "../supabase/middleware";
-import { BOOKMARKS_QUERY_KEY, SELECT_BOOKMARKS_DEFAULT_LIMIT } from "./const";
+import {
+  BOOKMARK_QUERY_KEY,
+  BOOKMARKS_BY_IDS_QUERY_KEY,
+  BOOKMARKS_QUERY_KEY,
+  SELECT_BOOKMARKS_DEFAULT_LIMIT,
+} from "./const";
 import { createDoneSchema } from "./utils/use-filters-search-params";
 
-export const insertBookmark = async (form: FormData) => {
-  return handleRpc({
-    data: decode(form, { arrays: ["tags[]"], numbers: ["tags[]"] }),
-    async handler(args) {
-      const supabase = getRequestSupabase();
+export const insertBookmarkServerAction = action(async (form: FormData) => {
+  "use server";
 
-      const { "tags[]": tags, ...values } = args;
-
-      const result = await supabase
-        .from("bookmarks")
-        .insert(values)
-        .select()
-        .single();
-
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
-
-      const tagsResult = await supabase.from("bookmarks_tags").insert(
-        tags.map((tagId) => ({
-          bookmark_id: result.data.id,
-          tag_id: tagId,
-        })),
-      );
-
-      if (tagsResult.error) {
-        return rpcErrorResult(tagsResult.error);
-      }
-
-      throw redirect(paths.home, { revalidate: BOOKMARKS_QUERY_KEY });
-    },
-    schema: v.object({
+  const parsed = await v.safeParseAsync(
+    v.object({
       preview: v.optional(v.string()),
       "tags[]": v.optional(v.array(v.number()), []),
       text: v.optional(v.string()),
       title: v.optional(v.string()),
       url: v.optional(v.string()),
     }),
-  });
-};
+    decode(form, { arrays: ["tags[]"], numbers: ["tags[]"] }),
+  );
 
-export const deleteBookmark = (form: FormData) => {
-  return handleRpc({
-    data: decode(form, { numbers: ["bookmarkId"] }),
-    async handler(args) {
-      const supabase = getRequestSupabase();
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
 
-      const result = await supabase
-        .from("bookmarks")
-        .delete()
-        .eq("id", args.bookmarkId);
+  const supabase = getRequestSupabase();
 
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
+  const { "tags[]": tags, ...values } = parsed.output;
 
-      throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
-    },
-    schema: v.object({ bookmarkId: v.number() }),
-  });
-};
+  const result = await supabase
+    .from("bookmarks")
+    .insert(values)
+    .select()
+    .single();
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  const tagsResult = await supabase.from("bookmarks_tags").insert(
+    tags.map((tagId) => ({
+      bookmark_id: result.data.id,
+      tag_id: tagId,
+    })),
+  );
+
+  if (tagsResult.error) {
+    return rpcErrorResult(tagsResult.error);
+  }
+
+  throw redirect("/", { revalidate: BOOKMARKS_QUERY_KEY });
+});
+
+export const deleteBookmarkServerAction = action(async (form: FormData) => {
+  "use server";
+
+  const parsed = await v.safeParseAsync(
+    v.object({ bookmarkId: v.number() }),
+    decode(form, { numbers: ["bookmarkId"] }),
+  );
+
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
+
+  const supabase = getRequestSupabase();
+
+  const result = await supabase
+    .from("bookmarks")
+    .delete()
+    .eq("id", parsed.output.bookmarkId);
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+});
 
 type UpdateBookmarkTagsArgs = {
   bookmarkId: number;
   existingTags: { tag_id: number; id: number }[];
   formTags: number[];
+  supabase: SupabaseTypedClient;
 };
 
 const updateBookmarkTags = ({
   bookmarkId,
   existingTags,
   formTags,
+  supabase,
 }: UpdateBookmarkTagsArgs) => {
-  const supabase = getRequestSupabase();
-
   const existingTagsSet = new Set(existingTags.map((tag) => tag.tag_id));
   const formTagsSet = new Set(formTags);
 
@@ -104,45 +120,11 @@ const updateBookmarkTags = ({
   ]);
 };
 
-export const updateBookmark = (form: FormData) => {
-  return handleRpc({
-    data: decode(form, {
-      arrays: ["tags[]"],
-      numbers: ["bookmarkId", "tags[]"],
-    }),
-    async handler(args) {
-      const supabase = getRequestSupabase();
+export const updateBookmarkServerAction = action(async (form: FormData) => {
+  "use server";
 
-      const { bookmarkId, "tags[]": tags, ...values } = args;
-
-      const result = await supabase
-        .from("bookmarks")
-        .update(values)
-        .eq("id", bookmarkId)
-        .select("*, bookmarks_tags ( id, tag_id )")
-        .single();
-
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
-
-      const [deleteResult, insertResult] = await updateBookmarkTags({
-        bookmarkId,
-        existingTags: result.data.bookmarks_tags,
-        formTags: tags,
-      });
-
-      if (deleteResult.error) {
-        return rpcErrorResult(deleteResult.error);
-      }
-
-      if (insertResult.error) {
-        return rpcErrorResult(insertResult.error);
-      }
-
-      throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
-    },
-    schema: v.object({
+  const parsed = await v.safeParseAsync(
+    v.object({
       bookmarkId: v.number(),
       preview: v.optional(v.string()),
       "tags[]": v.optional(v.array(v.number()), []),
@@ -150,39 +132,84 @@ export const updateBookmark = (form: FormData) => {
       title: v.optional(v.string()),
       url: v.optional(v.string()),
     }),
-  });
-};
-
-export const completeBookmark = (form: FormData) => {
-  return handleRpc({
-    data: decode(form, {
-      booleans: ["done"],
-      numbers: ["bookmarkId", "rate"],
+    decode(form, {
+      arrays: ["tags[]"],
+      numbers: ["bookmarkId", "tags[]"],
     }),
-    async handler(args) {
-      const supabase = getRequestSupabase();
+  );
 
-      const { bookmarkId, ...values } = args;
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
 
-      const result = await supabase
-        .from("bookmarks")
-        .update({ ...values, done_at: new Date().toISOString() })
-        .eq("id", bookmarkId);
+  const supabase = getRequestSupabase();
 
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
+  const { bookmarkId, "tags[]": tags, ...values } = parsed.output;
 
-      throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
-    },
-    schema: v.object({
+  const result = await supabase
+    .from("bookmarks")
+    .update(values)
+    .eq("id", bookmarkId)
+    .select("*, bookmarks_tags ( id, tag_id )")
+    .single();
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  const [deleteResult, insertResult] = await updateBookmarkTags({
+    bookmarkId,
+    existingTags: result.data.bookmarks_tags,
+    formTags: tags,
+    supabase,
+  });
+
+  if (deleteResult.error) {
+    return rpcErrorResult(deleteResult.error);
+  }
+
+  if (insertResult.error) {
+    return rpcErrorResult(insertResult.error);
+  }
+
+  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+});
+
+export const completeBookmarkServerAction = action(async (form: FormData) => {
+  "use server";
+
+  const parsed = await v.safeParseAsync(
+    v.object({
       bookmarkId: v.number(),
       done: v.optional(v.boolean()),
       note: v.optional(v.string()),
       rate: v.optional(v.number()),
     }),
-  });
-};
+    decode(form, {
+      booleans: ["done"],
+      numbers: ["bookmarkId", "rate"],
+    }),
+  );
+
+  if (!parsed.success) {
+    return rpcParseIssueResult(parsed.issues);
+  }
+
+  const supabase = getRequestSupabase();
+
+  const { bookmarkId, ...values } = parsed.output;
+
+  const result = await supabase
+    .from("bookmarks")
+    .update({ ...values, done_at: new Date().toISOString() })
+    .eq("id", bookmarkId);
+
+  if (result.error) {
+    return rpcErrorResult(result.error);
+  }
+
+  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+});
 
 const createSelectBookmarksSchema = () => {
   return v.object({
@@ -199,6 +226,10 @@ export type SelectBookmarksArgs = v.InferOutput<
   ReturnType<typeof createSelectBookmarksSchema>
 >;
 
+type SelectBookmarksFromDbArgs = SelectBookmarksArgs & {
+  supabase: SupabaseTypedClient;
+};
+
 const selectBookmarksFromDb = async ({
   offset = 0,
   limit = SELECT_BOOKMARKS_DEFAULT_LIMIT,
@@ -206,9 +237,8 @@ const selectBookmarksFromDb = async ({
   tags,
   random,
   query,
-}: SelectBookmarksArgs) => {
-  const supabase = getRequestSupabase();
-
+  supabase,
+}: SelectBookmarksFromDbArgs) => {
   let builder = (
     tags.length > 0
       ? supabase
@@ -248,21 +278,28 @@ export type BookmarkWithTagsModel = NonNullable<
   Awaited<ReturnType<typeof selectBookmarksFromDb>>["data"]
 >[0];
 
-export const selectBookmarks = (args: SelectBookmarksArgs) => {
-  return handleRpc({
-    data: args,
-    async handler(args) {
-      const result = await selectBookmarksFromDb(args);
+export const selectBookmarksServerQuery = query(
+  async (args: SelectBookmarksArgs) => {
+    "use server";
 
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
+    const parsed = await v.safeParseAsync(createSelectBookmarksSchema(), args);
 
-      return rpcSuccessResult({ count: result.count, data: result.data });
-    },
-    schema: createSelectBookmarksSchema(),
-  });
-};
+    if (!parsed.success) {
+      return rpcParseIssueResult(parsed.issues);
+    }
+
+    const supabase = getRequestSupabase();
+
+    const result = await selectBookmarksFromDb({ ...parsed.output, supabase });
+
+    if (result.error) {
+      return rpcErrorResult(result.error);
+    }
+
+    return rpcSuccessResult({ count: result.count, data: result.data });
+  },
+  BOOKMARKS_QUERY_KEY,
+);
 
 const createSelectBookmarkSchema = () => {
   return v.object({
@@ -274,27 +311,32 @@ export type SelectBookmarkArgs = v.InferOutput<
   ReturnType<typeof createSelectBookmarkSchema>
 >;
 
-export const selectBookmark = (args: SelectBookmarkArgs) => {
-  return handleRpc({
-    data: args,
-    async handler(args) {
-      const supabase = getRequestSupabase();
+export const selectBookmarkServerQuery = query(
+  async (args: SelectBookmarkArgs) => {
+    "use server";
 
-      const result = await supabase
-        .from("bookmarks")
-        .select("*, bookmarks_tags ( id, tags ( id, name ) )")
-        .eq("id", args.bookmarkId)
-        .single();
+    const parsed = await v.safeParseAsync(createSelectBookmarkSchema(), args);
 
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
+    if (!parsed.success) {
+      return rpcParseIssueResult(parsed.issues);
+    }
 
-      return rpcSuccessResult({ data: result.data });
-    },
-    schema: createSelectBookmarkSchema(),
-  });
-};
+    const supabase = getRequestSupabase();
+
+    const result = await supabase
+      .from("bookmarks")
+      .select("*, bookmarks_tags ( id, tags ( id, name ) )")
+      .eq("id", parsed.output.bookmarkId)
+      .single();
+
+    if (result.error) {
+      return rpcErrorResult(result.error);
+    }
+
+    return rpcSuccessResult({ data: result.data });
+  },
+  BOOKMARK_QUERY_KEY,
+);
 
 const createSelectBookmarksByIdsSchema = () => {
   return v.object({
@@ -306,23 +348,31 @@ export type SelectBookmarksByIdsArgs = v.InferOutput<
   ReturnType<typeof createSelectBookmarksByIdsSchema>
 >;
 
-export const selectBookmarksByIds = (args: SelectBookmarksByIdsArgs) => {
-  return handleRpc({
-    data: args,
-    async handler(args) {
-      const supabase = getRequestSupabase();
+export const selectBookmarksByIdsServerQuery = query(
+  async (args: SelectBookmarksByIdsArgs) => {
+    "use server";
 
-      const result = await supabase
-        .from("bookmarks")
-        .select("*, bookmarks_tags ( id, tags ( id, name ) )")
-        .in("id", args.bookmarkIds);
+    const parsed = await v.safeParseAsync(
+      createSelectBookmarksByIdsSchema(),
+      args,
+    );
 
-      if (result.error) {
-        return rpcErrorResult(result.error);
-      }
+    if (!parsed.success) {
+      return rpcParseIssueResult(parsed.issues);
+    }
 
-      return rpcSuccessResult({ data: result.data });
-    },
-    schema: createSelectBookmarksByIdsSchema(),
-  });
-};
+    const supabase = getRequestSupabase();
+
+    const result = await supabase
+      .from("bookmarks")
+      .select("*, bookmarks_tags ( id, tags ( id, name ) )")
+      .in("id", parsed.output.bookmarkIds);
+
+    if (result.error) {
+      return rpcErrorResult(result.error);
+    }
+
+    return rpcSuccessResult({ data: result.data });
+  },
+  BOOKMARKS_BY_IDS_QUERY_KEY,
+);

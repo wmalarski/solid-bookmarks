@@ -1,20 +1,20 @@
-import { createAsync } from "@solidjs/router";
+import { createAsync, type RouteDefinition } from "@solidjs/router";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { selectTagsQuery } from "~/modules/tags/client";
 import { InsertTagDialog } from "~/modules/tags/components/insert-tag-dialog";
 import { TagsList } from "~/modules/tags/components/tags-list";
+import { selectTagsServerQuery } from "~/modules/tags/server";
 
-// export const route = {
-//   load: async () => {
-//     await selectTagsQuery({});
-//   },
-// } satisfies RouteDefinition;
+export const route = {
+  load: async () => {
+    await selectTagsServerQuery({});
+  },
+} satisfies RouteDefinition;
 
 export default function TagsPage() {
   const { t } = useI18n();
 
-  const tags = createAsync(() => selectTagsQuery({}));
+  const tags = createAsync(() => selectTagsServerQuery({}));
 
   return (
     <div class="flex w-full max-w-xl flex-col gap-4 px-2 py-4">

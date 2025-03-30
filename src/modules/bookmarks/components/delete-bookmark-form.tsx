@@ -5,8 +5,10 @@ import { useActionOnSubmit } from "~/modules/common/utils/use-action-on-submit";
 import { AlertDialog } from "~/ui/alert-dialog/alert-dialog";
 import { closeDialog, DialogTrigger } from "~/ui/dialog/dialog";
 import { TrashIcon } from "~/ui/icons/trash-icon";
-import { deleteBookmarkAction } from "../client";
-import type { BookmarkWithTagsModel } from "../server";
+import {
+  type BookmarkWithTagsModel,
+  deleteBookmarkServerAction,
+} from "../server";
 
 type DeleteBookmarkFormProps = {
   bookmark: BookmarkWithTagsModel;
@@ -20,12 +22,12 @@ export const DeleteBookmarkForm: Component<DeleteBookmarkFormProps> = (
   const dialogId = createMemo(() => `delete-dialog-${props.bookmark.id}`);
 
   const submission = useSubmission(
-    deleteBookmarkAction,
+    deleteBookmarkServerAction,
     ([form]) => form.get("bookmarkId") === String(props.bookmark.id),
   );
 
   const onSubmit = useActionOnSubmit({
-    action: deleteBookmarkAction,
+    action: deleteBookmarkServerAction,
     onSuccess: () => closeDialog(dialogId()),
   });
 

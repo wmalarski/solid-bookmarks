@@ -3,7 +3,7 @@ import type { Component } from "solid-js";
 import { useBookmarksHistory } from "~/modules/bookmarks/contexts/bookmarks-history";
 import { RpcShow } from "~/modules/common/components/rpc-show";
 import { ClientOnly } from "~/ui/client-only/client-only";
-import { selectBookmarksByIdsQuery } from "../client";
+import { selectBookmarksByIdsServerQuery } from "../server";
 import { BookmarkListContainer, BookmarkListPart } from "./bookmark-list";
 
 export const VisitedBookmarks: Component = () => {
@@ -18,7 +18,7 @@ const ClientVisitedBookmarks: Component = () => {
   const history = useBookmarksHistory();
 
   const bookmarks = createAsync(() =>
-    selectBookmarksByIdsQuery({
+    selectBookmarksByIdsServerQuery({
       bookmarkIds: history().ids,
     }),
   );

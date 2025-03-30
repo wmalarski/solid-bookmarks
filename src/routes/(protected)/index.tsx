@@ -1,21 +1,25 @@
 import { createAsync, type RouteDefinition } from "@solidjs/router";
-import { createMemo } from "solid-js";
-import { selectBookmarksQuery } from "~/modules/bookmarks/client";
-import type { SelectBookmarksArgs } from "~/modules/bookmarks/server";
+import { createMemo, Suspense } from "solid-js";
+import {
+  BookmarkList,
+  BookmarkListPlaceholder,
+} from "~/modules/bookmarks/components/bookmark-list";
+import {
+  type SelectBookmarksArgs,
+  selectBookmarksServerQuery,
+} from "~/modules/bookmarks/server";
 import {
   type FiltersSearchParams,
   parseFiltersSearchParams,
   useFiltersSearchParams,
 } from "~/modules/bookmarks/utils/use-filters-search-params";
-import { Button } from "~/ui/button/button";
+import { RpcShow } from "~/modules/common/components/rpc-show";
 
 export const route = {
   load: async ({ location }) => {
     const filterSearchParams = parseFiltersSearchParams(location.query);
-    const result = await selectBookmarksQuery(
-      mapToSelectBookmarksArgs(filterSearchParams),
-    );
-    console.log("load", selectBookmarksQuery, result);
+    const bookmarkArgs = mapToSelectBookmarksArgs(filterSearchParams);
+    await selectBookmarksServerQuery(bookmarkArgs);
   },
 } satisfies RouteDefinition;
 
@@ -26,26 +30,21 @@ export default function HomePage() {
     mapToSelectBookmarksArgs(filterSearchParams()),
   );
 
-  const bookmarks = createAsync(() => selectBookmarksQuery(queryArgs()));
+  const bookmarks = createAsync(() => selectBookmarksServerQuery(queryArgs()));
 
   return (
-    <>
-      <Button type="button" onClick={() => console.log("Click3")}>
-        Click3
-      </Button>
-      {/* <Suspense fallback={<BookmarkListPlaceholder />}>
-        <RpcShow result={bookmarks()}>
-          {(bookmarks) => (
-            <BookmarkList
-              count={bookmarks().count ?? 0}
-              filterSearchParams={filterSearchParams()}
-              initialBookmarks={bookmarks().data}
-              queryArgs={queryArgs()}
-            />
-          )}
-        </RpcShow>
-      </Suspense> */}
-    </>
+    <Suspense fallback={<BookmarkListPlaceholder />}>
+      <RpcShow result={bookmarks()}>
+        {(bookmarks) => (
+          <BookmarkList
+            count={bookmarks().count ?? 0}
+            filterSearchParams={filterSearchParams()}
+            initialBookmarks={bookmarks().data}
+            queryArgs={queryArgs()}
+          />
+        )}
+      </RpcShow>
+    </Suspense>
   );
 }
 

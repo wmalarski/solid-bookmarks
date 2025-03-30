@@ -13,9 +13,11 @@ import {
   DialogTrigger,
 } from "~/ui/dialog/dialog";
 import { CheckIcon } from "~/ui/icons/check-icon";
-import { completeBookmarkAction } from "../client";
 import { useBookmarksHistory } from "../contexts/bookmarks-history";
-import type { BookmarkWithTagsModel } from "../server";
+import {
+  type BookmarkWithTagsModel,
+  completeBookmarkServerAction,
+} from "../server";
 import { CompleteFields } from "./complete-fields";
 
 type CompleteDialogProps = {
@@ -29,7 +31,7 @@ export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
   const formId = createMemo(() => `complete-form-${props.bookmark.id}`);
 
   const submission = useSubmission(
-    completeBookmarkAction,
+    completeBookmarkServerAction,
     ([form]) => form.get("bookmarkId") === String(props.bookmark.id),
   );
 
@@ -40,7 +42,7 @@ export const CompleteDialog: Component<CompleteDialogProps> = (props) => {
   };
 
   const onSubmit = useActionOnSubmit({
-    action: completeBookmarkAction,
+    action: completeBookmarkServerAction,
     onSuccess: () => {
       closeDialog(dialogId());
     },
