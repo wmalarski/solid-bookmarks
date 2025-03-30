@@ -5,9 +5,9 @@ import { RpcShow } from "~/modules/common/components/rpc-show";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button/button";
 import { Skeleton } from "~/ui/skeleton/skeleton";
-import { SELECT_BOOKMARKS_DEFAULT_LIMIT } from "../const";
 import {
   type BookmarkWithTagsModel,
+  SELECT_BOOKMARKS_DEFAULT_LIMIT,
   type SelectBookmarksArgs,
   selectBookmarksServerQuery,
 } from "../server";

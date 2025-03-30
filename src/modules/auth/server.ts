@@ -11,7 +11,6 @@ import {
 } from "../common/server/helpers";
 import { paths } from "../common/utils/paths";
 import { getRequestSupabase } from "../supabase/middleware";
-import { USER_QUERY_KEY } from "./const";
 
 const getRedirectUrl = (event: RequestEvent, path: string) => {
   const origin = new URL(event.request.url).origin;
@@ -73,7 +72,7 @@ export const signInServerAction = action(async (form: FormData) => {
     return rpcErrorResult(result.error);
   }
 
-  throw redirect(paths.home, { revalidate: USER_QUERY_KEY });
+  throw redirect(paths.home, { revalidate: getUserServerLoader.key });
 });
 
 export const signOutServerAction = action(async () => {
@@ -87,7 +86,7 @@ export const signOutServerAction = action(async () => {
     return rpcErrorResult(result.error);
   }
 
-  throw redirect(paths.signIn, { revalidate: USER_QUERY_KEY });
+  throw redirect(paths.signIn, { revalidate: getUserServerLoader.key });
 });
 
 export const getUserServerLoader = query(async () => {
@@ -103,4 +102,4 @@ export const getUserServerLoader = query(async () => {
   }
 
   return user;
-}, USER_QUERY_KEY);
+}, "user");

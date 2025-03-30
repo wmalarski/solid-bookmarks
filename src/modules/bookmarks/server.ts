@@ -8,12 +8,6 @@ import {
 } from "../common/server/helpers";
 import type { SupabaseTypedClient } from "../supabase/client";
 import { getRequestSupabase } from "../supabase/middleware";
-import {
-  BOOKMARK_QUERY_KEY,
-  BOOKMARKS_BY_IDS_QUERY_KEY,
-  BOOKMARKS_QUERY_KEY,
-  SELECT_BOOKMARKS_DEFAULT_LIMIT,
-} from "./const";
 import { createDoneSchema } from "./utils/use-filters-search-params";
 
 export const insertBookmarkServerAction = action(async (form: FormData) => {
@@ -59,7 +53,7 @@ export const insertBookmarkServerAction = action(async (form: FormData) => {
     return rpcErrorResult(tagsResult.error);
   }
 
-  throw redirect("/", { revalidate: BOOKMARKS_QUERY_KEY });
+  throw redirect("/", { revalidate: selectBookmarksServerQuery.key });
 });
 
 export const deleteBookmarkServerAction = action(async (form: FormData) => {
@@ -85,7 +79,7 @@ export const deleteBookmarkServerAction = action(async (form: FormData) => {
     return rpcErrorResult(result.error);
   }
 
-  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+  throw reload({ revalidate: selectBookmarksServerQuery.key });
 });
 
 type UpdateBookmarkTagsArgs = {
@@ -172,7 +166,7 @@ export const updateBookmarkServerAction = action(async (form: FormData) => {
     return rpcErrorResult(insertResult.error);
   }
 
-  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+  throw reload({ revalidate: selectBookmarksServerQuery.key });
 });
 
 export const completeBookmarkServerAction = action(async (form: FormData) => {
@@ -208,7 +202,7 @@ export const completeBookmarkServerAction = action(async (form: FormData) => {
     return rpcErrorResult(result.error);
   }
 
-  throw reload({ revalidate: BOOKMARKS_QUERY_KEY });
+  throw reload({ revalidate: selectBookmarksServerQuery.key });
 });
 
 const createSelectBookmarksSchema = () => {
@@ -225,6 +219,8 @@ const createSelectBookmarksSchema = () => {
 export type SelectBookmarksArgs = v.InferOutput<
   ReturnType<typeof createSelectBookmarksSchema>
 >;
+
+export const SELECT_BOOKMARKS_DEFAULT_LIMIT = 5;
 
 type SelectBookmarksFromDbArgs = SelectBookmarksArgs & {
   supabase: SupabaseTypedClient;
@@ -298,7 +294,7 @@ export const selectBookmarksServerQuery = query(
 
     return rpcSuccessResult({ count: result.count, data: result.data });
   },
-  BOOKMARKS_QUERY_KEY,
+  "bookmarks",
 );
 
 const createSelectBookmarkSchema = () => {
@@ -335,7 +331,7 @@ export const selectBookmarkServerQuery = query(
 
     return rpcSuccessResult({ data: result.data });
   },
-  BOOKMARK_QUERY_KEY,
+  "bookmark",
 );
 
 const createSelectBookmarksByIdsSchema = () => {
@@ -374,5 +370,5 @@ export const selectBookmarksByIdsServerQuery = query(
 
     return rpcSuccessResult({ data: result.data });
   },
-  BOOKMARKS_BY_IDS_QUERY_KEY,
+  "bookmarks-by-ids",
 );

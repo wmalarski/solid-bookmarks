@@ -1,7 +1,6 @@
 import { query } from "@solidjs/router";
 import * as cheerio from "cheerio";
 import * as v from "valibot";
-import { OG_PROPS_QUERY_KEY } from "./const";
 
 export type OgProp = {
   property: string;
@@ -28,4 +27,4 @@ export const getOgPropsServerQuery = query(async (text?: string) => {
     console.error(error);
     return null;
   }
-}, OG_PROPS_QUERY_KEY);
+}, "og-props");
